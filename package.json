@@ -1,0 +1,16 @@
+{
+  "name": "bassbook",
+  "type": "module",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "install:fe": "bun i --filter=\"!apps/be\"",
+    "install:be": "bun i --filter=\"!apps/fe\""
+  }
+}
