@@ -1,16 +1,19 @@
 {
   "name": "bassbook",
   "type": "module",
-  "private": true,
-  "workspaces": ["packages/*"],
+  "version": "0.0.1",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "lerna": "^9.0.1"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
+  "dependencies": {},
   "scripts": {
-    "install:fe": "bun i --filter=\"!apps/be\"",
-    "install:be": "bun i --filter=\"!apps/fe\""
+    "publish": "lerna publish"
   }
 }

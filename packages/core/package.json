@@ -1,6 +1,6 @@
 {
-  "name": "@bassbook/core",
-  "version": "0.0.1",
+  "name": "bassbook",
+  "version": "0.0.2",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -10,5 +10,8 @@
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "csstype": "^3.2.1"
   }
 }
