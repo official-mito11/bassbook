@@ -1,5 +1,6 @@
 {
   "name": "bassbook",
+  "private": true,
   "type": "module",
   "version": "0.0.2",
   "workspaces": [
@@ -12,13 +13,15 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "lerna": "^9.0.1"
+    "lerna": "^9.0.1",
+    "tsup": "^8.2.4"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {},
   "scripts": {
+    "build": "lerna run build --stream",
     "publish": "lerna publish"
   }
 }
