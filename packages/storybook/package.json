@@ -1,5 +1,5 @@
 {
-  "name": "bassbook-storybook",
+  "name": "@bassbook/storybook",
   "version": "0.0.1",
   "type": "module",
   "main": "./src/index.ts",
@@ -7,10 +7,14 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "^5"
   },
   "dependencies": {
+    "storybook": "^10.0.7"
   }
 }
