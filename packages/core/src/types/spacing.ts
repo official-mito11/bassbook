@@ -1,52 +1,56 @@
+/**
+ * Spacing Props
+ * Padding, margin, and gap properties
+ */
+
 import type { Length } from "./length";
 
-export type PaddingProps = {
+export interface PaddingProps {
   padding?: Length;
   paddingTop?: Length;
   paddingRight?: Length;
   paddingBottom?: Length;
   paddingLeft?: Length;
-  paddingVertical?: Length;
-  paddingHorizontal?: Length;
-
-  // aliases
+  // Logical properties
+  paddingBlock?: Length;
+  paddingInline?: Length;
+  // Aliases
   p?: Length;
   pt?: Length;
   pr?: Length;
   pb?: Length;
   pl?: Length;
-  pv?: Length;
-  ph?: Length;
+  px?: Length;
+  py?: Length;
 }
 
-export type MarginProps = {
+export interface MarginProps {
   margin?: Length;
   marginTop?: Length;
   marginRight?: Length;
   marginBottom?: Length;
   marginLeft?: Length;
-  marginVertical?: Length;
-  marginHorizontal?: Length;
-
-  // aliases
+  // Logical properties
+  marginBlock?: Length;
+  marginInline?: Length;
+  // Aliases
   m?: Length;
   mt?: Length;
   mr?: Length;
   mb?: Length;
   ml?: Length;
-  mv?: Length;
-  mh?: Length;
+  mx?: Length;
+  my?: Length;
 }
 
-export type GapProps = {
+export interface GapProps {
   gap?: Length;
-  gapVertical?: Length;
-  gapHorizontal?: Length;
-
-  // aliases
+  rowGap?: Length;
+  columnGap?: Length;
+  // Aliases
   g?: Length;
-  gv?: Length;
-  gh?: Length;
+  gx?: Length;
+  gy?: Length;
 }
 
-export type SpacingProps = PaddingProps & MarginProps & GapProps;
+export interface SpacingProps extends PaddingProps, MarginProps, GapProps {}

@@ -1,42 +1,30 @@
-import type { GlobalValue } from "./value";
-import type { Length } from "./length";
+/**
+ * Sizing Props
+ * Width, height, and box-sizing properties
+ */
 
-export type BoxSizing = 
-  "border-box" | 
-  "content-box" | 
-  // aliases
-  "border" | 
-  "content" | 
-  GlobalValue;
+import type { Length, SizingKeyword, FractionKeyword } from "./length";
 
-export type SizeLength = 
-  "auto" | 
-  "fit-content" | 
-  "max-content" | 
-  "min-content" | 
-  // aliases
-  "fit" | 
-  "max" | 
-  "min" | 
-  Length;
+// Size value: length, keyword, or fraction
+export type SizeValue = Length | SizingKeyword | FractionKeyword;
 
-export type SizingProps = {
-  width?: SizeLength;
-  height?: SizeLength;
-  minWidth?: SizeLength;
-  minHeight?: SizeLength;
-  maxWidth?: SizeLength;
-  maxHeight?: SizeLength;
-  aspectRatio?: string & GlobalValue;
-  boxSizing?: BoxSizing;
+// Box sizing values
+export type BoxSizingValue = "border-box" | "content-box";
 
-  // aliases
-  w?: SizeLength;
-  h?: SizeLength;
-  minW?: SizeLength;
-  minH?: SizeLength;
-  maxW?: SizeLength;
-  maxH?: SizeLength;
-  ratio?: string & GlobalValue;
-  box?: BoxSizing;
+export interface SizingProps {
+  width?: SizeValue;
+  height?: SizeValue;
+  minWidth?: SizeValue;
+  minHeight?: SizeValue;
+  maxWidth?: SizeValue;
+  maxHeight?: SizeValue;
+  aspectRatio?: string;
+  boxSizing?: BoxSizingValue;
+  // Aliases
+  w?: SizeValue;
+  h?: SizeValue;
+  minW?: SizeValue;
+  minH?: SizeValue;
+  maxW?: SizeValue;
+  maxH?: SizeValue;
 }

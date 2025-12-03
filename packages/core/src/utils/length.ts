@@ -1,19 +1,35 @@
-import type { Length, LengthAlias, RawLengthValue } from "../types";
+/**
+ * Length Utilities
+ * @deprecated Use engine/resolvers/length instead
+ */
 
-const LEN_MAP: Record<LengthAlias, RawLengthValue> = {
-  "full": "100%",
-  "half": "50%",
-  "quarter": "25%",
-}
+import type { Length, SizingKeyword, ResolvedLength } from "../types";
 
-export function lengthed(length: Length): RawLengthValue {
+const SIZING_MAP: Record<SizingKeyword, string> = {
+  auto: "auto",
+  "fit-content": "fit-content",
+  "max-content": "max-content",
+  "min-content": "min-content",
+  full: "100%",
+  half: "50%",
+  quarter: "25%",
+  screen: "100vw",
+  "screen-h": "100vh",
+};
+
+/**
+ * Convert length value to CSS string
+ * - number → px
+ * - sizing keyword → CSS value
+ * - string → as-is
+ */
+export function lengthed(length: Length): string {
   if (typeof length === "number") {
-    return `${length}px`;
-  } else if (typeof length === "string") {
-    const lenKeys = Object.keys(LEN_MAP) as LengthAlias[];
-    if (lenKeys.includes(length as LengthAlias)) {
-      return LEN_MAP[length as LengthAlias];
-    }
+    return length === 0 ? "0" : `${length}px`;
   }
-  return length as RawLengthValue;
+  if (typeof length === "string") {
+    const mapped = SIZING_MAP[length as SizingKeyword];
+    if (mapped) return mapped;
+  }
+  return String(length);
 }
