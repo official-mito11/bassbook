@@ -23,9 +23,11 @@ export type Visibility = "visible" | "hidden" | "collapse";
 
 export interface DisplayProps {
   display?: Display | string;
-  visibility?: Visibility;
+  visibility?: Visibility | string;
   // Aliases
   d?: Display | string;
+  visible?: boolean;
+  invisible?: boolean;
   hidden?: boolean;
 }
 
@@ -36,6 +38,8 @@ export interface PositionProps {
   bottom?: Length;
   left?: Length;
   inset?: Length;
+  insetX?: Length;
+  insetY?: Length;
   zIndex?: number | string;
   // Aliases
   pos?: Position;
@@ -52,7 +56,11 @@ export interface TransformProps {
   transform?: string;
   transformOrigin?: string;
   scale?: number | string;
+  scaleX?: number | string;
+  scaleY?: number | string;
   rotate?: number | string;
+  skewX?: number | string;
+  skewY?: number | string;
   translateX?: Length;
   translateY?: Length;
 }
@@ -69,12 +77,40 @@ export interface InteractionProps {
   cursor?: string;
   pointerEvents?: "auto" | "none";
   userSelect?: "none" | "text" | "all" | "auto";
+  // Aliases
+  select?: "none" | "text" | "all" | "auto";
+}
+
+export interface ObjectProps {
+  objectFit?: string;
+  objectPosition?: string;
+}
+
+export interface FloatProps {
+  float?: string;
+  clear?: string;
+}
+
+export interface IsolationProps {
+  isolation?: string;
 }
 
 export interface EffectProps {
   boxShadow?: string;
   // Aliases
   shadow?: string;
+}
+
+export interface AnimationProps {
+  animation?: string;
+  animationName?: string;
+  animationDuration?: string;
+  animationTimingFunction?: string;
+  animationDelay?: string;
+  animationIterationCount?: number | string;
+  animationDirection?: string;
+  animationFillMode?: string;
+  animationPlayState?: string;
 }
 
 export interface LayoutProps extends 
@@ -84,4 +120,8 @@ export interface LayoutProps extends
   TransformProps, 
   TransitionProps,
   InteractionProps,
+  ObjectProps,
+  FloatProps,
+  IsolationProps,
+  AnimationProps,
   EffectProps {}

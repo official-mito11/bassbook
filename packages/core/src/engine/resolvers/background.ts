@@ -160,7 +160,7 @@ export function resolveVisualProps(
 /**
  * Extract visual props from a props object
  */
-const visualKeys: VisualKey[] = [
+export const visualKeys: VisualKey[] = [
   "background", "bg",
   "backgroundColor", "bgColor",
   "backgroundImage", "bgImage",

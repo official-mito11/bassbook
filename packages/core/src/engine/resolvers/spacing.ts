@@ -64,6 +64,8 @@ const spacingMap: Record<SpacingKey, (keyof CSSDeclarations)[]> = {
   gy: ["rowGap"],
 };
 
+export const spacingKeys = Object.keys(spacingMap) as SpacingKey[];
+
 /**
  * Resolve spacing properties
  */

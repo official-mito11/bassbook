@@ -130,7 +130,7 @@ export function resolveFlexProps(
 /**
  * Extract flex props from a props object
  */
-const flexKeys: FlexKey[] = [
+export const flexKeys: FlexKey[] = [
   "display",
   "flexDirection", "flexRow", "flexColumn", "flexRowReverse", "flexColumnReverse",
   "flexWrap", "flexNowrap", "flexDowrap", "flexWrapReverse",

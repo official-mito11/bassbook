@@ -34,9 +34,22 @@ export interface FlexContainerProps {
   // Boolean aliases
   flexRow?: boolean;
   flexColumn?: boolean;
+  flexRowReverse?: boolean;
+  flexColumnReverse?: boolean;
+  flexNowrap?: boolean;
+  flexDowrap?: boolean;
+  flexWrapReverse?: boolean;
+  justifyStart?: boolean;
+  justifyEnd?: boolean;
   justifyCenter?: boolean;
   justifyBetween?: boolean;
+  justifyAround?: boolean;
+  justifyEvenly?: boolean;
+  alignStart?: boolean;
+  alignEnd?: boolean;
   alignCenter?: boolean;
+  alignBaseline?: boolean;
+  alignStretch?: boolean;
 }
 
 // Flex child props
@@ -47,6 +60,9 @@ export interface FlexChildProps {
   flexBasis?: Length | "auto";
   alignSelf?: string;
   order?: number;
+  flexAuto?: boolean;
+  flexInitial?: boolean;
+  flexNone?: boolean;
   // Aliases
   grow?: number;
   shrink?: number;

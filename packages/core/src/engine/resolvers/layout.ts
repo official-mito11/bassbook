@@ -192,7 +192,7 @@ export function resolveLayoutProps(
 /**
  * Extract layout props from a props object
  */
-const layoutKeys: LayoutKey[] = [
+export const layoutKeys: LayoutKey[] = [
   "display", "d",
   "position", "pos",
   "top", "right", "bottom", "left",

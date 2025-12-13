@@ -151,7 +151,7 @@ export function resolveTypographyProps(
 /**
  * Extract typography props from a props object
  */
-const typographyKeys: TypographyKey[] = [
+export const typographyKeys: TypographyKey[] = [
   "fontFamily", "font",
   "fontSize", "text",
   "fontWeight", "weight",

@@ -8,30 +8,26 @@ import type { StyleResult, StyleOptions } from "./style";
 import { css, extractCSS, createSSRContext } from "./style";
 import type { ThemeTokens } from "../themes/tokens";
 
+import { spacingKeys } from "./resolvers/spacing";
+import { sizingKeys } from "./resolvers/sizing";
+import { flexKeys } from "./resolvers/flex";
+import { borderKeys } from "./resolvers/border";
+import { visualKeys } from "./resolvers/background";
+import { typographyKeys } from "./resolvers/typography";
+import { layoutKeys } from "./resolvers/layout";
+
 /**
  * Props that should be filtered out before passing to DOM elements
  * (aliases and shorthand props not valid as HTML attributes)
  */
-const stylePropsKeys = new Set([
-  // Spacing aliases
-  "p", "pt", "pr", "pb", "pl", "px", "py",
-  "m", "mt", "mr", "mb", "ml", "mx", "my",
-  "g", "gx", "gy",
-  // Sizing aliases
-  "w", "h", "minW", "minH", "maxW", "maxH",
-  // Flex aliases
-  "flexRow", "flexColumn", "justifyCenter", "justifyBetween", "alignCenter",
-  "grow", "shrink", "basis",
-  // Border aliases
-  "rounded",
-  // Background aliases
-  "bg", "bgColor",
-  // Layout aliases
-  "d", "pos", "z", "shadow",
-  // Typography
-  "align", "truncate", "lineClamp",
-  // Interaction
-  "hidden",
+const stylePropsKeys = new Set<string>([
+  ...spacingKeys,
+  ...sizingKeys,
+  ...flexKeys,
+  ...borderKeys,
+  ...visualKeys,
+  ...typographyKeys,
+  ...layoutKeys,
 ]);
 
 /**
@@ -152,7 +148,11 @@ export function createStyled<V extends Record<string, Record<string, Partial<Sty
  * SSR Helper - Collect CSS during server rendering
  */
 export class SSRStyleCollector {
-  private ctx = createSSRContext();
+  private ctx: ReturnType<typeof createSSRContext>;
+
+  constructor(options?: { theme?: Partial<ThemeTokens>; prefix?: string }) {
+    this.ctx = createSSRContext(options);
+  }
 
   css(props: Record<string, unknown>, options?: StyleOptions): StyleResult {
     return this.ctx.css(props, options);
@@ -176,7 +176,7 @@ export class SSRStyleCollector {
  * Create SSR collector instance
  */
 export function createSSRCollector(options?: { theme?: Partial<ThemeTokens>; prefix?: string }) {
-  return new SSRStyleCollector();
+  return new SSRStyleCollector(options);
 }
 
 /**

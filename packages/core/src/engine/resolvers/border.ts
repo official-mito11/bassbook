@@ -178,7 +178,7 @@ export function resolveBorderProps(
 /**
  * Extract border props from a props object
  */
-const borderKeys: BorderKey[] = [
+export const borderKeys: BorderKey[] = [
   "border", "borderTop", "borderRight", "borderBottom", "borderLeft",
   "borderX", "borderY",
   "borderWidth", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth",

@@ -9,7 +9,7 @@ import type { Length, SizingKeyword, FractionKeyword } from "./length";
 export type SizeValue = Length | SizingKeyword | FractionKeyword;
 
 // Box sizing values
-export type BoxSizingValue = "border-box" | "content-box";
+export type BoxSizingValue = "border-box" | "content-box" | "border" | "content";
 
 export interface SizingProps {
   width?: SizeValue;
@@ -19,7 +19,9 @@ export interface SizingProps {
   maxWidth?: SizeValue;
   maxHeight?: SizeValue;
   aspectRatio?: string;
+  ratio?: string;
   boxSizing?: BoxSizingValue;
+  box?: BoxSizingValue;
   // Aliases
   w?: SizeValue;
   h?: SizeValue;

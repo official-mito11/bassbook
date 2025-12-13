@@ -34,6 +34,8 @@ const sizingMap: Record<SizingKey, keyof CSSDeclarations> = {
   box: "boxSizing",
 };
 
+export const sizingKeys = Object.keys(sizingMap) as SizingKey[];
+
 // Box sizing aliases
 const boxSizingAliases: Record<string, string> = {
   border: "border-box",
