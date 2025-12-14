@@ -42,7 +42,11 @@ export interface PositionProps {
   insetY?: Length;
   zIndex?: number | string;
   // Aliases
-  pos?: Position;
+  static?: boolean;
+  relative?: boolean;
+  absolute?: boolean;
+  fixed?: boolean;
+  sticky?: boolean;
   z?: number | string;
 }
 
@@ -50,6 +54,12 @@ export interface OverflowProps {
   overflow?: Overflow;
   overflowX?: Overflow;
   overflowY?: Overflow;
+  // Aliases
+  overflowVisible?: boolean;
+  overflowHidden?: boolean;
+  overflowClip?: boolean;
+  overflowScroll?: boolean;
+  overflowAuto?: boolean;
 }
 
 export interface TransformProps {
@@ -79,11 +89,20 @@ export interface InteractionProps {
   userSelect?: "none" | "text" | "all" | "auto";
   // Aliases
   select?: "none" | "text" | "all" | "auto";
+  selectNone?: boolean;
+  selectText?: boolean;
+  selectAll?: boolean;
+  pointerNone?: boolean;
 }
 
 export interface ObjectProps {
   objectFit?: string;
   objectPosition?: string;
+  // Aliases
+  objectFitCover?: boolean;
+  objectFitContain?: boolean;
+  objectFitNone?: boolean;
+  objectFitScale?: boolean;
 }
 
 export interface FloatProps {

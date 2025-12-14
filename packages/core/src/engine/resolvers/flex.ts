@@ -11,7 +11,7 @@ import { resolveSizing } from "./length";
 type FlexContainerKey =
   | "display"
   | "flexDirection" | "flexRow" | "flexColumn" | "flexRowReverse" | "flexColumnReverse"
-  | "flexWrap" | "flexNowrap" | "flexDowrap" | "flexWrapReverse"
+  | "flexWrap" | "flexNowrap" | "flexDoWrap" | "flexDowrap" | "flexWrapReverse"
   | "justifyContent" | "justifyStart" | "justifyEnd" | "justifyCenter" 
   | "justifyBetween" | "justifyAround" | "justifyEvenly"
   | "alignItems" | "alignStart" | "alignEnd" | "alignCenter" 
@@ -46,6 +46,7 @@ export function resolveFlexContainer(
   // Flex wrap
   if (props.flexWrap) result.flexWrap = props.flexWrap as string;
   if (props.flexNowrap) result.flexWrap = "nowrap";
+  if (props.flexDoWrap) result.flexWrap = "wrap";
   if (props.flexDowrap) result.flexWrap = "wrap";
   if (props.flexWrapReverse) result.flexWrap = "wrap-reverse";
 
@@ -133,7 +134,7 @@ export function resolveFlexProps(
 export const flexKeys: FlexKey[] = [
   "display",
   "flexDirection", "flexRow", "flexColumn", "flexRowReverse", "flexColumnReverse",
-  "flexWrap", "flexNowrap", "flexDowrap", "flexWrapReverse",
+  "flexWrap", "flexNowrap", "flexDoWrap", "flexDowrap", "flexWrapReverse",
   "justifyContent", "justifyStart", "justifyEnd", "justifyCenter",
   "justifyBetween", "justifyAround", "justifyEvenly",
   "alignItems", "alignStart", "alignEnd", "alignCenter",

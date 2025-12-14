@@ -12,20 +12,20 @@ import { resolveLength, resolveColor } from "./length";
 type TypographyKey =
   // Font
   | "fontFamily" | "font"
-  | "fontSize" | "text"
+  | "fontSize"
   | "fontWeight" | "weight"
   | "fontStyle" | "italic"
   | "lineHeight" | "leading"
   | "letterSpacing" | "tracking"
   // Text
-  | "textAlign" | "align"
+  | "textAlign"
   | "textDecoration" | "decoration"
   | "textDecorationColor" | "decorationColor"
   | "textDecorationStyle" | "decorationStyle"
   | "textDecorationThickness" | "decorationThickness"
   | "textUnderlineOffset" | "underlineOffset"
-  | "textTransform" | "transform"
-  | "textOverflow" | "overflow"
+  | "textTransform"
+  | "textOverflow"
   | "textIndent" | "indent"
   | "textShadow"
   // Whitespace & wrapping
@@ -49,7 +49,7 @@ export function resolveTypographyProps(
   if (fontFamily !== undefined) result.fontFamily = String(fontFamily);
 
   // Font size
-  const fontSize = props.fontSize ?? props.text;
+  const fontSize = props.fontSize;
   if (fontSize !== undefined) {
     result.fontSize = resolveLength(fontSize as any, ctx) ?? String(fontSize);
   }
@@ -78,7 +78,7 @@ export function resolveTypographyProps(
   }
 
   // Text align
-  const textAlign = props.textAlign ?? props.align;
+  const textAlign = props.textAlign;
   if (textAlign !== undefined) result.textAlign = String(textAlign);
 
   // Text decoration
@@ -104,11 +104,11 @@ export function resolveTypographyProps(
   }
 
   // Text transform
-  const textTransform = props.textTransform ?? props.transform;
+  const textTransform = props.textTransform;
   if (textTransform !== undefined) result.textTransform = String(textTransform);
 
   // Text overflow
-  const textOverflow = props.textOverflow ?? props.overflow;
+  const textOverflow = props.textOverflow;
   if (textOverflow !== undefined) result.textOverflow = String(textOverflow);
 
   // Text indent
@@ -153,19 +153,19 @@ export function resolveTypographyProps(
  */
 export const typographyKeys: TypographyKey[] = [
   "fontFamily", "font",
-  "fontSize", "text",
+  "fontSize",
   "fontWeight", "weight",
   "fontStyle", "italic",
   "lineHeight", "leading",
   "letterSpacing", "tracking",
-  "textAlign", "align",
+  "textAlign",
   "textDecoration", "decoration",
   "textDecorationColor", "decorationColor",
   "textDecorationStyle", "decorationStyle",
   "textDecorationThickness", "decorationThickness",
   "textUnderlineOffset", "underlineOffset",
-  "textTransform", "transform",
-  "textOverflow", "overflow",
+  "textTransform",
+  "textOverflow",
   "textIndent", "indent",
   "textShadow",
   "whiteSpace", "whitespace",

@@ -7,12 +7,13 @@
     "packages/*"
   ],
   "exports": {
-    "react": "./packages/react/index.ts",
-    "core": "./packages/core/index.ts",
-    "storybook": "./packages/storybook/index.ts"
+    "./react": "./packages/react/src/index.ts",
+    "./core": "./packages/core/src/index.ts",
+    "./storybook": "./packages/storybook/src/index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/node": "latest",
     "lerna": "^9.0.1",
     "tsup": "^8.2.4"
   },

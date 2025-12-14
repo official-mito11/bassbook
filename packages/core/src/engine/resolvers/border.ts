@@ -11,18 +11,23 @@ import { resolveLength, resolveColor, resolveRadius } from "./length";
 type BorderKey =
   // Border shorthand
   | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft"
+  | "bt" | "br" | "bb" | "bl"
   | "borderX" | "borderY"
   // Border width
   | "borderWidth" | "borderTopWidth" | "borderRightWidth" | "borderBottomWidth" | "borderLeftWidth"
+  | "btWidth" | "brWidth" | "bbWidth" | "blWidth"
   // Border color
   | "borderColor" | "borderTopColor" | "borderRightColor" | "borderBottomColor" | "borderLeftColor"
+  | "btColor" | "brColor" | "bbColor" | "blColor"
   // Border style
   | "borderStyle" | "borderTopStyle" | "borderRightStyle" | "borderBottomStyle" | "borderLeftStyle"
   // Border radius
-  | "borderRadius" | "rounded"
+  | "borderRadius" | "rounded" | "r"
   | "borderTopLeftRadius" | "borderTopRightRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius"
   | "roundedTl" | "roundedTr" | "roundedBl" | "roundedBr"
+  | "rtl" | "rtr" | "rbl" | "rbr"
   | "roundedTop" | "roundedBottom" | "roundedLeft" | "roundedRight"
+  | "rt" | "rb" | "rl" | "rr"
   // Outline
   | "outline" | "outlineWidth" | "outlineColor" | "outlineStyle" | "outlineOffset"
   // Ring (Tailwind-like)
@@ -39,10 +44,14 @@ export function resolveBorderProps(
 
   // Border shorthand
   if (props.border !== undefined) result.border = String(props.border);
-  if (props.borderTop !== undefined) result.borderTop = String(props.borderTop);
-  if (props.borderRight !== undefined) result.borderRight = String(props.borderRight);
-  if (props.borderBottom !== undefined) result.borderBottom = String(props.borderBottom);
-  if (props.borderLeft !== undefined) result.borderLeft = String(props.borderLeft);
+  const borderTop = props.borderTop ?? props.bt;
+  if (borderTop !== undefined) result.borderTop = String(borderTop);
+  const borderRight = props.borderRight ?? props.br;
+  if (borderRight !== undefined) result.borderRight = String(borderRight);
+  const borderBottom = props.borderBottom ?? props.bb;
+  if (borderBottom !== undefined) result.borderBottom = String(borderBottom);
+  const borderLeft = props.borderLeft ?? props.bl;
+  if (borderLeft !== undefined) result.borderLeft = String(borderLeft);
   
   // Border X/Y
   if (props.borderX !== undefined) {
@@ -60,34 +69,42 @@ export function resolveBorderProps(
   if (props.borderWidth !== undefined) {
     result.borderWidth = resolveLength(props.borderWidth as any, ctx) ?? String(props.borderWidth);
   }
-  if (props.borderTopWidth !== undefined) {
-    result.borderTopWidth = resolveLength(props.borderTopWidth as any, ctx) ?? String(props.borderTopWidth);
+  const borderTopWidth = props.borderTopWidth ?? props.btWidth;
+  if (borderTopWidth !== undefined) {
+    result.borderTopWidth = resolveLength(borderTopWidth as any, ctx) ?? String(borderTopWidth);
   }
-  if (props.borderRightWidth !== undefined) {
-    result.borderRightWidth = resolveLength(props.borderRightWidth as any, ctx) ?? String(props.borderRightWidth);
+  const borderRightWidth = props.borderRightWidth ?? props.brWidth;
+  if (borderRightWidth !== undefined) {
+    result.borderRightWidth = resolveLength(borderRightWidth as any, ctx) ?? String(borderRightWidth);
   }
-  if (props.borderBottomWidth !== undefined) {
-    result.borderBottomWidth = resolveLength(props.borderBottomWidth as any, ctx) ?? String(props.borderBottomWidth);
+  const borderBottomWidth = props.borderBottomWidth ?? props.bbWidth;
+  if (borderBottomWidth !== undefined) {
+    result.borderBottomWidth = resolveLength(borderBottomWidth as any, ctx) ?? String(borderBottomWidth);
   }
-  if (props.borderLeftWidth !== undefined) {
-    result.borderLeftWidth = resolveLength(props.borderLeftWidth as any, ctx) ?? String(props.borderLeftWidth);
+  const borderLeftWidth = props.borderLeftWidth ?? props.blWidth;
+  if (borderLeftWidth !== undefined) {
+    result.borderLeftWidth = resolveLength(borderLeftWidth as any, ctx) ?? String(borderLeftWidth);
   }
 
   // Border color
   if (props.borderColor !== undefined) {
     result.borderColor = resolveColor(String(props.borderColor), ctx) ?? String(props.borderColor);
   }
-  if (props.borderTopColor !== undefined) {
-    result.borderTopColor = resolveColor(String(props.borderTopColor), ctx) ?? String(props.borderTopColor);
+  const borderTopColor = props.borderTopColor ?? props.btColor;
+  if (borderTopColor !== undefined) {
+    result.borderTopColor = resolveColor(String(borderTopColor), ctx) ?? String(borderTopColor);
   }
-  if (props.borderRightColor !== undefined) {
-    result.borderRightColor = resolveColor(String(props.borderRightColor), ctx) ?? String(props.borderRightColor);
+  const borderRightColor = props.borderRightColor ?? props.brColor;
+  if (borderRightColor !== undefined) {
+    result.borderRightColor = resolveColor(String(borderRightColor), ctx) ?? String(borderRightColor);
   }
-  if (props.borderBottomColor !== undefined) {
-    result.borderBottomColor = resolveColor(String(props.borderBottomColor), ctx) ?? String(props.borderBottomColor);
+  const borderBottomColor = props.borderBottomColor ?? props.bbColor;
+  if (borderBottomColor !== undefined) {
+    result.borderBottomColor = resolveColor(String(borderBottomColor), ctx) ?? String(borderBottomColor);
   }
-  if (props.borderLeftColor !== undefined) {
-    result.borderLeftColor = resolveColor(String(props.borderLeftColor), ctx) ?? String(props.borderLeftColor);
+  const borderLeftColor = props.borderLeftColor ?? props.blColor;
+  if (borderLeftColor !== undefined) {
+    result.borderLeftColor = resolveColor(String(borderLeftColor), ctx) ?? String(borderLeftColor);
   }
 
   // Border style
@@ -98,47 +115,51 @@ export function resolveBorderProps(
   if (props.borderLeftStyle !== undefined) result.borderLeftStyle = String(props.borderLeftStyle);
 
   // Border radius
-  const radiusValue = props.borderRadius ?? props.rounded;
+  const radiusValue = props.borderRadius ?? props.rounded ?? props.r;
   if (radiusValue !== undefined) {
     result.borderRadius = resolveRadius(radiusValue as any, ctx) ?? String(radiusValue);
   }
 
   // Individual corner radius
-  if (props.borderTopLeftRadius !== undefined || props.roundedTl !== undefined) {
-    const val = props.borderTopLeftRadius ?? props.roundedTl;
+  if (props.borderTopLeftRadius !== undefined || props.roundedTl !== undefined || props.rtl !== undefined) {
+    const val = props.borderTopLeftRadius ?? props.roundedTl ?? props.rtl;
     result.borderTopLeftRadius = resolveRadius(val as any, ctx) ?? String(val);
   }
-  if (props.borderTopRightRadius !== undefined || props.roundedTr !== undefined) {
-    const val = props.borderTopRightRadius ?? props.roundedTr;
+  if (props.borderTopRightRadius !== undefined || props.roundedTr !== undefined || props.rtr !== undefined) {
+    const val = props.borderTopRightRadius ?? props.roundedTr ?? props.rtr;
     result.borderTopRightRadius = resolveRadius(val as any, ctx) ?? String(val);
   }
-  if (props.borderBottomLeftRadius !== undefined || props.roundedBl !== undefined) {
-    const val = props.borderBottomLeftRadius ?? props.roundedBl;
+  if (props.borderBottomLeftRadius !== undefined || props.roundedBl !== undefined || props.rbl !== undefined) {
+    const val = props.borderBottomLeftRadius ?? props.roundedBl ?? props.rbl;
     result.borderBottomLeftRadius = resolveRadius(val as any, ctx) ?? String(val);
   }
-  if (props.borderBottomRightRadius !== undefined || props.roundedBr !== undefined) {
-    const val = props.borderBottomRightRadius ?? props.roundedBr;
+  if (props.borderBottomRightRadius !== undefined || props.roundedBr !== undefined || props.rbr !== undefined) {
+    const val = props.borderBottomRightRadius ?? props.roundedBr ?? props.rbr;
     result.borderBottomRightRadius = resolveRadius(val as any, ctx) ?? String(val);
   }
 
   // Rounded top/bottom/left/right
-  if (props.roundedTop !== undefined) {
-    const val = resolveRadius(props.roundedTop as any, ctx) ?? String(props.roundedTop);
+  if (props.roundedTop !== undefined || props.rt !== undefined) {
+    const v = props.roundedTop ?? props.rt;
+    const val = resolveRadius(v as any, ctx) ?? String(v);
     result.borderTopLeftRadius = val;
     result.borderTopRightRadius = val;
   }
-  if (props.roundedBottom !== undefined) {
-    const val = resolveRadius(props.roundedBottom as any, ctx) ?? String(props.roundedBottom);
+  if (props.roundedBottom !== undefined || props.rb !== undefined) {
+    const v = props.roundedBottom ?? props.rb;
+    const val = resolveRadius(v as any, ctx) ?? String(v);
     result.borderBottomLeftRadius = val;
     result.borderBottomRightRadius = val;
   }
-  if (props.roundedLeft !== undefined) {
-    const val = resolveRadius(props.roundedLeft as any, ctx) ?? String(props.roundedLeft);
+  if (props.roundedLeft !== undefined || props.rl !== undefined) {
+    const v = props.roundedLeft ?? props.rl;
+    const val = resolveRadius(v as any, ctx) ?? String(v);
     result.borderTopLeftRadius = val;
     result.borderBottomLeftRadius = val;
   }
-  if (props.roundedRight !== undefined) {
-    const val = resolveRadius(props.roundedRight as any, ctx) ?? String(props.roundedRight);
+  if (props.roundedRight !== undefined || props.rr !== undefined) {
+    const v = props.roundedRight ?? props.rr;
+    const val = resolveRadius(v as any, ctx) ?? String(v);
     result.borderTopRightRadius = val;
     result.borderBottomRightRadius = val;
   }
@@ -180,14 +201,19 @@ export function resolveBorderProps(
  */
 export const borderKeys: BorderKey[] = [
   "border", "borderTop", "borderRight", "borderBottom", "borderLeft",
+  "bt", "br", "bb", "bl",
   "borderX", "borderY",
   "borderWidth", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth",
+  "btWidth", "brWidth", "bbWidth", "blWidth",
   "borderColor", "borderTopColor", "borderRightColor", "borderBottomColor", "borderLeftColor",
+  "btColor", "brColor", "bbColor", "blColor",
   "borderStyle", "borderTopStyle", "borderRightStyle", "borderBottomStyle", "borderLeftStyle",
-  "borderRadius", "rounded",
+  "borderRadius", "rounded", "r",
   "borderTopLeftRadius", "borderTopRightRadius", "borderBottomLeftRadius", "borderBottomRightRadius",
   "roundedTl", "roundedTr", "roundedBl", "roundedBr",
+  "rtl", "rtr", "rbl", "rbr",
   "roundedTop", "roundedBottom", "roundedLeft", "roundedRight",
+  "rt", "rb", "rl", "rr",
   "outline", "outlineWidth", "outlineColor", "outlineStyle", "outlineOffset",
   "ring", "ringColor", "ringWidth", "ringOffset", "ringOffsetColor",
 ];

@@ -197,7 +197,13 @@ export function applyStyles(
   // Apply inline styles
   if (result.style) {
     for (const [key, value] of Object.entries(result.style)) {
-      (element.style as any)[key] = value;
+      if (value === undefined || value === null) continue;
+      const stringValue = String(value);
+      if (key.startsWith("--") || key.includes("-")) {
+        element.style.setProperty(key, stringValue);
+      } else {
+        (element.style as any)[key] = stringValue;
+      }
     }
   }
 }
@@ -219,7 +225,13 @@ export function createElement<K extends keyof HTMLElementTagNameMap>(
   
   if (result.style) {
     for (const [key, value] of Object.entries(result.style)) {
-      (element.style as any)[key] = value;
+      if (value === undefined || value === null) continue;
+      const stringValue = String(value);
+      if (key.startsWith("--") || key.includes("-")) {
+        element.style.setProperty(key, stringValue);
+      } else {
+        (element.style as any)[key] = stringValue;
+      }
     }
   }
   

@@ -37,6 +37,7 @@ export interface FlexContainerProps {
   flexRowReverse?: boolean;
   flexColumnReverse?: boolean;
   flexNowrap?: boolean;
+  flexDoWrap?: boolean;
   flexDowrap?: boolean;
   flexWrapReverse?: boolean;
   justifyStart?: boolean;

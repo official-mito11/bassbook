@@ -40,6 +40,18 @@ export interface BorderProps {
   borderBottomLeftRadius?: Length;
   borderBottomRightRadius?: Length;
   // Aliases
+  bt?: string;
+  br?: string;
+  bb?: string;
+  bl?: string;
+  btWidth?: Length;
+  brWidth?: Length;
+  bbWidth?: Length;
+  blWidth?: Length;
+  btColor?: string;
+  brColor?: string;
+  bbColor?: string;
+  blColor?: string;
   rounded?: Length;
   roundedTl?: Length;
   roundedTr?: Length;
@@ -49,6 +61,15 @@ export interface BorderProps {
   roundedBottom?: Length;
   roundedLeft?: Length;
   roundedRight?: Length;
+  r?: Length;
+  rt?: Length;
+  rb?: Length;
+  rl?: Length;
+  rr?: Length;
+  rtl?: Length;
+  rtr?: Length;
+  rbl?: Length;
+  rbr?: Length;
   // Ring
   ring?: Length;
   ringColor?: string;

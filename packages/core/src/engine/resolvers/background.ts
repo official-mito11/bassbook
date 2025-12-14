@@ -25,7 +25,7 @@ type BackgroundKey =
 // Color prop keys
 type ColorKey =
   | "color" | "textColor"
-  | "opacity"
+  | "opacity" | "alpha"
   | "fill" | "stroke";
 
 type VisualKey = BackgroundKey | ColorKey;
@@ -127,8 +127,9 @@ export function resolveColorProps(
   }
 
   // Opacity
-  if (props.opacity !== undefined) {
-    result.opacity = String(props.opacity);
+  const opacity = props.opacity ?? props.alpha;
+  if (opacity !== undefined) {
+    result.opacity = String(opacity);
   }
 
   // Fill (SVG)
@@ -173,7 +174,7 @@ export const visualKeys: VisualKey[] = [
   "backgroundBlendMode", "bgBlend",
   "bgGradient", "gradientFrom", "gradientVia", "gradientTo",
   "color", "textColor",
-  "opacity",
+  "opacity", "alpha",
   "fill", "stroke",
 ];
 

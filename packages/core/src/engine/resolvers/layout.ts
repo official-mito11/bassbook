@@ -12,23 +12,28 @@ type LayoutKey =
   // Display
   | "display" | "d"
   // Position
-  | "position" | "pos"
+  | "position"
+  | "static" | "relative" | "absolute" | "fixed" | "sticky"
   | "top" | "right" | "bottom" | "left"
   | "inset" | "insetX" | "insetY"
   // Z-index
   | "zIndex" | "z"
   // Overflow
   | "overflow" | "overflowX" | "overflowY"
+  | "overflowVisible" | "overflowHidden" | "overflowClip" | "overflowScroll" | "overflowAuto"
   // Visibility
   | "visibility" | "visible" | "invisible" | "hidden"
   // Cursor
   | "cursor"
   // Pointer events
   | "pointerEvents"
+  | "pointerNone"
   // User select
   | "userSelect" | "select"
+  | "selectNone" | "selectText" | "selectAll"
   // Object fit/position
   | "objectFit" | "objectPosition"
+  | "objectFitCover" | "objectFitContain" | "objectFitNone" | "objectFitScale"
   // Float/Clear
   | "float" | "clear"
   // Isolation
@@ -63,8 +68,13 @@ export function resolveLayoutProps(
   if (display !== undefined) result.display = String(display);
 
   // Position
-  const position = props.position ?? props.pos;
+  const position = props.position;
   if (position !== undefined) result.position = String(position);
+  if (props.static === true) result.position = "static";
+  if (props.relative === true) result.position = "relative";
+  if (props.absolute === true) result.position = "absolute";
+  if (props.fixed === true) result.position = "fixed";
+  if (props.sticky === true) result.position = "sticky";
 
   // Position offsets
   if (props.top !== undefined) result.top = resolveLength(props.top as any, ctx) ?? String(props.top);
@@ -101,6 +111,11 @@ export function resolveLayoutProps(
   if (props.overflow !== undefined) result.overflow = String(props.overflow);
   if (props.overflowX !== undefined) result.overflowX = String(props.overflowX);
   if (props.overflowY !== undefined) result.overflowY = String(props.overflowY);
+  if (props.overflowVisible === true) result.overflow = "visible";
+  if (props.overflowHidden === true) result.overflow = "hidden";
+  if (props.overflowClip === true) result.overflow = "clip";
+  if (props.overflowScroll === true) result.overflow = "scroll";
+  if (props.overflowAuto === true) result.overflow = "auto";
 
   // Visibility shortcuts
   if (props.visibility !== undefined) result.visibility = String(props.visibility);
@@ -113,14 +128,22 @@ export function resolveLayoutProps(
 
   // Pointer events
   if (props.pointerEvents !== undefined) result.pointerEvents = String(props.pointerEvents);
+  if (props.pointerNone === true) result.pointerEvents = "none";
 
   // User select
   const userSelect = props.userSelect ?? props.select;
   if (userSelect !== undefined) result.userSelect = String(userSelect);
+  if (props.selectNone === true) result.userSelect = "none";
+  if (props.selectText === true) result.userSelect = "text";
+  if (props.selectAll === true) result.userSelect = "all";
 
   // Object fit/position
   if (props.objectFit !== undefined) result.objectFit = String(props.objectFit);
   if (props.objectPosition !== undefined) result.objectPosition = String(props.objectPosition);
+  if (props.objectFitCover === true) result.objectFit = "cover";
+  if (props.objectFitContain === true) result.objectFit = "contain";
+  if (props.objectFitNone === true) result.objectFit = "none";
+  if (props.objectFitScale === true) result.objectFit = "scale-down";
 
   // Float/Clear
   if (props.float !== undefined) result.float = String(props.float);
@@ -194,16 +217,21 @@ export function resolveLayoutProps(
  */
 export const layoutKeys: LayoutKey[] = [
   "display", "d",
-  "position", "pos",
+  "position",
+  "static", "relative", "absolute", "fixed", "sticky",
   "top", "right", "bottom", "left",
   "inset", "insetX", "insetY",
   "zIndex", "z",
   "overflow", "overflowX", "overflowY",
+  "overflowVisible", "overflowHidden", "overflowClip", "overflowScroll", "overflowAuto",
   "visibility", "visible", "invisible", "hidden",
   "cursor",
   "pointerEvents",
+  "pointerNone",
   "userSelect", "select",
+  "selectNone", "selectText", "selectAll",
   "objectFit", "objectPosition",
+  "objectFitCover", "objectFitContain", "objectFitNone", "objectFitScale",
   "float", "clear",
   "isolation",
   "boxShadow", "shadow",

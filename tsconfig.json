@@ -25,10 +25,12 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
-
+    
     "baseUrl": ".",
     "paths": {
-      "@bassbook": ["./packages/*"]
+      "@bassbook/core": ["./packages/core/src/index.ts"],
+      "@bassbook/react": ["./packages/react/src/index.ts"],
+      "@bassbook/storybook": ["./packages/storybook/src/index.ts"]
     },
     "types": ["node", "bun"]
   },

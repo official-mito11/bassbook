@@ -98,11 +98,19 @@ export function resolveRadius(value: string | number | undefined, ctx: StyleCont
     return value === 0 ? "0" : `${value}px`;
   }
 
-  // Check radius tokens
-  const radiusValue = resolveToken(ctx, "radius", value);
-  if (radiusValue) return radiusValue;
+  if (typeof value === "string") {
+    if (isTokenRef(value)) {
+      const resolved = parseAndResolveToken(ctx, value);
+      if (resolved) return resolved;
+    }
 
-  return value;
+    const radiusValue = resolveToken(ctx, "radius", value);
+    if (radiusValue) return radiusValue;
+
+    return value;
+  }
+
+  return undefined;
 }
 
 /**
@@ -110,6 +118,11 @@ export function resolveRadius(value: string | number | undefined, ctx: StyleCont
  */
 export function resolveShadow(value: string | undefined, ctx: StyleContext): string | undefined {
   if (value === undefined || value === null) return undefined;
+
+  if (isTokenRef(value)) {
+    const resolved = parseAndResolveToken(ctx, value);
+    if (resolved) return resolved;
+  }
 
   // Check shadow tokens
   const shadowValue = resolveToken(ctx, "shadow", value);
@@ -128,9 +141,17 @@ export function resolveZIndex(value: string | number | undefined, ctx: StyleCont
     return String(value);
   }
 
-  // Check z-index tokens
-  const zValue = resolveToken(ctx, "zIndex", value);
-  if (zValue) return zValue;
+  if (typeof value === "string") {
+    if (isTokenRef(value)) {
+      const resolved = parseAndResolveToken(ctx, value);
+      if (resolved) return resolved;
+    }
 
-  return value;
+    const zValue = resolveToken(ctx, "zIndex", value);
+    if (zValue) return zValue;
+
+    return value;
+  }
+
+  return undefined;
 }

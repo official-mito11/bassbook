@@ -35,6 +35,7 @@ export interface ColorProps {
   color?: string;
   textColor?: string;
   opacity?: number | string;
+  alpha?: number | string;
   // SVG
   fill?: string;
   stroke?: string;

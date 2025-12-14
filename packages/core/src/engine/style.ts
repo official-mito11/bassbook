@@ -91,6 +91,8 @@ export function css(
     const className = ctx.registry.register(cssProperty, value);
     classNames.push(className);
   }
+
+  classNames.sort();
   
   // Add additional class names
   if (options?.className) {

@@ -21,7 +21,6 @@ export interface FontProps {
   fontFamily?: string;
   font?: string;
   fontSize?: Length;
-  text?: Length;
   fontWeight?: number | string;
   weight?: number | string;
   fontStyle?: string;
