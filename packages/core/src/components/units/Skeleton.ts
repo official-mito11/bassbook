@@ -1,8 +1,8 @@
-import { defineUnitComponent, el } from "../spec";
+import { defineUnitComponent, comp } from "../spec";
 
 export const Skeleton = defineUnitComponent({
   name: "Skeleton",
-  tree: el("div", {
+  tree: comp("Box", {
     part: "root",
   }),
   styles: {

@@ -6,6 +6,7 @@ export * from "./Placeholder";
 export * from "./Progressbar";
 export * from "./Radio";
 export * from "./Select";
+export * from "./SelectOption";
 export * from "./Skeleton";
 export * from "./Slider";
 export * from "./Switch";

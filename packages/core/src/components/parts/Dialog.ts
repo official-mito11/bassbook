@@ -1,8 +1,8 @@
-import { definePartComponent, el, slot } from "../spec";
+import { definePartComponent, comp, slot } from "../spec";
 
 export const Dialog = definePartComponent({
   name: "Dialog",
-  tree: el("div", {
+  tree: comp("Box", {
     part: "root",
     children: [slot("children")],
   }),

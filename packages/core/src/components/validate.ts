@@ -170,6 +170,16 @@ function validateNode(
   resolver: SpecResolver | undefined,
   path: string
 ): void {
+  if (node.kind === "element") {
+    if (parentLayer === "unit") {
+      issue(issues, path, `Unit components cannot include element nodes ('${node.tag}')`);
+    }
+
+    if (parentLayer === "part") {
+      issue(issues, path, `Part components cannot include element nodes ('${node.tag}')`);
+    }
+  }
+
   if (node.kind === "component") {
     if (parentLayer === "core") {
       issue(issues, path, `Core components cannot include component nodes ('${node.component}')`);
@@ -188,6 +198,12 @@ function validateNode(
           issues,
           path,
           `Unit components can only reference core components (got '${node.component}' layer '${target.layer}')`
+        );
+      } else if (parentLayer === "part" && target.layer === "part") {
+        issue(
+          issues,
+          path,
+          `Part components cannot reference part components (got '${node.component}' layer '${target.layer}')`
         );
       }
     }
@@ -237,6 +253,10 @@ export function validateComponentSpec(
   collectParts(root as unknown as NodeSpec, parts);
 
   validateDataProps(spec, issues, "spec");
+
+  if (spec.layer === "core" && (spec as CoreComponentSpec).styles) {
+    issue(issues, "spec.styles", "Core components cannot define default styles");
+  }
 
   if (spec.layer === "core") {
     validateBaseStyles((spec as CoreComponentSpec).styles, parts, issues, "spec.styles");

@@ -9,7 +9,6 @@ import { resolveSizing } from "./length";
 
 // Flex container prop keys
 type FlexContainerKey =
-  | "display"
   | "flexDirection" | "flexRow" | "flexColumn" | "flexRowReverse" | "flexColumnReverse"
   | "flexWrap" | "flexNowrap" | "flexDoWrap" | "flexDowrap" | "flexWrapReverse"
   | "justifyContent" | "justifyStart" | "justifyEnd" | "justifyCenter" 
@@ -132,7 +131,6 @@ export function resolveFlexProps(
  * Extract flex props from a props object
  */
 export const flexKeys: FlexKey[] = [
-  "display",
   "flexDirection", "flexRow", "flexColumn", "flexRowReverse", "flexColumnReverse",
   "flexWrap", "flexNowrap", "flexDoWrap", "flexDowrap", "flexWrapReverse",
   "justifyContent", "justifyStart", "justifyEnd", "justifyCenter",

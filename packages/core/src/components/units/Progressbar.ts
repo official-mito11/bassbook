@@ -1,8 +1,8 @@
-import { defineUnitComponent, el } from "../spec";
+import { defineUnitComponent, comp } from "../spec";
 
 export const Progressbar = defineUnitComponent({
   name: "Progressbar",
-  tree: el("progress", {
+  tree: comp("CoreProgress", {
     part: "root",
   }),
 });
