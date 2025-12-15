@@ -14,16 +14,32 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist"
+    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist",
+    "dev": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^8.0.0",
+    "@storybook/addon-interactions": "^8.0.0",
+    "@storybook/react": "^8.0.0",
+    "@storybook/react-vite": "^8.0.0",
     "@types/bun": "latest",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^5.4.0",
+    "vite-tsconfig-paths": "^5.1.4",
     "typescript": "^5"
   },
   "dependencies": {
-    "storybook": "^10.0.7"
+    "@bassbook/core": "workspace:*",
+    "@bassbook/react": "workspace:*",
+    "storybook": "^8.0.0"
   }
 }

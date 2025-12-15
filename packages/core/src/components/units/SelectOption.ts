@@ -2,7 +2,7 @@ import { defineUnitComponent, comp, slot } from "../spec";
 
 export const SelectOption = defineUnitComponent({
   name: "SelectOption",
-  dataProps: ["selected", "disabled"] as const,
+  dataProps: ["selected", "active", "disabled"] as const,
   tree: comp("CoreButton", {
     part: "root",
     props: {
@@ -61,6 +61,14 @@ export const SelectOption = defineUnitComponent({
       },
     },
     variants: {
+      active: {
+        true: {
+          root: {
+            bg: "secondary",
+          },
+        },
+        false: {},
+      },
       selected: {
         true: {
           root: {
@@ -73,7 +81,6 @@ export const SelectOption = defineUnitComponent({
         },
         false: {
           root: {
-            bg: "transparent",
             color: "current",
           },
           check: {
@@ -98,6 +105,7 @@ export const SelectOption = defineUnitComponent({
     },
     defaultVariants: {
       selected: "false",
+      active: "false",
       disabled: "false",
     },
   },
