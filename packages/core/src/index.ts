@@ -9,5 +9,8 @@ export * from "./types";
 
 export * from "./components";
 
+// Global styles
+export * from "./styles";
+
 // Legacy utils (deprecated, use engine instead)
 export * from "./utils";

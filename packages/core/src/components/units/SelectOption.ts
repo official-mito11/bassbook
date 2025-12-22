@@ -43,28 +43,35 @@ export const SelectOption = defineUnitComponent({
         alignCenter: true,
         justifyBetween: true,
         w: "100%",
-        px: 12,
-        py: 8,
+        px: 8,
+        py: 6,
+        mx: 4,
         rounded: "sm",
-        transition: "all 150ms ease",
+        transition: "background-color 150ms ease",
         cursor: "pointer",
         selectNone: true,
+        fontSize: "0.875rem",
+        color: "#09090b",
+        bg: "transparent",
+        border: "none",
+        outline: "none",
       },
       label: {
         flex: "1",
+        textAlign: "left",
       },
       check: {
         w: 16,
         h: 16,
         opacity: 0,
-        transition: "all 150ms ease",
+        color: "#18181b",
       },
     },
     variants: {
       active: {
         true: {
           root: {
-            bg: "secondary",
+            bg: "#f4f4f5",
           },
         },
         false: {},
@@ -72,17 +79,13 @@ export const SelectOption = defineUnitComponent({
       selected: {
         true: {
           root: {
-            bg: "primary",
-            color: "white",
+            fontWeight: 500,
           },
           check: {
             opacity: 1,
           },
         },
         false: {
-          root: {
-            color: "current",
-          },
           check: {
             opacity: 0,
           },
@@ -96,11 +99,7 @@ export const SelectOption = defineUnitComponent({
             pointerNone: true,
           },
         },
-        false: {
-          root: {
-            pointerNone: false,
-          },
-        },
+        false: {},
       },
     },
     defaultVariants: {

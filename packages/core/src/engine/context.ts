@@ -16,10 +16,18 @@ export interface StyleContext {
 // Global context
 let globalContext: StyleContext | null = null;
 
+const isServer = typeof document === "undefined";
+
 /**
  * Get the global style context
  */
 export function getContext(): StyleContext {
+  if (isServer) {
+    return {
+      theme: defaultTheme,
+      registry: createRegistry(),
+    };
+  }
   if (!globalContext) {
     globalContext = {
       theme: defaultTheme,
@@ -43,6 +51,10 @@ export function configure(options: {
   const registry = options.prefix 
     ? createRegistry(options.prefix) 
     : getRegistry();
+
+  if (isServer) {
+    return { theme, registry };
+  }
 
   globalContext = { theme, registry };
   return globalContext;
@@ -68,6 +80,7 @@ export function createContext(options?: {
  * Reset the global context
  */
 export function resetContext(): void {
+  if (isServer) return;
   globalContext?.registry.reset();
   globalContext = null;
 }

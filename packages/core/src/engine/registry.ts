@@ -203,7 +203,12 @@ export class CSSRegistry {
 // Global singleton registry
 let globalRegistry: CSSRegistry | null = null;
 
+const isServer = typeof document === "undefined";
+
 export function getRegistry(): CSSRegistry {
+  if (isServer) {
+    return new CSSRegistry();
+  }
   if (!globalRegistry) {
     globalRegistry = new CSSRegistry();
   }
@@ -215,6 +220,7 @@ export function createRegistry(prefix?: string): CSSRegistry {
 }
 
 export function resetGlobalRegistry(): void {
+  if (isServer) return;
   globalRegistry?.reset();
   globalRegistry = null;
 }

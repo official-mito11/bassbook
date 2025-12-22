@@ -4,11 +4,6 @@ import { slot } from "../spec";
 export const Radio = defineUnitComponent({
   name: "Radio",
   dataProps: ["checked", "disabled", "size"] as const,
-  // Custom radio UI (no native radio UI dependency)
-  // - root: interactive container (role=radio)
-  // - indicator: outer circle
-  // - dot: inner dot (shown when checked)
-  // - label: text slot
   tree: comp("Box", {
     part: "root",
     props: {
@@ -22,23 +17,11 @@ export const Radio = defineUnitComponent({
           "aria-hidden": true,
         },
         children: [
-          comp("Svg", {
+          comp("Box", {
             part: "dot",
             props: {
               "aria-hidden": true,
-              viewBox: "0 0 16 16",
             },
-            children: [
-              comp("CoreCircle", {
-                part: "circle",
-                props: {
-                  cx: 8,
-                  cy: 8,
-                  r: 4,
-                  fill: "currentColor",
-                },
-              }),
-            ],
           }),
         ],
       }),
@@ -61,45 +44,49 @@ export const Radio = defineUnitComponent({
         display: "inline-flex",
         alignCenter: true,
         justifyCenter: true,
+        flexShrink: 0,
         w: 16,
         h: 16,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "secondary",
         rounded: "full",
+        border: "1px solid #d4d4d8",
+        bg: "transparent",
         transition: "all 150ms ease",
       },
       dot: {
-        w: 12,
-        h: 12,
-        color: "white",
+        w: 8,
+        h: 8,
+        rounded: "full",
+        bg: "white",
         opacity: 0,
-        scale: 0.5,
+        transform: "scale(0)",
         transition: "all 150ms ease",
       },
       label: {
         fontSize: "0.875rem",
+        color: "#18181b",
+        lineHeight: 1.5,
       },
     },
     variants: {
       checked: {
         true: {
           indicator: {
-            bg: "primary",
-            borderColor: "primary",
+            bg: "#18181b",
+            borderColor: "#18181b",
           },
           dot: {
             opacity: 1,
-            scale: 1,
+            transform: "scale(1)",
           },
         },
         false: {
           indicator: {
             bg: "transparent",
+            borderColor: "#d4d4d8",
           },
           dot: {
             opacity: 0,
-            scale: 0.5,
+            transform: "scale(0)",
           },
         },
       },
@@ -111,11 +98,7 @@ export const Radio = defineUnitComponent({
             pointerNone: true,
           },
         },
-        false: {
-          root: {
-            pointerNone: false,
-          },
-        },
+        false: {},
       },
       size: {
         sm: {

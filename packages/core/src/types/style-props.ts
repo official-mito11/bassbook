@@ -11,6 +11,7 @@ export type { BorderProps, OutlineProps, BorderStyle } from "./border";
 export type { BackgroundProps, ColorProps } from "./background";
 export type { TypographyProps, FontProps, TextProps, TextAlign, TextTransform, WhiteSpace, WordBreak } from "./font";
 export type { LayoutProps, DisplayProps, PositionProps, OverflowProps, TransformProps, TransitionProps, InteractionProps, EffectProps, Display, Position, Overflow, Visibility } from "./layout";
+export type { PseudoProps } from "./pseudo";
 
 // Import for composition
 import type { SpacingProps } from "./spacing";
@@ -20,12 +21,12 @@ import type { BorderProps, OutlineProps } from "./border";
 import type { BackgroundProps, ColorProps } from "./background";
 import type { TypographyProps } from "./font";
 import type { LayoutProps } from "./layout";
+import type { PseudoProps } from "./pseudo";
 
 /**
- * Combined style props interface
- * All CSS properties with shorthand aliases
+ * Base style props without pseudo-classes (used inside pseudo props)
  */
-export interface StyleProps extends 
+export interface BaseStyleProps extends 
   SpacingProps, 
   SizingProps, 
   FlexProps, 
@@ -35,6 +36,12 @@ export interface StyleProps extends
   ColorProps, 
   TypographyProps, 
   LayoutProps {}
+
+/**
+ * Combined style props interface
+ * All CSS properties with shorthand aliases and pseudo-class support
+ */
+export interface StyleProps extends BaseStyleProps, PseudoProps {}
 
 /**
  * Extract style props from component props

@@ -7,4 +7,13 @@ export const HStack = defineCoreComponent({
     part: "root",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+      },
+    },
+  },
 });

@@ -4,11 +4,6 @@ import { slot } from "../spec";
 export const Checkbox = defineUnitComponent({
   name: "Checkbox",
   dataProps: ["checked", "disabled", "size"] as const,
-  // Custom checkbox UI (no native checkbox UI dependency)
-  // - root: interactive container (role=checkbox)
-  // - indicator: visual box
-  // - mark: SVG check mark (shown when checked)
-  // - label: text slot
   tree: comp("Box", {
     part: "root",
     props: {
@@ -23,19 +18,19 @@ export const Checkbox = defineUnitComponent({
         },
         children: [
           comp("Svg", {
-            part: "mark",
+            part: "icon",
             props: {
               "aria-hidden": true,
-              viewBox: "0 0 16 16",
+              viewBox: "0 0 24 24",
             },
             children: [
               comp("CorePath", {
                 part: "path",
                 props: {
-                  d: "M3 8.5l3 3 7-7",
+                  d: "M20 6L9 17l-5-5",
                   fill: "none",
                   stroke: "currentColor",
-                  strokeWidth: 2,
+                  strokeWidth: 3,
                   strokeLinecap: "round",
                   strokeLinejoin: "round",
                 },
@@ -60,48 +55,50 @@ export const Checkbox = defineUnitComponent({
         selectNone: true,
       },
       indicator: {
-        display: "inline-flex",
+        display: "flex",
         alignCenter: true,
         justifyCenter: true,
+        flexShrink: 0,
         w: 16,
         h: 16,
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: "secondary",
         rounded: "sm",
+        border: "1.5px solid #d4d4d8",
+        bg: "white",
         transition: "all 150ms ease",
       },
-      mark: {
+      icon: {
+        display: "block",
         w: 12,
         h: 12,
         color: "white",
         opacity: 0,
-        scale: 0.5,
-        transition: "all 150ms ease",
+        transition: "opacity 150ms ease",
       },
+      path: {},
       label: {
         fontSize: "0.875rem",
+        color: "#18181b",
+        lineHeight: 1.5,
       },
     },
     variants: {
       checked: {
         true: {
           indicator: {
-            bg: "primary",
-            borderColor: "primary",
+            bg: "#18181b",
+            borderColor: "#18181b",
           },
-          mark: {
+          icon: {
             opacity: 1,
-            scale: 1,
           },
         },
         false: {
           indicator: {
-            bg: "transparent",
+            bg: "white",
+            borderColor: "#d4d4d8",
           },
-          mark: {
+          icon: {
             opacity: 0,
-            scale: 0.5,
           },
         },
       },
@@ -113,26 +110,22 @@ export const Checkbox = defineUnitComponent({
             pointerNone: true,
           },
         },
-        false: {
-          root: {
-            pointerNone: false,
-          },
-        },
+        false: {},
       },
       size: {
         sm: {
           indicator: { w: 14, h: 14 },
-          mark: { w: 8, h: 8 },
+          icon: { w: 10, h: 10 },
           label: { fontSize: "0.8125rem" },
         },
         md: {
           indicator: { w: 16, h: 16 },
-          mark: { w: 10, h: 10 },
+          icon: { w: 12, h: 12 },
           label: { fontSize: "0.875rem" },
         },
         lg: {
           indicator: { w: 20, h: 20 },
-          mark: { w: 12, h: 12 },
+          icon: { w: 16, h: 16 },
           label: { fontSize: "1rem" },
         },
       },

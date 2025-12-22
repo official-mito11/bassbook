@@ -24,6 +24,9 @@ import {
   type StyleResult,
 } from "../src";
 
+import { defineCoreComponent, defineUnitComponent, el, comp, slot } from "../src/components/spec";
+import { renderFromSpecs } from "./component-runtime";
+
 // ============================================
 // 1. Basic Usage - css() function
 // ============================================
@@ -206,3 +209,79 @@ console.log("  style tag:", styleTag);
 
 const globalCSS = extractCSS();
 console.log("\nAll generated CSS length:", globalCSS.length, "chars");
+
+// ============================================
+// 11. Component Specs -> Runtime Render Example
+// ============================================
+
+const CoreBox = defineCoreComponent({
+  name: "CoreBox",
+  tree: el("div", {
+    part: "root",
+    attrs: { "data-core": "box" },
+    children: [slot("children")],
+  }),
+  styles: {
+    base: {
+      root: {
+        p: 16,
+        rounded: "md",
+        bg: "white",
+        border: "1px solid black",
+      },
+    },
+  },
+});
+
+const CoreContent = defineCoreComponent({
+  name: "CoreContent",
+  tree: el("div", {
+    part: "root",
+    attrs: { "data-core": "content" },
+    children: [slot("children")],
+  }),
+  styles: {
+    base: {
+      root: {
+        p: 16,
+      },
+    },
+  },
+});
+
+const Card = defineUnitComponent({
+  name: "Card",
+  tree: comp("CoreBox", {
+    part: "container",
+    children: [
+      comp("CoreContent", {
+        part: "content",
+        children: [slot("children")],
+      }),
+    ],
+  }),
+  styles: {
+    base: {
+      container: { shadow: "md" },
+      content: {},
+    },
+    variants: {
+      tone: {
+        neutral: { container: { bg: "white", color: "black" } },
+        inverted: { container: { bg: "black", color: "white" } },
+      },
+    },
+    defaultVariants: { tone: "neutral" },
+  },
+});
+
+const rendered = renderFromSpecs(
+  [CoreBox, CoreContent, Card],
+  "Card",
+  { tone: "inverted" },
+  { theme: { colors: { black: "#111", white: "#fff" } } }
+);
+
+console.log("\nComponent runtime render:");
+console.log("  html:", rendered.html);
+console.log("  css:", rendered.css);

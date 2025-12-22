@@ -2,8 +2,63 @@ import { definePartComponent, comp, slot } from "../spec";
 
 export const Modal = definePartComponent({
   name: "Modal",
+  dataProps: ["open"] as const,
   tree: comp("Box", {
     part: "root",
-    children: [slot("children")],
+    children: [
+      comp("Box", {
+        part: "backdrop",
+        props: {
+          "aria-hidden": true,
+        },
+      }),
+      comp("Box", {
+        part: "container",
+        children: [slot("children")],
+      }),
+    ],
   }),
+  styles: {
+    base: {
+      root: {
+        position: "fixed",
+        inset: 0,
+        zIndex: 50,
+        display: "flex",
+        alignCenter: true,
+        justifyCenter: true,
+        p: 16,
+      },
+      backdrop: {
+        position: "absolute",
+        inset: 0,
+        bg: "rgba(0,0,0,0.6)",
+        animation: "bb-fadeIn 200ms ease-out",
+      },
+      container: {
+        position: "relative",
+        zIndex: 1,
+        maxW: "100%",
+        maxH: "100%",
+        animation: "bb-modalIn 200ms ease-out",
+      },
+    },
+    variants: {
+      open: {
+        true: {
+          root: {
+            display: "flex",
+          },
+        },
+        false: {
+          root: {
+            display: "none",
+          },
+        },
+      },
+    },
+    defaultVariants: {
+      open: "false",
+    },
+  },
 });

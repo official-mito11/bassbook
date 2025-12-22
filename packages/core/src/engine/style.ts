@@ -8,6 +8,7 @@ import { getContext, createContext } from "./context";
 import type { CSSDeclarations } from "./resolvers";
 import { resolveAllProps } from "./resolvers";
 import type { Properties } from "csstype";
+import { isPseudoProp, pseudoSelectors, type PseudoProps } from "../types/pseudo";
 
 // Style result with class names and optional inline styles
 export interface StyleResult {
@@ -65,8 +66,22 @@ export function css(
 ): StyleResult {
   const ctx = options?.context ?? getContext();
   
-  // Resolve props to CSS declarations
-  const declarations = resolveAllProps(props, ctx);
+  // Separate pseudo props from regular props
+  const regularProps: Record<string, unknown> = {};
+  const pseudoProps: Record<string, Record<string, unknown>> = {};
+  
+  for (const [key, value] of Object.entries(props)) {
+    if (value === undefined || value === null) continue;
+    
+    if (isPseudoProp(key)) {
+      pseudoProps[key] = value as Record<string, unknown>;
+    } else {
+      regularProps[key] = value;
+    }
+  }
+  
+  // Resolve regular props to CSS declarations
+  const declarations = resolveAllProps(regularProps, ctx);
   
   // Separate atomic and inline styles
   const atomicDeclarations: CSSDeclarations = {};
@@ -90,6 +105,23 @@ export function css(
     const cssProperty = toKebabCase(prop);
     const className = ctx.registry.register(cssProperty, value);
     classNames.push(className);
+  }
+  
+  // Process pseudo-class styles
+  for (const [pseudoKey, pseudoStyleProps] of Object.entries(pseudoProps)) {
+    const selector = pseudoSelectors[pseudoKey as keyof PseudoProps];
+    if (!selector) continue;
+    
+    const pseudoDeclarations = resolveAllProps(pseudoStyleProps, ctx);
+    
+    for (const [prop, value] of Object.entries(pseudoDeclarations)) {
+      if (value === undefined || value === null) continue;
+      if (shouldInline(prop, value)) continue; // Skip inline-only values for pseudo
+      
+      const cssProperty = toKebabCase(prop);
+      const className = ctx.registry.register(cssProperty, value, { selector });
+      classNames.push(className);
+    }
   }
 
   classNames.sort();

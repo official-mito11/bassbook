@@ -15,6 +15,9 @@ export * from "./background";
 export * from "./font";
 export * from "./layout";
 
+// Pseudo-class props
+export * from "./pseudo";
+
 // Combined style props
 export * from "./style-props";
 

@@ -4,11 +4,6 @@ import { slot } from "../spec";
 export const Switch = defineUnitComponent({
   name: "Switch",
   dataProps: ["checked", "disabled", "size"] as const,
-  // Custom switch UI (no native checkbox UI dependency)
-  // - root: interactive container (role=switch)
-  // - track: background track
-  // - thumb: sliding knob
-  // - label: text slot
   tree: comp("Box", {
     part: "root",
     props: {
@@ -36,6 +31,24 @@ export const Switch = defineUnitComponent({
       }),
     ],
   }),
+  // Built-in behavior: state, actions, bindings
+  behavior: {
+    state: {
+      checked: { type: "boolean", default: false, controlled: true },
+    },
+    actions: {
+      toggle: (s) => ({ checked: !s.checked }),
+    },
+    bindings: {
+      root: {
+        onClick: "toggle",
+        onKeyDown: { action: "toggle", keys: ["Enter", " "], preventDefault: true },
+      },
+    },
+    controlledProps: {
+      checked: { prop: "checked", onChange: "onCheckedChange" },
+    },
+  },
   styles: {
     base: {
       root: {
@@ -47,44 +60,44 @@ export const Switch = defineUnitComponent({
       },
       track: {
         position: "relative",
-        display: "inline-flex",
-        alignCenter: true,
-        w: 36,
-        h: 20,
+        display: "inline-block",
+        flexShrink: 0,
+        w: 44,
+        h: 24,
         rounded: "full",
-        bg: "secondary",
-        transition: "all 150ms ease",
+        bg: "#e4e4e7",
+        transition: "background-color 200ms ease",
       },
       thumb: {
         position: "absolute",
         left: 2,
         top: 2,
-        w: 16,
-        h: 16,
+        w: 20,
+        h: 20,
         rounded: "full",
         bg: "white",
-        transition: "all 150ms ease",
+        shadow: "sm",
+        transition: "transform 200ms ease",
       },
       label: {
         fontSize: "0.875rem",
+        color: "#18181b",
+        lineHeight: 1.5,
       },
     },
     variants: {
       checked: {
         true: {
           track: {
-            bg: "primary",
+            bg: "#18181b",
           },
           thumb: {
-            left: 18,
+            transform: "translateX(100%)",
           },
         },
         false: {
           track: {
-            bg: "secondary",
-          },
-          thumb: {
-            left: 2,
+            bg: "#e4e4e7",
           },
         },
       },
@@ -96,26 +109,22 @@ export const Switch = defineUnitComponent({
             pointerNone: true,
           },
         },
-        false: {
-          root: {
-            pointerNone: false,
-          },
-        },
+        false: {},
       },
       size: {
         sm: {
-          track: { w: 30, h: 16 },
-          thumb: { w: 12, h: 12, top: 2, left: 2 },
+          track: { w: 36, h: 20 },
+          thumb: { w: 16, h: 16 },
           label: { fontSize: "0.8125rem" },
         },
         md: {
-          track: { w: 36, h: 20 },
-          thumb: { w: 16, h: 16, top: 2, left: 2 },
+          track: { w: 44, h: 24 },
+          thumb: { w: 20, h: 20 },
           label: { fontSize: "0.875rem" },
         },
         lg: {
-          track: { w: 44, h: 24 },
-          thumb: { w: 20, h: 20, top: 2, left: 2 },
+          track: { w: 52, h: 28 },
+          thumb: { w: 24, h: 24 },
           label: { fontSize: "1rem" },
         },
       },
@@ -125,19 +134,5 @@ export const Switch = defineUnitComponent({
       disabled: "false",
       size: "md",
     },
-    compoundVariants: [
-      {
-        conditions: { checked: "true", size: "sm" },
-        styles: { thumb: { left: 14 } },
-      },
-      {
-        conditions: { checked: "true", size: "md" },
-        styles: { thumb: { left: 18 } },
-      },
-      {
-        conditions: { checked: "true", size: "lg" },
-        styles: { thumb: { left: 22 } },
-      },
-    ],
   },
 });

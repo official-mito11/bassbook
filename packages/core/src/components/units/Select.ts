@@ -7,6 +7,27 @@ export const Select = defineUnitComponent({
   // Slots:
   // - value: content shown in trigger
   // - options: dropdown option list (usually SelectOption components)
+  behavior: {
+    state: {
+      open: { type: "boolean", default: false, controlled: true },
+    },
+    actions: {
+      toggle: (s) => ({ open: !s.open }),
+      open: () => ({ open: true }),
+      close: () => ({ open: false }),
+    },
+    bindings: {
+      trigger: {
+        onClick: "toggle",
+      },
+      menu: {
+        onClickOutside: "close",
+      },
+    },
+    controlledProps: {
+      open: { prop: "open", onChange: "onOpenChange" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     children: [
@@ -67,22 +88,27 @@ export const Select = defineUnitComponent({
         alignCenter: true,
         justifyBetween: true,
         gap: 8,
-        minW: 160,
+        minW: 180,
+        h: 36,
         px: 12,
-        py: 8,
         rounded: "md",
-        border: "1px solid currentColor",
+        border: "1px solid #e4e4e7",
         bg: "white",
-        color: "current",
-        transition: "all 150ms ease",
+        color: "#09090b",
+        fontSize: "0.875rem",
+        cursor: "pointer",
+        transition: "border-color 150ms ease",
+        outline: "none",
       },
       value: {
         flex: "1",
+        textAlign: "left",
       },
       icon: {
         w: 16,
         h: 16,
-        transition: "all 150ms ease",
+        color: "#71717a",
+        transition: "transform 150ms ease",
       },
       menu: {
         position: "absolute",
@@ -90,13 +116,14 @@ export const Select = defineUnitComponent({
         left: 0,
         w: "100%",
         bg: "white",
-        border: "1px solid currentColor",
+        border: "1px solid #e4e4e7",
         rounded: "md",
-        py: 6,
+        py: 4,
         zIndex: 50,
         maxH: 240,
         overflowAuto: true,
         display: "none",
+        shadow: "md",
       },
     },
     variants: {

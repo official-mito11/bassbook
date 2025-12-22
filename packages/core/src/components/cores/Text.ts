@@ -7,4 +7,12 @@ export const Text = defineCoreComponent({
     part: "root",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        fontSize: "inherit",
+        lineHeight: "inherit",
+      },
+    },
+  },
 });

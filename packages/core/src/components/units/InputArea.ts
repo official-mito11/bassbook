@@ -2,6 +2,7 @@ import { defineUnitComponent, comp, slot } from "../spec";
 
 export const InputArea = defineUnitComponent({
   name: "InputArea",
+  dataProps: ["size"] as const,
   tree: comp("TextArea", {
     part: "root",
     children: [slot("children")],
@@ -10,7 +11,49 @@ export const InputArea = defineUnitComponent({
     base: {
       root: {
         w: "full",
+        minH: 80,
+        px: 12,
+        py: 8,
+        fontSize: "0.875rem",
+        lineHeight: 1.5,
+        color: "#09090b",
+        bg: "transparent",
+        border: "1px solid #e4e4e7",
+        rounded: "md",
+        outline: "none",
+        transition: "border-color 150ms ease, box-shadow 150ms ease",
       },
+    },
+    variants: {
+      size: {
+        sm: {
+          root: {
+            minH: 60,
+            px: 10,
+            py: 6,
+            fontSize: "0.8125rem",
+          },
+        },
+        md: {
+          root: {
+            minH: 80,
+            px: 12,
+            py: 8,
+            fontSize: "0.875rem",
+          },
+        },
+        lg: {
+          root: {
+            minH: 100,
+            px: 14,
+            py: 10,
+            fontSize: "0.9375rem",
+          },
+        },
+      },
+    },
+    defaultVariants: {
+      size: "md",
     },
   },
 });

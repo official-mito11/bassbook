@@ -7,4 +7,13 @@ export const CoreButton = defineCoreComponent({
     part: "root",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        border: "none",
+        outline: "none",
+        cursor: "pointer",
+      },
+    },
+  },
 });

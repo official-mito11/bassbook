@@ -7,4 +7,12 @@ export const VStack = defineCoreComponent({
     part: "root",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        display: "flex",
+        flexDirection: "column",
+      },
+    },
+  },
 });

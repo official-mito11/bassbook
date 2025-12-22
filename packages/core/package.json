@@ -1,20 +1,22 @@
 {
   "name": "@bassbook/core",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "bun": "./src/index.ts"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist"
+    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist",
+    "test": "bun test"
   },
   "publishConfig": {
     "access": "public"

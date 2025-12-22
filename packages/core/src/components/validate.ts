@@ -254,10 +254,6 @@ export function validateComponentSpec(
 
   validateDataProps(spec, issues, "spec");
 
-  if (spec.layer === "core" && (spec as CoreComponentSpec).styles) {
-    issue(issues, "spec.styles", "Core components cannot define default styles");
-  }
-
   if (spec.layer === "core") {
     validateBaseStyles((spec as CoreComponentSpec).styles, parts, issues, "spec.styles");
   } else if (spec.layer === "unit") {
