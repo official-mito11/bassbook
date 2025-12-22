@@ -62,8 +62,10 @@ export const Checkbox = defineUnitComponent({
         w: 16,
         h: 16,
         rounded: "sm",
-        border: "1.5px solid #d4d4d8",
-        bg: "white",
+        borderWidth: 1.5,
+        borderStyle: "solid",
+        borderColor: "neutral-300",
+        bg: "background",
         transition: "all 150ms ease",
       },
       icon: {
@@ -77,7 +79,7 @@ export const Checkbox = defineUnitComponent({
       path: {},
       label: {
         fontSize: "0.875rem",
-        color: "#18181b",
+        color: "foreground",
         lineHeight: 1.5,
       },
     },
@@ -85,8 +87,8 @@ export const Checkbox = defineUnitComponent({
       checked: {
         true: {
           indicator: {
-            bg: "#18181b",
-            borderColor: "#18181b",
+            bg: "primary",
+            borderColor: "primary",
           },
           icon: {
             opacity: 1,
@@ -94,8 +96,8 @@ export const Checkbox = defineUnitComponent({
         },
         false: {
           indicator: {
-            bg: "white",
-            borderColor: "#d4d4d8",
+            bg: "background",
+            borderColor: "neutral-300",
           },
           icon: {
             opacity: 0,

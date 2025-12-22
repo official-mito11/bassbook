@@ -97,13 +97,21 @@ export interface CommonVariantProps {
   size?: string;
   checked?: boolean;
   selected?: boolean;
+  active?: boolean;
   open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onCheckedChange?: (checked: boolean) => void;
+  onValueChange?: (value: number) => void;
   side?: string;
   hasImage?: boolean;
   layout?: string;
   padding?: string;
   centered?: boolean;
 }
+
+type DataAttributes = {
+  [K in `data-${string}`]?: string | number | boolean | undefined;
+};
 
 /**
  * Combined props for Bassbook components
@@ -116,9 +124,7 @@ export type BassbookComponentProps = Partial<StyleProps> & NativeElementProps & 
   __slots?: SlotValues;
   __partProps?: Record<string, Record<string, unknown>>;
   ref?: React.Ref<unknown>;
-  // Allow additional props for flexibility
-  [key: string]: unknown;
-};
+} & DataAttributes;
 
 export interface ReactRenderer {
   render(name: string, props?: BassbookComponentProps, slots?: SlotValues): React.ReactElement | null;

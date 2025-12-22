@@ -48,7 +48,9 @@ export const Radio = defineUnitComponent({
         w: 16,
         h: 16,
         rounded: "full",
-        border: "1px solid #d4d4d8",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "neutral-300",
         bg: "transparent",
         transition: "all 150ms ease",
       },
@@ -56,14 +58,14 @@ export const Radio = defineUnitComponent({
         w: 8,
         h: 8,
         rounded: "full",
-        bg: "white",
+        bg: "background",
         opacity: 0,
         transform: "scale(0)",
         transition: "all 150ms ease",
       },
       label: {
         fontSize: "0.875rem",
-        color: "#18181b",
+        color: "foreground",
         lineHeight: 1.5,
       },
     },
@@ -71,8 +73,8 @@ export const Radio = defineUnitComponent({
       checked: {
         true: {
           indicator: {
-            bg: "#18181b",
-            borderColor: "#18181b",
+            bg: "primary",
+            borderColor: "primary",
           },
           dot: {
             opacity: 1,
@@ -82,7 +84,7 @@ export const Radio = defineUnitComponent({
         false: {
           indicator: {
             bg: "transparent",
-            borderColor: "#d4d4d8",
+            borderColor: "neutral-300",
           },
           dot: {
             opacity: 0,

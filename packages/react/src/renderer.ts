@@ -19,13 +19,15 @@ import {
   mergeReactStyles,
   mergeRefs,
 } from "./utils";
+import { useBehavior } from "./hooks/useBehavior";
 
 export function createReactRenderer(options: CreateReactRendererOptions): ReactRenderer {
   const { registry, context, validate } = options;
   const baseStyleOptions: StyleOptions | undefined = context ? { context } : undefined;
 
-  // Inject global styles (animations, etc.) on first render
-  injectGlobalStyles();
+  // Inject global styles (animations, etc.) lazily to avoid import-time side effects.
+  // injectGlobalStyles() is idempotent.
+  let globalStylesInjected = false;
 
   if (validate !== false) {
     const result = registry.validate();
@@ -207,6 +209,10 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
   }
 
   function render(name: string, props?: BassbookComponentProps, slots?: SlotValues): React.ReactElement | null {
+    if (!globalStylesInjected) {
+      injectGlobalStyles();
+      globalStylesInjected = true;
+    }
     const spec = registry.get(name);
     if (!spec) {
       throw new Error(`Unknown component '${name}'`);
@@ -219,15 +225,48 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       props: BassbookComponentProps,
       ref: React.ForwardedRef<unknown>
     ) {
+      if (!globalStylesInjected) {
+        injectGlobalStyles();
+        globalStylesInjected = true;
+      }
       const spec = registry.get(name);
       if (!spec) {
         throw new Error(`Unknown component '${name}'`);
       }
 
+      const behaviorResult = useBehavior(spec.layer === "core" ? undefined : spec.behavior, props as Record<string, unknown>);
+
+      const userPartProps = (props.__partProps ?? {}) as Record<string, Record<string, unknown>>;
+      const mergedPartProps: Record<string, Record<string, unknown>> = { ...behaviorResult.partProps };
+      for (const [partName, partObj] of Object.entries(userPartProps)) {
+        mergedPartProps[partName] = { ...(mergedPartProps[partName] ?? {}), ...(partObj ?? {}) };
+      }
+
+      const propsWithBehavior = {
+        ...props,
+        ...(behaviorResult.state as Record<string, unknown>),
+        __partProps: mergedPartProps,
+      } as BassbookComponentProps;
+
+      if (spec.name === "Slider") {
+        const v = (propsWithBehavior as unknown as { value?: unknown }).value;
+        if (typeof v === "number" && Number.isFinite(v)) {
+          const clamped = Math.min(100, Math.max(0, v));
+          const pct = `${clamped}%`;
+          const existingRoot = (propsWithBehavior.__partProps?.root ?? {}) as Record<string, unknown>;
+          const existingStyle = (existingRoot.style ?? undefined) as Record<string, unknown> | undefined;
+          const nextStyle: Record<string, unknown> = { ...(existingStyle ?? {}), "--slider-value": pct };
+          (propsWithBehavior as unknown as { __partProps?: Record<string, Record<string, unknown>> }).__partProps = {
+            ...(propsWithBehavior.__partProps ?? {}),
+            root: { ...existingRoot, style: nextStyle },
+          };
+        }
+      }
+
       const rootExtras: UnknownProps = {};
       if (ref) rootExtras.ref = ref;
 
-      return renderBySpec(spec, props, undefined, rootExtras, undefined) ?? null;
+      return renderBySpec(spec, propsWithBehavior, undefined, rootExtras, undefined) ?? null;
     });
   }
 

@@ -51,7 +51,7 @@ export const SelectOption = defineUnitComponent({
         cursor: "pointer",
         selectNone: true,
         fontSize: "0.875rem",
-        color: "#09090b",
+        color: "foreground",
         bg: "transparent",
         border: "none",
         outline: "none",
@@ -64,14 +64,14 @@ export const SelectOption = defineUnitComponent({
         w: 16,
         h: 16,
         opacity: 0,
-        color: "#18181b",
+        color: "foreground",
       },
     },
     variants: {
       active: {
         true: {
           root: {
-            bg: "#f4f4f5",
+            bg: "secondary",
           },
         },
         false: {},

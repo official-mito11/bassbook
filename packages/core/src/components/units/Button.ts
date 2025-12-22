@@ -51,33 +51,35 @@ export const Button = defineUnitComponent({
       variant: {
         default: {
           root: {
-            bg: "#18181b",
-            color: "#fafafa",
+            bg: "primary",
+            color: "primary-foreground",
           },
         },
         secondary: {
           root: {
-            bg: "#f4f4f5",
-            color: "#18181b",
+            bg: "secondary",
+            color: "secondary-foreground",
           },
         },
         outline: {
           root: {
             bg: "transparent",
-            color: "#18181b",
-            border: "1px solid #e4e4e7",
+            color: "foreground",
+            borderWidth: 1,
+            borderStyle: "solid",
+            borderColor: "border",
           },
         },
         ghost: {
           root: {
             bg: "transparent",
-            color: "#18181b",
+            color: "foreground",
           },
         },
         destructive: {
           root: {
-            bg: "#ef4444",
-            color: "#fafafa",
+            bg: "destructive",
+            color: "destructive-foreground",
           },
         },
       },

@@ -57,30 +57,30 @@ export const Alert = definePartComponent({
       variant: {
         info: {
           root: {
-            bg: "rgba(59,130,246,0.1)",
-            borderColor: "rgba(59,130,246,0.3)",
-            color: "#1d4ed8",
+            bg: "info-bg",
+            borderColor: "info-border",
+            color: "info-text",
           },
         },
         success: {
           root: {
-            bg: "rgba(34,197,94,0.1)",
-            borderColor: "rgba(34,197,94,0.3)",
-            color: "#15803d",
+            bg: "success-bg",
+            borderColor: "success-border",
+            color: "success-text",
           },
         },
         warning: {
           root: {
-            bg: "rgba(245,158,11,0.1)",
-            borderColor: "rgba(245,158,11,0.3)",
-            color: "#b45309",
+            bg: "warning-bg",
+            borderColor: "warning-border",
+            color: "warning-text",
           },
         },
         error: {
           root: {
-            bg: "rgba(239,68,68,0.1)",
-            borderColor: "rgba(239,68,68,0.3)",
-            color: "#b91c1c",
+            bg: "error-bg",
+            borderColor: "error-border",
+            color: "error-text",
           },
         },
       },

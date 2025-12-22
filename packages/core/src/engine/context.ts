@@ -22,17 +22,16 @@ const isServer = typeof document === "undefined";
  * Get the global style context
  */
 export function getContext(): StyleContext {
-  if (isServer) {
-    return {
-      theme: defaultTheme,
-      registry: createRegistry(),
-    };
-  }
   if (!globalContext) {
-    globalContext = {
-      theme: defaultTheme,
-      registry: getRegistry(),
-    };
+    globalContext = isServer
+      ? {
+          theme: defaultTheme,
+          registry: createRegistry(),
+        }
+      : {
+          theme: defaultTheme,
+          registry: getRegistry(),
+        };
   }
   return globalContext;
 }
@@ -80,7 +79,6 @@ export function createContext(options?: {
  * Reset the global context
  */
 export function resetContext(): void {
-  if (isServer) return;
   globalContext?.registry.reset();
   globalContext = null;
 }

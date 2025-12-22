@@ -2,7 +2,7 @@ import { definePartComponent, comp, slot } from "../spec";
 
 export const View = definePartComponent({
   name: "View",
-  dataProps: ["padding", "centered"] as const,
+  dataProps: ["padding", "centered", "scrollable"] as const,
   tree: comp("Box", {
     part: "root",
     children: [slot("children")],
@@ -43,10 +43,23 @@ export const View = definePartComponent({
         },
         false: {},
       },
+      scrollable: {
+        true: {
+          root: {
+            overflowAuto: true,
+          },
+        },
+        false: {
+          root: {
+            overflowHidden: true,
+          },
+        },
+      },
     },
     defaultVariants: {
       padding: "md",
       centered: "false",
+      scrollable: "false",
     },
   },
 });

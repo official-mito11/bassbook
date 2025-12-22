@@ -11,9 +11,9 @@ import { resolveSizing } from "./length";
 type FlexContainerKey =
   | "flexDirection" | "flexRow" | "flexColumn" | "flexRowReverse" | "flexColumnReverse"
   | "flexWrap" | "flexNowrap" | "flexDoWrap" | "flexDowrap" | "flexWrapReverse"
-  | "justifyContent" | "justifyStart" | "justifyEnd" | "justifyCenter" 
+  | "justifyContent" | "justify" | "justifyStart" | "justifyEnd" | "justifyCenter" 
   | "justifyBetween" | "justifyAround" | "justifyEvenly"
-  | "alignItems" | "alignStart" | "alignEnd" | "alignCenter" 
+  | "alignItems" | "align" | "alignStart" | "alignEnd" | "alignCenter" 
   | "alignBaseline" | "alignStretch"
   | "alignContent" | "placeContent" | "placeItems";
 
@@ -51,6 +51,7 @@ export function resolveFlexContainer(
 
   // Justify content
   if (props.justifyContent) result.justifyContent = props.justifyContent as string;
+  if (props.justify) result.justifyContent = props.justify as string;
   if (props.justifyStart) result.justifyContent = "flex-start";
   if (props.justifyEnd) result.justifyContent = "flex-end";
   if (props.justifyCenter) result.justifyContent = "center";
@@ -60,6 +61,7 @@ export function resolveFlexContainer(
 
   // Align items
   if (props.alignItems) result.alignItems = props.alignItems as string;
+  if (props.align) result.alignItems = props.align as string;
   if (props.alignStart) result.alignItems = "flex-start";
   if (props.alignEnd) result.alignItems = "flex-end";
   if (props.alignCenter) result.alignItems = "center";
@@ -133,9 +135,9 @@ export function resolveFlexProps(
 export const flexKeys: FlexKey[] = [
   "flexDirection", "flexRow", "flexColumn", "flexRowReverse", "flexColumnReverse",
   "flexWrap", "flexNowrap", "flexDoWrap", "flexDowrap", "flexWrapReverse",
-  "justifyContent", "justifyStart", "justifyEnd", "justifyCenter",
+  "justifyContent", "justify", "justifyStart", "justifyEnd", "justifyCenter",
   "justifyBetween", "justifyAround", "justifyEvenly",
-  "alignItems", "alignStart", "alignEnd", "alignCenter",
+  "alignItems", "align", "alignStart", "alignEnd", "alignCenter",
   "alignBaseline", "alignStretch",
   "alignContent", "placeContent", "placeItems",
   "flex", "flexGrow", "flexShrink", "flexBasis",

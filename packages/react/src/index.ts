@@ -41,6 +41,9 @@ export {
 
 export type { SlotComponentProps } from "./compound";
 
+export { ThemeProvider } from "./ThemeProvider";
+export type { ThemeProviderProps } from "./ThemeProvider";
+
 // App helper
 export { createBassbookApp, ComponentNames } from "./app";
 export type { BassbookAppConfig, BassbookApp, ComponentName } from "./app";

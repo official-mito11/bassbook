@@ -31,6 +31,9 @@ export interface FlexContainerProps {
   alignContent?: string;
   placeContent?: string;
   placeItems?: string;
+  // Shorthand aliases
+  justify?: JustifyContent;
+  align?: AlignItems;
   // Boolean aliases
   flexRow?: boolean;
   flexColumn?: boolean;

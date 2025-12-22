@@ -43,7 +43,7 @@ export interface EventBinding {
   /** Action name to trigger */
   action: string;
   /** Optional payload to pass to action */
-  payload?: unknown;
+  payload?: unknown | ((event: unknown) => unknown);
   /** For keyboard events, specify which keys trigger the action */
   keys?: string[];
   /** Prevent default behavior */

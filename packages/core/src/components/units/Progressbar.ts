@@ -23,13 +23,13 @@ export const Progressbar = defineUnitComponent({
       },
       track: {
         w: "100%",
-        bg: "#e4e4e7",
+        bg: "border",
         rounded: "full",
         overflow: "hidden",
       },
       fill: {
         h: "100%",
-        bg: "#18181b",
+        bg: "primary",
         rounded: "full",
         transition: "width 300ms ease",
         w: "var(--progress-width, 0%)",

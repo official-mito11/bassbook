@@ -170,7 +170,9 @@ export function App() {
       <Section title="Label & Link">
         <HStack gap={16}>
           <Label>This is a label</Label>
-          <Link href="https://github.com" target="_blank">External Link →</Link>
+          <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+            External Link →
+          </Link>
         </HStack>
       </Section>
 
@@ -216,9 +218,7 @@ export function App() {
       <Section title="Checkbox">
         <VStack gap={8} alignItems="flex-start">
           <Checkbox
-            checked={checkboxChecked}
-            onClick={() => setCheckboxChecked(!checkboxChecked)}
-            aria-checked={checkboxChecked}
+            {...checkbox.props}
           >
             Click to toggle ({checkboxChecked ? "checked" : "unchecked"})
           </Checkbox>
@@ -256,8 +256,7 @@ export function App() {
       <Section title="Switch">
         <VStack gap={8} alignItems="flex-start">
           <Switch
-            checked={switchChecked}
-            onClick={() => setSwitchChecked(!switchChecked)}
+            {...switchCtrl.props}
           >
             Toggle me ({switchChecked ? "ON" : "OFF"})
           </Switch>

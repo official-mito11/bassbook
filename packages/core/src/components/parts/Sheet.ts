@@ -28,15 +28,17 @@ export const Sheet = definePartComponent({
       backdrop: {
         position: "absolute",
         inset: 0,
-        bg: "rgba(0,0,0,0.6)",
+        bg: "overlay",
         animation: "bb-fadeIn 200ms ease-out",
       },
       panel: {
         position: "absolute",
-        bg: "white",
+        bg: "background",
         shadow: "xl",
         overflowAuto: true,
-        border: "1px solid #e4e4e7",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "border",
       },
     },
     variants: {

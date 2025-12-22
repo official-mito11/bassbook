@@ -9,7 +9,10 @@ export const Skeleton = defineUnitComponent({
   styles: {
     base: {
       root: {
-        bg: "linear-gradient(90deg, #f4f4f5 25%, #e4e4e7 50%, #f4f4f5 75%)",
+        bgGradient: "90deg",
+        gradientFrom: "secondary",
+        gradientVia: "border",
+        gradientTo: "secondary",
         backgroundSize: "200% 100%",
         rounded: "md",
         animation: "bb-shimmer 1.5s ease-in-out infinite",

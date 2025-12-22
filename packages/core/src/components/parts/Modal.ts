@@ -32,7 +32,7 @@ export const Modal = definePartComponent({
       backdrop: {
         position: "absolute",
         inset: 0,
-        bg: "rgba(0,0,0,0.6)",
+        bg: "overlay",
         animation: "bb-fadeIn 200ms ease-out",
       },
       container: {

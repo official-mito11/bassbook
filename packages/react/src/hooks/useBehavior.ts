@@ -1,5 +1,11 @@
 import * as React from "react";
-import type { ComponentBehavior, StateSchema, EventBinding, PartBindings } from "@bassbook/core";
+import type {
+  ComponentBehavior,
+  StateSchema,
+  PartBindings,
+  EventBinding,
+} from "@bassbook/core";
+import { createBehaviorRuntime } from "@bassbook/core";
 
 type StateValues<S extends StateSchema> = {
   [K in keyof S]: S[K]["default"] extends boolean
@@ -27,76 +33,31 @@ export function useBehavior<S extends StateSchema>(
     return { state: {}, partProps: {} };
   }
 
-  const { state: stateSchema, actions, bindings, controlledProps } = behavior;
+  const externalPropsRef = React.useRef<Record<string, unknown>>(externalProps);
+  externalPropsRef.current = externalProps;
 
-  // Initialize internal state from schema defaults
-  const initialState = React.useMemo(() => {
-    const init: Record<string, unknown> = {};
-    if (stateSchema) {
-      for (const [key, def] of Object.entries(stateSchema)) {
-        init[key] = def.default;
-      }
-    }
-    return init;
-  }, []);
+  const [, forceRender] = React.useState(0);
 
-  const [internalState, setInternalState] = React.useState(initialState);
+  const runtime = React.useMemo(() => {
+    return createBehaviorRuntime(behavior, {
+      getExternalProps: () => externalPropsRef.current,
+      onStateChange: () => forceRender((v) => v + 1),
+    });
+  }, [behavior]);
 
-  // Compute effective state (controlled props override internal state)
-  const effectiveState = React.useMemo(() => {
-    const result = { ...internalState };
-    if (controlledProps && stateSchema) {
-      for (const [stateKey, propDef] of Object.entries(controlledProps)) {
-        if (propDef.prop in externalProps) {
-          result[stateKey] = externalProps[propDef.prop];
-        }
-      }
-    }
-    return result as Partial<StateValues<S>>;
-  }, [internalState, externalProps, controlledProps, stateSchema]);
+  const effectiveState = runtime.getState() as Partial<StateValues<S>>;
 
-  // Create action dispatcher
-  const dispatch = React.useCallback(
-    (actionName: string, payload?: unknown) => {
-      if (!actions || !(actionName in actions)) {
-        console.warn(`Action "${actionName}" not found`);
-        return;
-      }
-
-      const actionFn = actions[actionName];
-      if (!actionFn) {
-        console.warn(`Action "${actionName}" not found`);
-        return;
-      }
-      const updates = actionFn(effectiveState as unknown as { [K in keyof S]: S[K]["default"] }, payload) as Record<string, unknown>;
-
-      // Check if any updated state is controlled
-      if (controlledProps) {
-        for (const [stateKey, newValue] of Object.entries(updates)) {
-          const propDef = controlledProps[stateKey];
-          if (propDef && propDef.prop in externalProps) {
-            // Call the onChange handler for controlled props
-            const onChange = externalProps[propDef.onChange];
-            if (typeof onChange === "function") {
-              onChange(newValue);
-            }
-          } else {
-            // Update internal state for uncontrolled
-            setInternalState((prev) => ({ ...prev, [stateKey]: newValue }));
-          }
-        }
-      } else {
-        setInternalState((prev) => ({ ...prev, ...updates }));
-      }
-    },
-    [actions, effectiveState, controlledProps, externalProps]
-  );
+  const outsideTargetsRef = React.useRef<Record<string, HTMLElement | null>>({});
+  const outsideBindingsRef = React.useRef<Record<string, EventBinding>>({});
 
   // Create event handlers from bindings
   const partProps = React.useMemo(() => {
     const result: Record<string, Record<string, unknown>> = {};
 
+    const bindings = behavior.bindings;
     if (!bindings) return result;
+
+    outsideBindingsRef.current = {};
 
     for (const [partName, partBindings] of Object.entries(bindings)) {
       result[partName] = {};
@@ -108,7 +69,10 @@ export function useBehavior<S extends StateSchema>(
           typeof binding === "string" ? { action: binding } : binding;
 
         if (eventName === "onClickOutside") {
-          // Special handling for click outside - needs ref setup
+          outsideBindingsRef.current[partName] = eventBinding;
+          result[partName].ref = (node: unknown) => {
+            outsideTargetsRef.current[partName] = (node as HTMLElement | null) ?? null;
+          };
           continue;
         }
 
@@ -128,13 +92,50 @@ export function useBehavior<S extends StateSchema>(
             }
           }
 
-          dispatch(eventBinding.action, eventBinding.payload);
+          const maybeFn = eventBinding.payload as unknown;
+          const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
+          runtime.dispatch(eventBinding.action, payload ?? ev);
         };
       }
     }
 
     return result;
-  }, [bindings, dispatch]);
+  }, [behavior.bindings, runtime]);
+
+  React.useEffect(() => {
+    const doc = (globalThis as { document?: Document }).document;
+    if (!doc) return;
+
+    const hasOutsideBindings = Object.keys(outsideBindingsRef.current).length > 0;
+    if (!hasOutsideBindings) return;
+
+    function onPointerDownCapture(ev: PointerEvent) {
+      const target = ev.target as Node | null;
+      if (!target) return;
+
+      for (const [partName, binding] of Object.entries(outsideBindingsRef.current)) {
+        const el = outsideTargetsRef.current[partName];
+        if (!el) continue;
+        if (typeof el.contains === "function" && el.contains(target)) continue;
+
+        if (binding.preventDefault) {
+          ev.preventDefault();
+        }
+        if (binding.stopPropagation) {
+          ev.stopPropagation();
+        }
+
+        const maybeFn = binding.payload as unknown;
+        const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : binding.payload;
+        runtime.dispatch(binding.action, payload ?? ev);
+      }
+    }
+
+    doc.addEventListener("pointerdown", onPointerDownCapture, true);
+    return () => {
+      doc.removeEventListener("pointerdown", onPointerDownCapture, true);
+    };
+  }, [runtime]);
 
   return { state: effectiveState, partProps };
 }

@@ -3,6 +3,40 @@ import { defineUnitComponent, comp } from "../spec";
 export const Slider = defineUnitComponent({
   name: "Slider",
   dataProps: ["size", "value"] as const,
+  behavior: {
+    state: {
+      value: { type: "number", default: 50, controlled: true },
+    },
+    actions: {
+      set: (_s, payload) => {
+        const next = typeof payload === "number" && Number.isFinite(payload) ? payload : 0;
+        return { value: next };
+      },
+      step: (s, payload) => {
+        const current = typeof (s as { value?: unknown }).value === "number" ? ((s as { value: number }).value) : 0;
+        const delta = typeof payload === "number" && Number.isFinite(payload) ? payload : 0;
+        return { value: current + delta };
+      },
+      min: () => ({ value: 0 }),
+      max: () => ({ value: 100 }),
+    },
+    bindings: {
+      root: {
+        onKeyDown: {
+          action: "step",
+          keys: ["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp"],
+          preventDefault: true,
+          payload: (ev: unknown) => {
+            const e = ev as { key?: string };
+            return e.key === "ArrowLeft" || e.key === "ArrowDown" ? -1 : 1;
+          },
+        },
+      },
+    },
+    controlledProps: {
+      value: { prop: "value", onChange: "onValueChange" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     props: {
@@ -38,7 +72,7 @@ export const Slider = defineUnitComponent({
         position: "relative",
         w: "100%",
         h: 4,
-        bg: "#e4e4e7",
+        bg: "border",
         rounded: "full",
         overflow: "visible",
       },
@@ -47,7 +81,7 @@ export const Slider = defineUnitComponent({
         left: 0,
         top: 0,
         h: "100%",
-        bg: "#18181b",
+        bg: "primary",
         rounded: "full",
         w: "var(--slider-value, 50%)",
       },
@@ -58,10 +92,9 @@ export const Slider = defineUnitComponent({
         transform: "translate(-50%, -50%)",
         w: 24,
         h: 16,
-        bg: "white",
-        // border: "2px solid #18181b",
+        bg: "background",
         rounded: "full",
-        shadow: "0 0 4px rgba(0, 0, 0, 0.2)",
+        shadow: "subtle",
         transition: "transform 100ms ease",
       },
     },

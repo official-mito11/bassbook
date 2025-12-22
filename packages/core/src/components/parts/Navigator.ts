@@ -50,8 +50,10 @@ export const Navigator = definePartComponent({
       variant: {
         default: {
           root: {
-            bg: "white",
-            borderBottom: "1px solid rgba(0,0,0,0.1)",
+            bg: "background",
+            borderBottomWidth: 1,
+            borderBottomStyle: "solid",
+            borderBottomColor: "border",
           },
         },
         transparent: {
@@ -62,7 +64,7 @@ export const Navigator = definePartComponent({
         filled: {
           root: {
             bg: "primary",
-            color: "white",
+            color: "primary-foreground",
           },
         },
       },

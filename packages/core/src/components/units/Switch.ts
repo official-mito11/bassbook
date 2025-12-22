@@ -65,7 +65,7 @@ export const Switch = defineUnitComponent({
         w: 44,
         h: 24,
         rounded: "full",
-        bg: "#e4e4e7",
+        bg: "border",
         transition: "background-color 200ms ease",
       },
       thumb: {
@@ -75,13 +75,13 @@ export const Switch = defineUnitComponent({
         w: 20,
         h: 20,
         rounded: "full",
-        bg: "white",
+        bg: "background",
         shadow: "sm",
         transition: "transform 200ms ease",
       },
       label: {
         fontSize: "0.875rem",
-        color: "#18181b",
+        color: "foreground",
         lineHeight: 1.5,
       },
     },
@@ -89,7 +89,7 @@ export const Switch = defineUnitComponent({
       checked: {
         true: {
           track: {
-            bg: "#18181b",
+            bg: "primary",
           },
           thumb: {
             transform: "translateX(100%)",
@@ -97,7 +97,7 @@ export const Switch = defineUnitComponent({
         },
         false: {
           track: {
-            bg: "#e4e4e7",
+            bg: "border",
           },
         },
       },

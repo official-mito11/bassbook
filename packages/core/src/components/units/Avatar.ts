@@ -30,7 +30,7 @@ export const Avatar = defineUnitComponent({
         flexShrink: 0,
         rounded: "full",
         overflow: "hidden",
-        bg: "#f4f4f5",
+        bg: "secondary",
       },
       image: {
         position: "absolute",
@@ -44,11 +44,11 @@ export const Avatar = defineUnitComponent({
         justifyCenter: true,
         w: "100%",
         h: "100%",
-        bg: "#e4e4e7",
+        bg: "border",
       },
       fallbackText: {
         fontWeight: 500,
-        color: "#71717a",
+        color: "muted-foreground",
         selectNone: true,
         textTransform: "uppercase",
       },

@@ -15,6 +15,7 @@ import { borderKeys } from "./resolvers/border";
 import { visualKeys } from "./resolvers/background";
 import { typographyKeys } from "./resolvers/typography";
 import { layoutKeys } from "./resolvers/layout";
+import { pseudoKeys } from "../types/pseudo";
 
 /**
  * Props that should be filtered out before passing to DOM elements
@@ -28,6 +29,7 @@ const stylePropsKeys = new Set<string>([
   ...visualKeys,
   ...typographyKeys,
   ...layoutKeys,
+  ...pseudoKeys,
 ]);
 
 /**
