@@ -64,6 +64,11 @@ const selectSpec = {
       open: { prop: "open", onChange: "onOpenChange" },
       value: { prop: "value", onChange: "onValueChange" },
     } as const,
+    context: {
+      provide: {
+        "Select.value": ({ state }) => (state as { value?: unknown }).value,
+      },
+    },
   } satisfies ComponentBehavior,
   tree: comp("Box", {
     part: "root",

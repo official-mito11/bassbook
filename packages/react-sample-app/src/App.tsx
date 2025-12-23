@@ -235,7 +235,7 @@ export function App() {
           onValueChange={setSelectValue}
           placeholder="Select an option..."
         >
-          <Select.Header>Fruits</Select.Header>
+          <Select.Header centered>Fruits</Select.Header>
           <Select.Option value="opt1" disabled>Option 1</Select.Option>
           <Select.Option value="opt2">Option 2</Select.Option>
           <Select.Option value="opt3">Option 3</Select.Option>

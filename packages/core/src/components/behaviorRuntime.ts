@@ -39,6 +39,8 @@ export function createBehaviorRuntime<S extends StateSchema>(
   const bindings = behavior?.bindings;
   const controlledProps = behavior?.controlledProps;
 
+  let seededFromDefaultProps = false;
+
   const internalState: Record<string, unknown> = {};
   if (stateSchema) {
     for (const [key, def] of Object.entries(stateSchema)) {
@@ -46,9 +48,35 @@ export function createBehaviorRuntime<S extends StateSchema>(
     }
   }
 
+  function seedFromDefaultPropsOnce() {
+    if (seededFromDefaultProps) return;
+    seededFromDefaultProps = true;
+
+    if (!stateSchema || !controlledProps) return;
+
+    const externalProps = options.getExternalProps();
+    for (const [stateKey, propDef] of Object.entries(controlledProps)) {
+      if (propDef.prop in externalProps) continue;
+      const prop = propDef.prop;
+      const defaultProp = `default${prop.charAt(0).toUpperCase()}${prop.slice(1)}`;
+      if (defaultProp in externalProps) {
+        internalState[stateKey] = externalProps[defaultProp];
+      }
+    }
+  }
+
   function getState(): Partial<StateValuesFromSchema<S>> {
+    seedFromDefaultPropsOnce();
     const externalProps = options.getExternalProps();
     const result: Record<string, unknown> = { ...internalState };
+
+    if (stateSchema) {
+      for (const [stateKey, def] of Object.entries(stateSchema)) {
+        if (def.controlled && stateKey in externalProps) {
+          result[stateKey] = externalProps[stateKey];
+        }
+      }
+    }
 
     if (controlledProps && stateSchema) {
       for (const [stateKey, propDef] of Object.entries(controlledProps)) {

@@ -8,6 +8,11 @@ import type { BassbookComponentProps, ReactRenderer, SlotValues } from "./types"
 const SLOT_SYMBOL = Symbol.for("bassbook.slot");
 
 /**
+ * Symbol to mark slotted components (real component + slot marker)
+ */
+const SLOTTED_SYMBOL = Symbol.for("bassbook.slotted");
+
+/**
  * Props for slot components
  */
 export type SlotComponentProps = BassbookComponentProps & {
@@ -47,6 +52,7 @@ export function createSlottedComponent<P extends BassbookComponentProps>(
     return React.createElement(Component, props);
   };
   (Slotted as unknown as Record<symbol, string>)[SLOT_SYMBOL] = slotName;
+  (Slotted as unknown as Record<symbol, boolean>)[SLOTTED_SYMBOL] = true;
   Slotted.displayName = `Slotted(${slotName})`;
   return Slotted;
 }
@@ -66,6 +72,15 @@ export function isSlotComponent(element: unknown): element is React.ReactElement
 export function getSlotName(element: React.ReactElement): string | undefined {
   const type = element.type as unknown as Record<symbol, string> | undefined;
   return type?.[SLOT_SYMBOL];
+}
+
+/**
+ * Check if a React element is a slotted component (keeps the element itself)
+ */
+export function isSlottedComponent(element: unknown): element is React.ReactElement {
+  if (!React.isValidElement(element)) return false;
+  const type = element.type as unknown as Record<symbol, unknown> | undefined;
+  return typeof type === "function" && type !== null && SLOTTED_SYMBOL in type;
 }
 
 /**
@@ -93,18 +108,21 @@ export function extractSlotsFromChildren(
     if (isSlotComponent(child)) {
       const slotName = getSlotName(child);
       if (slotName) {
-        // Collect children of the slot component
-        const slotChildren = (child.props as { children?: React.ReactNode }).children;
+        // For slotted components, keep the element itself so props are preserved.
+        // For plain slot components, unwrap to its children.
+        const slotValue: React.ReactNode = isSlottedComponent(child)
+          ? child
+          : (child as React.ReactElement<{ children?: React.ReactNode }>).props.children;
         if (slots[slotName]) {
           // Append to existing slot
           slots[slotName] = React.createElement(
             React.Fragment,
             null,
             slots[slotName],
-            slotChildren
+            slotValue
           );
         } else {
-          slots[slotName] = slotChildren;
+          slots[slotName] = slotValue;
         }
         return;
       }

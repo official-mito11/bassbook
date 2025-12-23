@@ -22,7 +22,7 @@ export const Skeleton = defineUnitComponent({
         gradientTo: "surface",
         backgroundSize: "200% 100%",
         rounded: "md",
-        animation: "bb-shimmer 1.5s ease-in-out infinite",
+        animation: "bb-shimmer 2s linear infinite",
       },
     },
     variants: {

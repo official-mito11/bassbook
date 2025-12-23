@@ -58,6 +58,7 @@ export interface EventBinding {
 export type PartBindings = {
   onClick?: string | EventBinding;
   onPointerDown?: string | EventBinding;
+  onPointerMove?: string | EventBinding;
   onPointerUp?: string | EventBinding;
   onKeyDown?: string | EventBinding;
   onFocus?: string | EventBinding;

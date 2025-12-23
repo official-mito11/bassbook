@@ -395,20 +395,37 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         props as Record<string, unknown>
       );
 
+      // Compute derived props from ancestor-provided context.
+      // Important: pass effective props (external props + behavior state) so core specs can
+      // derive part props/vars without renderer-level special casing.
       const consumedProps =
         spec.layer !== "core" && spec.behavior?.context?.consume
-          ? spec.behavior.context.consume(parentCtx, props as Record<string, unknown>)
+          ? spec.behavior.context.consume(parentCtx, {
+              ...(props as Record<string, unknown>),
+              ...(behaviorResult.state as Record<string, unknown>),
+            })
           : undefined;
+
+      const consumedPartProps =
+        (consumedProps as unknown as { __partProps?: Record<string, Record<string, unknown>> } | undefined)
+          ?.__partProps;
 
       const userPartProps = (props.__partProps ?? {}) as Record<string, Record<string, unknown>>;
       const mergedPartProps: Record<string, Record<string, unknown>> = { ...behaviorResult.partProps };
+
+      if (consumedPartProps) {
+        for (const [partName, partObj] of Object.entries(consumedPartProps)) {
+          mergedPartProps[partName] = { ...(mergedPartProps[partName] ?? {}), ...(partObj ?? {}) };
+        }
+      }
+
       for (const [partName, partObj] of Object.entries(userPartProps)) {
         mergedPartProps[partName] = { ...(mergedPartProps[partName] ?? {}), ...(partObj ?? {}) };
       }
 
       const propsWithBehavior = {
         ...props,
-        ...(consumedProps ?? {}),
+        ...(consumedProps ? { ...consumedProps, __partProps: undefined } : {}),
         ...(behaviorResult.state as Record<string, unknown>),
         __partProps: mergedPartProps,
       } as BassbookComponentProps<S>;
@@ -453,34 +470,6 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
               return { ...parentCtx, ...additions };
             })()
           : parentCtx;
-
-      if (spec.layer !== "core") {
-        // Provide Select.value for descendants generically if state has `value` and component name is Select.
-        if (spec.name === "Select") {
-          const v = (behaviorResult.state as Record<string, unknown>).value;
-          if (typeof v === "string") {
-            (providedCtx as Record<string, unknown>)["Select.value"] = v;
-          }
-        }
-      }
-
-      if (spec.name === "Slider") {
-        const v = (propsWithBehavior as unknown as { value?: unknown }).value;
-        if (typeof v === "number" && Number.isFinite(v)) {
-          const clamped = Math.min(100, Math.max(0, v));
-          const pct = `${clamped}%`;
-          const existingRoot = (propsWithBehavior.__partProps?.root ?? {}) as Record<string, unknown>;
-          const existingStyle = (existingRoot.style ?? undefined) as Record<string, unknown> | undefined;
-          const alreadyHasVar = Boolean(existingStyle && "--slider-value" in existingStyle);
-          const nextStyle: Record<string, unknown> = alreadyHasVar
-            ? { ...(existingStyle ?? {}) }
-            : { ...(existingStyle ?? {}), "--slider-value": pct };
-          (propsWithBehavior as unknown as { __partProps?: Record<string, Record<string, unknown>> }).__partProps = {
-            ...(propsWithBehavior.__partProps ?? {}),
-            root: { ...existingRoot, style: nextStyle },
-          };
-        }
-      }
 
       const rootExtras: UnknownProps = {};
       if (ref) rootExtras.ref = ref;
