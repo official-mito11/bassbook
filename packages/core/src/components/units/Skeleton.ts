@@ -4,7 +4,7 @@ export const Skeleton = defineUnitComponent({
   name: "Skeleton",
   dataProps: ["variant"] as const,
   keyframes: {
-    "bb-shimmer": {
+    shimmer: {
       "0%": { backgroundPosition: "200% 0" },
       "100%": { backgroundPosition: "-200% 0" },
     },
@@ -22,7 +22,7 @@ export const Skeleton = defineUnitComponent({
         gradientTo: "surface",
         backgroundSize: "200% 100%",
         rounded: "md",
-        animation: "bb-shimmer 2s linear infinite",
+        animation: "shimmer 2s linear infinite",
       },
     },
     variants: {

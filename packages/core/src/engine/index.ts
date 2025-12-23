@@ -40,6 +40,13 @@ export {
 } from "./style";
 export type { StyleResult, StyleOptions } from "./style";
 
+// Keyframes
+export {
+  keyframeNameForComponent,
+  serializeNamespacedKeyframes,
+  namespaceKeyframeReferencesInStyleObject,
+} from "./keyframes";
+
 // Framework adapters
 export {
   isStyleProp,

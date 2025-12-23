@@ -1,5 +1,12 @@
 import * as React from "react";
-import { css, cx, splitProps, injectGlobalStyles } from "@bassbook/core";
+import {
+  css,
+  cx,
+  splitProps,
+  injectGlobalStyles,
+  serializeNamespacedKeyframes,
+  namespaceKeyframeReferencesInStyleObject,
+} from "@bassbook/core";
 import type { AnyComponentSpec, NodeSpec, StyleOptions, StyleContext } from "@bassbook/core";
 import type {
   BassbookComponentProps,
@@ -36,39 +43,6 @@ function injectComponentCssText(cssText: string): void {
   style.setAttribute("data-bassbook", "component");
   style.textContent = cssText;
   document.head.appendChild(style);
-}
-
-function toKebabCase(str: string): string {
-  return str.replace(/([A-Z])/g, "-$1").toLowerCase();
-}
-
-function serializeKeyframes(keyframes: unknown): string | undefined {
-  if (!keyframes || typeof keyframes !== "object") return undefined;
-  const kf = keyframes as Record<string, unknown>;
-  const blocks: string[] = [];
-
-  for (const [name, framesUnknown] of Object.entries(kf)) {
-    if (!framesUnknown || typeof framesUnknown !== "object") continue;
-    const frames = framesUnknown as Record<string, unknown>;
-    const steps: string[] = [];
-
-    for (const [pct, declsUnknown] of Object.entries(frames)) {
-      if (!declsUnknown || typeof declsUnknown !== "object") continue;
-      const decls = declsUnknown as Record<string, unknown>;
-      const pairs: string[] = [];
-      for (const [prop, val] of Object.entries(decls)) {
-        if (val === undefined || val === null) continue;
-        pairs.push(`${toKebabCase(prop)}:${String(val)}`);
-      }
-      steps.push(`${pct}{${pairs.join(";")}}`);
-    }
-
-    if (steps.length > 0) {
-      blocks.push(`@keyframes ${name}{${steps.join("")}}`);
-    }
-  }
-
-  return blocks.length > 0 ? blocks.join("\n") : undefined;
 }
 
 export function createReactRenderer(options: CreateReactRendererOptions): ReactRenderer {
@@ -199,6 +173,26 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       propsInput?.children
     );
     const partStyles = resolvePartStyles(spec, props, userStyleProps);
+
+    const keyframeNames =
+      (spec as unknown as { keyframes?: unknown }).keyframes &&
+      typeof (spec as unknown as { keyframes?: unknown }).keyframes === "object"
+        ? Object.keys((spec as unknown as { keyframes: Record<string, unknown> }).keyframes)
+        : [];
+
+    // If keyframes are injected with component-level namespacing (bb-<Component>-<name>),
+    // we must rewrite any animation references inside style props (which end up as CSS class rules)
+    // to match the injected keyframe names.
+    if (keyframeNames.length > 0) {
+      for (const styles of Object.values(partStyles)) {
+        if (!styles || typeof styles !== "object") continue;
+        namespaceKeyframeReferencesInStyleObject({
+          style: styles as Record<string, unknown>,
+          componentName: spec.name,
+          keyframeNames,
+        });
+      }
+    }
 
     // Check if value is a React element (has $$typeof symbol)
     function isReactElement(value: unknown): boolean {
@@ -382,7 +376,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       const styleContext = themeCtx ?? baseStyleContext;
 
       const specKeyframes = (spec as unknown as { keyframes?: unknown }).keyframes;
-      const keyframesCss = serializeKeyframes(specKeyframes);
+      const keyframesCss = serializeNamespacedKeyframes(specKeyframes, spec.name);
       if (typeof keyframesCss === "string") {
         if (!componentCssInjected) componentCssInjected = true;
         injectComponentCssText(keyframesCss);
@@ -394,6 +388,12 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         spec.layer === "core" ? undefined : spec.behavior,
         props as Record<string, unknown>
       );
+
+      const keyframeNames =
+        spec.layer !== "core" && (spec as unknown as { keyframes?: unknown }).keyframes &&
+        typeof (spec as unknown as { keyframes?: unknown }).keyframes === "object"
+          ? Object.keys((spec as unknown as { keyframes: Record<string, unknown> }).keyframes)
+          : [];
 
       // Compute derived props from ancestor-provided context.
       // Important: pass effective props (external props + behavior state) so core specs can
@@ -430,10 +430,28 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         __partProps: mergedPartProps,
       } as BassbookComponentProps<S>;
 
+      // Namespace keyframe references inside style props produced by behavior/context/user.
+      // Keyframes themselves were injected with the same namespace in serializeKeyframes().
+      if (keyframeNames.length > 0) {
+        const pp = (propsWithBehavior.__partProps ?? {}) as Record<string, Record<string, unknown>>;
+        for (const partObj of Object.values(pp)) {
+          const style = (partObj.style ?? undefined) as unknown;
+          if (style && typeof style === "object" && !Array.isArray(style)) {
+            namespaceKeyframeReferencesInStyleObject({
+              style: style as Record<string, unknown>,
+              componentName: spec.name,
+              keyframeNames,
+            });
+          }
+        }
+      }
+
       const slotsFromCompound =
         spec.layer === "part" && spec.slots
           ? extractSlotsFromChildren(propsWithBehavior.children, spec.slots)
           : undefined;
+
+      const slotsFromProps = (propsWithBehavior.__slots ?? undefined) as SlotValues | undefined;
 
       if (slotsFromCompound) {
         (propsWithBehavior as unknown as { children?: unknown }).children = undefined;
@@ -442,7 +460,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       const slotsWithDefaults: SlotValues | undefined =
         spec.layer === "part" && spec.slots
           ? (() => {
-              const next: SlotValues = { ...(slotsFromCompound ?? {}) };
+              const next: SlotValues = { ...(slotsFromCompound ?? {}), ...(slotsFromProps ?? {}) };
               for (const [slotName, def] of Object.entries(spec.slots)) {
                 const d = def as { defaultFromState?: unknown };
                 if (next[slotName] !== undefined) continue;
@@ -453,7 +471,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
               }
               return next;
             })()
-          : slotsFromCompound;
+          : (slotsFromProps ?? slotsFromCompound);
 
       const providedCtx =
         spec.layer !== "core" && spec.behavior?.context?.provide

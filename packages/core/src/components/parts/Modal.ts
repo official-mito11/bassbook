@@ -4,11 +4,11 @@ export const Modal = definePartComponent({
   name: "Modal",
   dataProps: ["open"] as const,
   keyframes: {
-    "bb-fadeIn": {
+    fadeIn: {
       from: { opacity: 0 },
       to: { opacity: 1 },
     },
-    "bb-modalIn": {
+    modalIn: {
       from: { opacity: 0, transform: "scale(0.95)" },
       to: { opacity: 1, transform: "scale(1)" },
     },
@@ -43,14 +43,14 @@ export const Modal = definePartComponent({
         position: "absolute",
         inset: 0,
         bg: "overlay",
-        animation: "bb-fadeIn 200ms ease-out",
+        animation: "fadeIn 200ms ease-out",
       },
       container: {
         position: "relative",
         zIndex: 1,
         maxW: "100%",
         maxH: "100%",
-        animation: "bb-modalIn 200ms ease-out",
+        animation: "modalIn 200ms ease-out",
       },
     },
     variants: {

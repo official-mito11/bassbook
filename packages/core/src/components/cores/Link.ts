@@ -7,4 +7,16 @@ export const Link = defineCoreComponent({
     part: "root",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        color: "inherit",
+        textDecoration: "none",
+        cursor: "pointer",
+        _hover: {
+          textDecoration: "underline",
+        },
+      },
+    },
+  },
 });

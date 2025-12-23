@@ -2,7 +2,7 @@ import { defineUnitComponent, comp, slot } from "../spec";
 
 export const SelectOption = defineUnitComponent({
   name: "SelectOption",
-  dataProps: ["selected", "disabled"] as const,
+  dataProps: ["selected", "disabled", "label"] as const,
   behavior: {
     context: {
       consume: (ctx, props) => {
@@ -10,7 +10,20 @@ export const SelectOption = defineUnitComponent({
         const optionValue = (props.value ?? undefined) as unknown;
         const disabled = Boolean(props.disabled);
         const selected = !disabled && typeof selectValue === "string" && selectValue === optionValue;
-        return { selected };
+        const label =
+          typeof props.label === "string"
+            ? props.label
+            : typeof props.children === "string"
+              ? props.children
+              : undefined;
+        return {
+          selected,
+          __partProps: {
+            root: {
+              "data-label": label,
+            },
+          },
+        };
       },
     },
   },

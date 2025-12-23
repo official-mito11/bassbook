@@ -4,9 +4,19 @@ import type { ComponentBehavior, PartComponentSpec } from "../spec";
 const selectSpec = {
   name: "Select",
   dataProps: ["open", "disabled", "size"] as const,
+  keyframes: {
+    menuOpen: {
+      "0%": { opacity: 0, transform: "translateY(-8px) scale(0.95)" },
+      "100%": { opacity: 1, transform: "translateY(0) scale(1)" },
+    },
+    menuClose: {
+      "0%": { opacity: 1, transform: "translateY(0) scale(1)" },
+      "100%": { opacity: 0, transform: "translateY(-8px) scale(0.95)" },
+    },
+  },
   slots: {
     header: {},
-    value: { defaultFromState: "value" },
+    value: { defaultFromState: "label" },
     options: { default: true },
   },
   // Custom select UI (no native <select>)
@@ -16,6 +26,7 @@ const selectSpec = {
   behavior: {
     state: {
       value: { type: "string", default: "", controlled: true },
+      label: { type: "string", default: "", controlled: false },
       open: { type: "boolean", default: false, controlled: true },
     } as const,
     actions: {
@@ -24,17 +35,33 @@ const selectSpec = {
         return { open: !current };
       },
       select: (s: Record<string, unknown>, payload?: unknown) => {
-        if (typeof payload !== "string") return {};
         const open = (s as { open?: boolean }).open;
         if (open === false) return {};
-        return { value: payload, open: false };
+
+        let value: string | undefined;
+        let label: string | undefined;
+        if (typeof payload === "string") {
+          value = payload;
+          label = payload;
+        } else if (
+          payload &&
+          typeof payload === "object" &&
+          typeof (payload as { value?: unknown }).value === "string"
+        ) {
+          value = (payload as { value: string }).value;
+          const maybeLabel = (payload as { label?: unknown }).label;
+          label = typeof maybeLabel === "string" ? maybeLabel : value;
+        }
+        if (typeof value !== "string") return {};
+
+        return { value, label, open: false };
       },
       setValue: (
         _s: Record<string, unknown>,
         payload?: unknown
       ) => {
         if (typeof payload !== "string") return {};
-        return { value: payload };
+        return { value: payload, label: payload };
       },
       open: () => ({ open: true }),
       close: () => ({ open: false }),
@@ -54,7 +81,9 @@ const selectSpec = {
             if (!btn) return undefined;
             if ((btn as any).disabled === true) return undefined;
             const v = (btn as any).value;
-            return typeof v === "string" ? v : undefined;
+            const lbl = (btn as any).dataset?.label as unknown;
+            const label = typeof lbl === "string" ? lbl : undefined;
+            return typeof v === "string" ? { value: v, label: label ?? v } : undefined;
           },
         },
         onClickOutside: "close",
@@ -179,6 +208,7 @@ const selectSpec = {
         true: {
           menu: {
             display: "flex",
+            animation: "menuOpen 150ms ease-out",
           },
           icon: {
             rotate: 180,
@@ -187,6 +217,7 @@ const selectSpec = {
         false: {
           menu: {
             display: "none",
+            animation: "menuClose 150ms ease-in",
           },
           icon: {
             rotate: 0,

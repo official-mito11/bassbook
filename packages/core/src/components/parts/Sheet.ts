@@ -4,23 +4,23 @@ export const Sheet = definePartComponent({
   name: "Sheet",
   dataProps: ["open", "side"] as const,
   keyframes: {
-    "bb-fadeIn": {
+    fadeIn: {
       from: { opacity: 0 },
       to: { opacity: 1 },
     },
-    "bb-slideInRight": {
-      from: { transform: "translateX(100%)" },
-      to: { transform: "translateX(0)" },
-    },
-    "bb-slideInLeft": {
+    slideInLeft: {
       from: { transform: "translateX(-100%)" },
       to: { transform: "translateX(0)" },
     },
-    "bb-slideInTop": {
+    slideInRight: {
+      from: { transform: "translateX(100%)" },
+      to: { transform: "translateX(0)" },
+    },
+    slideInTop: {
       from: { transform: "translateY(-100%)" },
       to: { transform: "translateY(0)" },
     },
-    "bb-slideInBottom": {
+    slideInBottom: {
       from: { transform: "translateY(100%)" },
       to: { transform: "translateY(0)" },
     },
@@ -51,7 +51,7 @@ export const Sheet = definePartComponent({
         position: "absolute",
         inset: 0,
         bg: "overlay",
-        animation: "bb-fadeIn 200ms ease-out",
+        animation: "fadeIn 200ms ease-out",
       },
       panel: {
         position: "absolute",
@@ -83,7 +83,7 @@ export const Sheet = definePartComponent({
             left: 0,
             bottom: 0,
             w: 320,
-            animation: "bb-slideInLeft 200ms ease-out",
+            animation: "slideInLeft 200ms ease-out",
           },
         },
         right: {
@@ -92,7 +92,7 @@ export const Sheet = definePartComponent({
             right: 0,
             bottom: 0,
             w: 320,
-            animation: "bb-slideInRight 200ms ease-out",
+            animation: "slideInRight 200ms ease-out",
           },
         },
         top: {
@@ -101,7 +101,7 @@ export const Sheet = definePartComponent({
             left: 0,
             right: 0,
             h: 320,
-            animation: "bb-slideInTop 200ms ease-out",
+            animation: "slideInTop 200ms ease-out",
           },
         },
         bottom: {
@@ -110,7 +110,7 @@ export const Sheet = definePartComponent({
             left: 0,
             right: 0,
             h: 320,
-            animation: "bb-slideInBottom 200ms ease-out",
+            animation: "slideInBottom 200ms ease-out",
           },
         },
       },

@@ -4,7 +4,7 @@ export const Dialog = definePartComponent({
   name: "Dialog",
   dataProps: ["open"] as const,
   keyframes: {
-    "bb-dialogIn": {
+    dialogIn: {
       from: { opacity: 0, transform: "scale(0.95) translateY(-10px)" },
       to: { opacity: 1, transform: "scale(1) translateY(0)" },
     },
@@ -58,7 +58,7 @@ export const Dialog = definePartComponent({
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "border",
-        animation: "bb-dialogIn 200ms ease-out",
+        animation: "dialogIn 200ms ease-out",
       },
       header: {
         display: "flex",

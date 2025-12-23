@@ -18,7 +18,14 @@ import { createComponentRegistry } from "@bassbook/core";
 import * as CoreComponents from "@bassbook/core";
 import type { AnyComponentSpec } from "@bassbook/core";
 import { createReactRenderer } from "./renderer";
-import { createCompoundComponent, createSlottedComponent } from "./compound";
+import {
+  createCompoundComponent,
+  createSlottedComponent,
+  isSlotComponent,
+  getSlotName,
+  isSlottedComponent,
+} from "./compound";
+import type { BassbookComponentProps, SlotValues } from "./types";
 
 // Helper to check if a value is a component spec
 function isComponentSpec(value: unknown): value is AnyComponentSpec {
@@ -77,9 +84,45 @@ export const Skeleton = renderer.createComponent<typeof CoreComponents.Skeleton>
 export const Slider = renderer.createComponent<typeof CoreComponents.Slider>("Slider");
 export const Switch = renderer.createComponent<typeof CoreComponents.Switch>("Switch");
 
-export const Select = Object.assign(BaseSelect, {
-  Header: createSlottedComponent(BaseSelectHeader, "header"),
-  Option: createSlottedComponent(BaseSelectOption, "options"),
+const SelectHeader = createSlottedComponent(BaseSelectHeader, "header");
+const SelectOption = createSlottedComponent(BaseSelectOption, "options");
+
+const SelectWithLabel = React.forwardRef<unknown, BassbookComponentProps<typeof CoreComponents.Select>>(
+  function SelectWithLabel(props, ref) {
+    const selectedValue = typeof props.value === "string" ? props.value : undefined;
+
+    let selectedLabel: React.ReactNode = undefined;
+    if (selectedValue !== undefined) {
+      React.Children.forEach(props.children, (child) => {
+        if (selectedLabel !== undefined) return;
+        if (!isSlotComponent(child)) return;
+        if (!isSlottedComponent(child)) return;
+        const slotName = getSlotName(child);
+        if (slotName !== "options") return;
+        const el = child as React.ReactElement<{ value?: unknown; children?: React.ReactNode }>;
+        if (el.props.value === selectedValue) {
+          selectedLabel = el.props.children;
+        }
+      });
+    }
+
+    const existingSlots = (props.__slots ?? undefined) as SlotValues | undefined;
+    const nextSlots: SlotValues | undefined =
+      selectedLabel !== undefined && (existingSlots?.value === undefined)
+        ? { ...(existingSlots ?? {}), value: selectedLabel }
+        : existingSlots;
+
+    return React.createElement(BaseSelect, {
+      ...(props as unknown as BassbookComponentProps<typeof CoreComponents.Select>),
+      __slots: nextSlots,
+      ref,
+    });
+  }
+);
+
+export const Select = Object.assign(SelectWithLabel, {
+  Header: SelectHeader,
+  Option: SelectOption,
 });
 
 // ============================================

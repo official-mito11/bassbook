@@ -97,6 +97,7 @@ function validateVariantStyles(
 
   if (styles.defaultVariants) {
     for (const [variantName, valueName] of Object.entries(styles.defaultVariants)) {
+      const valueKey = String(valueName);
       if (!variants || !(variantName in variants)) {
         issue(
           issues,
@@ -116,11 +117,11 @@ function validateVariantStyles(
         continue;
       }
 
-      if (!(valueName in values)) {
+      if (!(valueKey in values)) {
         issue(
           issues,
           `${basePath}.defaultVariants.${variantName}`,
-          `Unknown variant value '${variantName}.${valueName}'`
+          `Unknown variant value '${variantName}.${valueKey}'`
         );
       }
     }
@@ -137,6 +138,7 @@ function validateVariantStyles(
       }
 
       for (const [variantName, valueName] of Object.entries(compound.conditions)) {
+        const valueKey = String(valueName);
         if (!variants || !(variantName in variants)) {
           issue(issues, `${compoundPath}.conditions.${variantName}`, `Unknown variant '${variantName}'`);
           continue;
@@ -148,11 +150,11 @@ function validateVariantStyles(
           continue;
         }
 
-        if (!(valueName in values)) {
+        if (!(valueKey in values)) {
           issue(
             issues,
             `${compoundPath}.conditions.${variantName}`,
-            `Unknown variant value '${variantName}.${valueName}'`
+            `Unknown variant value '${variantName}.${valueKey}'`
           );
         }
       }

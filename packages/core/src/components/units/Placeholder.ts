@@ -4,7 +4,7 @@ export const Placeholder = defineUnitComponent({
   name: "Placeholder",
   dataProps: ["variant"] as const,
   keyframes: {
-    "bb-spin": {
+    spin: {
       from: { transform: "rotate(0deg)" },
       to: { transform: "rotate(360deg)" },
     },
@@ -48,7 +48,7 @@ export const Placeholder = defineUnitComponent({
         borderColor: "border",
         borderTopColor: "primary",
         rounded: "full",
-        animation: "bb-spin 0.8s linear infinite",
+        animation: "spin 0.8s linear infinite",
       },
       text: {
         color: "muted-foreground",
