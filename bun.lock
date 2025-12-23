@@ -32,7 +32,7 @@
       "name": "@bassbook/react",
       "version": "0.3.0",
       "dependencies": {
-        "@bassbook/core": "^0.2.0",
+        "@bassbook/core": "^0.3.0",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -1665,8 +1665,6 @@
     "@babel/helper-compilation-targets/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
 
     "@bassbook/core/@types/bun": ["@types/bun@1.3.5", "", { "dependencies": { "bun-types": "1.3.5" } }, "sha512-RnygCqNrd3srIPEWBd5LFeUYG7plCoH2Yw9WaZGyNmdTEei+gWaHqydbaIRkIkcbXwhBT94q78QljxN0Sk838w=="],
-
-    "@bassbook/react/@bassbook/core": ["@bassbook/core@0.2.0", "", { "dependencies": { "csstype": "^3.2.1" } }, "sha512-SgFXckeDNQCG9TYbeQFhH7PXBZEhOx/N7q6O0qzCGbhyAXl4mzboxIgHvcbuiIsEBoyJp8Bm5P80+7GZ9OcvSg=="],
 
     "@bassbook/react/@types/bun": ["@types/bun@1.3.5", "", { "dependencies": { "bun-types": "1.3.5" } }, "sha512-RnygCqNrd3srIPEWBd5LFeUYG7plCoH2Yw9WaZGyNmdTEei+gWaHqydbaIRkIkcbXwhBT94q78QljxN0Sk838w=="],
 

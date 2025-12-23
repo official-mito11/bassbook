@@ -1,6 +1,6 @@
 {
   "name": "@bassbook/react",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -33,6 +33,6 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@bassbook/core": "^0.2.0"
+    "@bassbook/core": "^0.3.0"
   }
 }
