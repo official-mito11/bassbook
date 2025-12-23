@@ -34,9 +34,6 @@
   },
   "dependencies": {
     "@bassbook/core": "^latest",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "emotion": "^11.0.0",
     "framer-motion": "^12.23.24"
   }
 }
