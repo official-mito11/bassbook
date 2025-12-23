@@ -33,6 +33,6 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@bassbook/core": "^0.3.0"
+    "@bassbook/core": "workspace:*"
   }
 }

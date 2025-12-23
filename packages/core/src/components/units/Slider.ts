@@ -8,11 +8,11 @@ export const Slider = defineUnitComponent({
       value: { type: "number", default: 50, controlled: true },
     },
     actions: {
-      set: (_s, payload) => {
+      set: (_s: Record<string, string | number | boolean | undefined>, payload?: unknown) => {
         const next = typeof payload === "number" && Number.isFinite(payload) ? payload : 0;
         return { value: next };
       },
-      step: (s, payload) => {
+      step: (s: Record<string, string | number | boolean | undefined>, payload?: unknown) => {
         const current = typeof (s as { value?: unknown }).value === "number" ? ((s as { value: number }).value) : 0;
         const delta = typeof payload === "number" && Number.isFinite(payload) ? payload : 0;
         return { value: current + delta };
@@ -71,7 +71,7 @@ export const Slider = defineUnitComponent({
       track: {
         position: "relative",
         w: "100%",
-        h: 4,
+        h: 5,
         bg: "border",
         rounded: "full",
         overflow: "visible",
@@ -102,17 +102,17 @@ export const Slider = defineUnitComponent({
       size: {
         sm: {
           root: { h: 16 },
-          track: { h: 3 },
+          track: { h: 5 },
           thumb: { w: 18, h: 12 },
         },
         md: {
           root: { h: 20 },
-          track: { h: 4 },
+          track: { h: 6 },
           thumb: { w: 24, h: 16 },
         },
         lg: {
           root: { h: 24 },
-          track: { h: 6 },
+          track: { h: 8 },
           thumb: { w: 30, h: 20 },
         },
       },

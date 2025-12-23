@@ -8,4 +8,13 @@ export const Svg = defineCoreComponent({
     namespace: "svg",
     children: [slot("children")],
   }),
+  styles: {
+    base: {
+      root: {
+        display: "block",
+        flexShrink: 0,
+        overflow: "visible",
+      },
+    },
+  },
 });

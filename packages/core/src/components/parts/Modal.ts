@@ -3,6 +3,16 @@ import { definePartComponent, comp, slot } from "../spec";
 export const Modal = definePartComponent({
   name: "Modal",
   dataProps: ["open"] as const,
+  keyframes: {
+    "bb-fadeIn": {
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+    },
+    "bb-modalIn": {
+      from: { opacity: 0, transform: "scale(0.95)" },
+      to: { opacity: 1, transform: "scale(1)" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     children: [

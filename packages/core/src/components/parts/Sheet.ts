@@ -3,6 +3,28 @@ import { definePartComponent, comp, slot } from "../spec";
 export const Sheet = definePartComponent({
   name: "Sheet",
   dataProps: ["open", "side"] as const,
+  keyframes: {
+    "bb-fadeIn": {
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+    },
+    "bb-slideInRight": {
+      from: { transform: "translateX(100%)" },
+      to: { transform: "translateX(0)" },
+    },
+    "bb-slideInLeft": {
+      from: { transform: "translateX(-100%)" },
+      to: { transform: "translateX(0)" },
+    },
+    "bb-slideInTop": {
+      from: { transform: "translateY(-100%)" },
+      to: { transform: "translateY(0)" },
+    },
+    "bb-slideInBottom": {
+      from: { transform: "translateY(100%)" },
+      to: { transform: "translateY(0)" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     children: [

@@ -9,40 +9,43 @@ export const Input = defineUnitComponent({
   styles: {
     base: {
       root: {
-        w: "full",
-        h: 36,
+        w: 180,
+        py: 8,
         px: 12,
         fontSize: "0.875rem",
         lineHeight: 1.5,
         color: "foreground",
-        bg: "transparent",
+        bg: "surface",
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "border",
         rounded: "md",
         outline: "none",
         transition: "border-color 150ms ease, box-shadow 150ms ease",
+        _placeholder: {
+          color: "muted-foreground",
+        },
       },
     },
     variants: {
       size: {
         sm: {
           root: {
-            h: 32,
+            py: 6,
             px: 10,
             fontSize: "0.8125rem",
           },
         },
         md: {
           root: {
-            h: 36,
+            py: 8,
             px: 12,
             fontSize: "0.875rem",
           },
         },
         lg: {
           root: {
-            h: 40,
+            py: 10,
             px: 14,
             fontSize: "0.9375rem",
           },

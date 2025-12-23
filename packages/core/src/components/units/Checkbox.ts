@@ -64,7 +64,7 @@ export const Checkbox = defineUnitComponent({
         rounded: "sm",
         borderWidth: 1.5,
         borderStyle: "solid",
-        borderColor: "neutral-300",
+        borderColor: "border",
         bg: "background",
         transition: "all 150ms ease",
       },
@@ -97,7 +97,7 @@ export const Checkbox = defineUnitComponent({
         false: {
           indicator: {
             bg: "background",
-            borderColor: "neutral-300",
+            borderColor: "border",
           },
           icon: {
             opacity: 0,

@@ -13,7 +13,7 @@ export const Badge = defineUnitComponent({
         display: "inline-flex",
         alignCenter: true,
         justifyCenter: true,
-        rounded: "md",
+        rounded: "full",
         fontWeight: 500,
         whiteSpace: "nowrap",
         lineHeight: 1,

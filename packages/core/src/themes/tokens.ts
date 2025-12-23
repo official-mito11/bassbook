@@ -51,10 +51,6 @@ export const defaultSizing: TokenScale<SizingToken> = {
 
 // Default color palette (shadcn/ui + cal.com inspired)
 export const defaultColors: TokenScale<ColorToken> = {
-  transparent: "transparent",
-  current: "currentColor",
-  black: "#000000",
-  white: "#ffffff",
   // Neutral scale (zinc-based like shadcn)
   "neutral-50": "oklch(0.985 0 0)",
   "neutral-100": "oklch(0.97 0 0)",
@@ -70,10 +66,8 @@ export const defaultColors: TokenScale<ColorToken> = {
   // Semantic colors
   primary: "oklch(0.205 0 0)",
   "primary-foreground": "oklch(0.985 0 0)",
-  secondary: "oklch(0.967 0.001 286.375)",
-  "secondary-foreground": "oklch(0.21 0.006 285.885)",
   muted: "oklch(0.967 0.001 286.375)",
-  "muted-foreground": "oklch(0.552 0.016 285.938)",
+  "muted-foreground": "oklch(0.752 0.016 285.938)",
   accent: "oklch(0.967 0.001 286.375)",
   "accent-foreground": "oklch(0.21 0.006 285.885)",
   destructive: "oklch(0.637 0.237 25.331)",
@@ -83,6 +77,8 @@ export const defaultColors: TokenScale<ColorToken> = {
   ring: "oklch(0.205 0 0)",
   background: "oklch(1 0 0)",
   foreground: "oklch(0.145 0 0)",
+  surface: "oklch(0.98 0 0)",
+  "surface-hover": "oklch(0.96 0 0)",
   overlay: "oklch(0 0 0 / 0.6)",
   "info-bg": "oklch(0.97 0.014 254.604 / 0.1)",
   "info-border": "oklch(0.623 0.214 259.815 / 0.3)",
@@ -116,8 +112,8 @@ export const defaultShadow: TokenScale<ShadowToken> = {
   none: "none",
   sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
   md: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-  lg: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-  xl: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+  lg: "0 2px 6px -1px rgb(0 0 0 / 0.1), 0 1px 4px -2px rgb(0 0 0 / 0.1)",
+  xl: "0 4px 15px -3px rgb(0 0 0 / 0.1), 0 2px 6px -4px rgb(0 0 0 / 0.1)",
   subtle: "0 0 4px rgb(0 0 0 / 0.2)",
 };
 

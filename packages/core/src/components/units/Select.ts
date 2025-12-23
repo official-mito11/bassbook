@@ -1,18 +1,41 @@
-import { defineUnitComponent, comp, slot } from "../spec";
+import { definePartComponent, comp, slot } from "../spec";
+import type { ComponentBehavior, PartComponentSpec } from "../spec";
 
-export const Select = defineUnitComponent({
+const selectSpec = {
   name: "Select",
   dataProps: ["open", "disabled", "size"] as const,
+  slots: {
+    header: {},
+    value: { defaultFromState: "value" },
+    options: { default: true },
+  },
   // Custom select UI (no native <select>)
   // Slots:
   // - value: content shown in trigger
   // - options: dropdown option list (usually SelectOption components)
   behavior: {
     state: {
+      value: { type: "string", default: "", controlled: true },
       open: { type: "boolean", default: false, controlled: true },
-    },
+    } as const,
     actions: {
-      toggle: (s) => ({ open: !s.open }),
+      toggle: (s: Record<string, unknown>) => {
+        const current = (s as { open?: boolean }).open;
+        return { open: !current };
+      },
+      select: (s: Record<string, unknown>, payload?: unknown) => {
+        if (typeof payload !== "string") return {};
+        const open = (s as { open?: boolean }).open;
+        if (open === false) return {};
+        return { value: payload, open: false };
+      },
+      setValue: (
+        _s: Record<string, unknown>,
+        payload?: unknown
+      ) => {
+        if (typeof payload !== "string") return {};
+        return { value: payload };
+      },
       open: () => ({ open: true }),
       close: () => ({ open: false }),
     },
@@ -21,13 +44,27 @@ export const Select = defineUnitComponent({
         onClick: "toggle",
       },
       menu: {
+        onClick: {
+          action: "select",
+          payload: (ev: unknown) => {
+            const target = (ev as { target?: unknown } | null)?.target;
+            const node = target as Element | null;
+            if (!node || typeof (node as any).closest !== "function") return undefined;
+            const btn = (node as any).closest('button[role="option"]') as HTMLButtonElement | null;
+            if (!btn) return undefined;
+            if ((btn as any).disabled === true) return undefined;
+            const v = (btn as any).value;
+            return typeof v === "string" ? v : undefined;
+          },
+        },
         onClickOutside: "close",
       },
     },
     controlledProps: {
       open: { prop: "open", onChange: "onOpenChange" },
-    },
-  },
+      value: { prop: "value", onChange: "onValueChange" },
+    } as const,
+  } satisfies ComponentBehavior,
   tree: comp("Box", {
     part: "root",
     children: [
@@ -71,7 +108,7 @@ export const Select = defineUnitComponent({
         props: {
           role: "listbox",
         },
-        children: [slot("options")],
+        children: [slot("header"), slot("options")],
       }),
     ],
   }),
@@ -88,7 +125,7 @@ export const Select = defineUnitComponent({
         alignCenter: true,
         justifyBetween: true,
         gap: 8,
-        minW: 180,
+        w: 180,
         h: 36,
         px: 12,
         rounded: "md",
@@ -125,16 +162,18 @@ export const Select = defineUnitComponent({
         py: 4,
         zIndex: 50,
         maxH: 240,
-        overflowAuto: true,
+        overflowX: "hidden",
+        overflowY: "auto",
+        flexColumn: true,
         display: "none",
-        shadow: "md",
+        shadow: "sm",
       },
     },
     variants: {
       open: {
         true: {
           menu: {
-            display: "block",
+            display: "flex",
           },
           icon: {
             rotate: 180,
@@ -184,4 +223,6 @@ export const Select = defineUnitComponent({
       size: "md",
     },
   },
-});
+} as const satisfies Omit<PartComponentSpec, "layer">;
+
+export const Select = definePartComponent(selectSpec);

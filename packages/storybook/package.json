@@ -15,9 +15,10 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist",
-    "dev": "storybook dev -p 6006",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "generate": "bun run scripts/generate-stories.ts",
+    "dev": "bun run generate && storybook dev -p 6006",
+    "storybook": "bun run generate && storybook dev -p 6006",
+    "storybook:build": "bun run generate && storybook build"
   },
   "publishConfig": {
     "access": "public"

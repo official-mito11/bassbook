@@ -9,6 +9,7 @@ export * from "./Placeholder";
 export * from "./Progressbar";
 export * from "./Radio";
 export * from "./Select";
+export * from "./SelectHeader";
 export * from "./SelectOption";
 export * from "./Skeleton";
 export * from "./Slider";

@@ -10,10 +10,12 @@ export const Divider = defineCoreComponent({
     base: {
       root: {
         border: "none",
-        borderTop: "1px solid currentColor",
-        opacity: 0.2,
         margin: 0,
         width: "100%",
+        height: "1px",
+        boxSizing: "content-box",
+        overflow: "hidden",
+        backgroundColor: "border",
       },
     },
   },

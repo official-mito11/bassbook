@@ -10,7 +10,7 @@ import { resolveLength, resolveZIndex, resolveShadow } from "./length";
 // Layout prop keys
 type LayoutKey =
   // Display
-  | "display" | "d"
+  | "display" | "d" | "displayFlex" | "displayGrid" | "block" | "inline" | "inlineBlock"
   // Position
   | "position"
   | "static" | "relative" | "absolute" | "fixed" | "sticky"
@@ -33,7 +33,7 @@ type LayoutKey =
   | "selectNone" | "selectText" | "selectAll"
   // Object fit/position
   | "objectFit" | "objectPosition"
-  | "objectFitCover" | "objectFitContain" | "objectFitNone" | "objectFitScale"
+  | "fitCover" | "fitContain" | "fitNone" | "fitScale"
   // Float/Clear
   | "float" | "clear"
   // Isolation
@@ -66,6 +66,11 @@ export function resolveLayoutProps(
   // Display
   const display = props.display ?? props.d;
   if (display !== undefined) result.display = String(display);
+  if (props.displayFlex === true) result.display = "flex";
+  if (props.displayGrid === true) result.display = "grid";
+  if (props.block === true) result.display = "block";
+  if (props.inline === true) result.display = "inline";
+  if (props.inlineBlock === true) result.display = "inline-block";
 
   // Position
   const position = props.position;
@@ -140,10 +145,10 @@ export function resolveLayoutProps(
   // Object fit/position
   if (props.objectFit !== undefined) result.objectFit = String(props.objectFit);
   if (props.objectPosition !== undefined) result.objectPosition = String(props.objectPosition);
-  if (props.objectFitCover === true) result.objectFit = "cover";
-  if (props.objectFitContain === true) result.objectFit = "contain";
-  if (props.objectFitNone === true) result.objectFit = "none";
-  if (props.objectFitScale === true) result.objectFit = "scale-down";
+  if (props.fitCover === true) result.objectFit = "cover";
+  if (props.fitContain === true) result.objectFit = "contain";
+  if (props.fitNone === true) result.objectFit = "none";
+  if (props.fitScale === true) result.objectFit = "scale-down";
 
   // Float/Clear
   if (props.float !== undefined) result.float = String(props.float);
@@ -231,7 +236,7 @@ export const layoutKeys: LayoutKey[] = [
   "userSelect", "select",
   "selectNone", "selectText", "selectAll",
   "objectFit", "objectPosition",
-  "objectFitCover", "objectFitContain", "objectFitNone", "objectFitScale",
+  "fitCover", "fitContain", "fitNone", "fitScale",
   "float", "clear",
   "isolation",
   "boxShadow", "shadow",

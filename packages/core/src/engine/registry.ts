@@ -13,8 +13,15 @@ function hashString(str: string): string {
 }
 
 // Generate a unique class name from CSS property-value pair
-function generateClassName(property: string, value: string, prefix = "bb"): string {
-  const hash = hashString(`${property}:${value}`);
+function generateClassName(
+  property: string,
+  value: string,
+  options?: { media?: string; selector?: string },
+  prefix = "bb"
+): string {
+  const selector = options?.selector ?? "";
+  const media = options?.media ?? "";
+  const hash = hashString(`${property}:${value}|${selector}|${media}`);
   return `${prefix}-${hash}`;
 }
 
@@ -65,7 +72,7 @@ export class CSSRegistry {
     }
 
     // Create new rule
-    const className = generateClassName(property, value, this.prefix);
+    const className = generateClassName(property, value, options, this.prefix);
     const cssText = this.buildCSSText(className, property, value, options);
     
     const rule: CSSRule = {

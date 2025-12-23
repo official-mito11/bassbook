@@ -2,7 +2,6 @@
 export type {
   SlotValues,
   NativeElementProps,
-  CommonVariantProps,
   BassbookComponentProps,
   ReactRenderer,
   CreateReactRendererOptions,
@@ -15,19 +14,7 @@ export { createReactRenderer, createReactComponent } from "./renderer";
 
 // Hooks
 export {
-  useSelectController,
-  useToggleController,
-  useSliderController,
   useBehavior,
-} from "./hooks";
-
-export type {
-  SelectSize,
-  SelectItem,
-  UseSelectControllerOptions,
-  SelectControllerResult,
-  UseToggleControllerOptions,
-  UseSliderControllerOptions,
 } from "./hooks";
 
 // Compound components
@@ -36,6 +23,7 @@ export {
   isSlotComponent,
   getSlotName,
   extractSlotsFromChildren,
+  createSlottedComponent,
   createCompoundComponent,
 } from "./compound";
 
@@ -75,7 +63,6 @@ export {
   Progressbar,
   Radio,
   Select,
-  SelectOption,
   Skeleton,
   Slider,
   Switch,

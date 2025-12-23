@@ -45,7 +45,7 @@ export interface EventBinding {
   /** Optional payload to pass to action */
   payload?: unknown | ((event: unknown) => unknown);
   /** For keyboard events, specify which keys trigger the action */
-  keys?: string[];
+  keys?: readonly string[];
   /** Prevent default behavior */
   preventDefault?: boolean;
   /** Stop propagation */
@@ -76,14 +76,14 @@ export type BindingsMap = Record<string, PartBindings>;
  * Controlled props mapping
  * Maps internal state to external controlled props
  */
-export interface ControlledPropDef {
+export interface ControlledPropDef<PropKey extends string = string, OnChangeKey extends string = string> {
   /** The prop name for the value */
-  prop: string;
+  prop: PropKey;
   /** The prop name for the change handler */
-  onChange: string;
+  onChange: OnChangeKey;
 }
 
-export type ControlledPropsMap = Record<string, ControlledPropDef>;
+export type ControlledPropsMap = Readonly<Record<string, ControlledPropDef>>;
 
 /**
  * Component behavior definition
@@ -97,6 +97,16 @@ export interface ComponentBehavior<S extends StateSchema = StateSchema> {
   bindings?: BindingsMap;
   /** Controlled props mapping */
   controlledProps?: ControlledPropsMap;
+
+  /**
+   * Context provide/consume
+   * - provide: expose values/functions to descendant components
+   * - consume: derive extra props (e.g., selected) from ancestor-provided context
+   */
+  context?: {
+    provide?: Record<string, (api: { state: Record<string, unknown>; dispatch: (action: string, payload?: unknown) => void; props: Record<string, unknown> }) => unknown>;
+    consume?: (ctx: Record<string, unknown>, props: Record<string, unknown>) => Record<string, unknown>;
+  };
 }
 
 export type DOMTagName =
@@ -106,15 +116,22 @@ export type DOMTagName =
 
 export type SlotStyles = Record<string, Partial<StyleProps>>;
 
-export interface BaseStyleConfig {
-  base?: SlotStyles;
+export type KeyframesSpec = Record<
+  string,
+  Record<string, Record<string, string | number | undefined>>
+>;
+
+export interface BaseStyleConfig<B extends SlotStyles = SlotStyles> {
+  base?: B;
 }
 
-export interface VariantStyleConfig extends BaseStyleConfig {
-  variants?: Record<string, Record<string, SlotStyles>>;
-  defaultVariants?: Record<string, string>;
+export interface VariantStyleConfig<
+  V extends Record<string, Record<string, SlotStyles>> = Record<string, Record<string, SlotStyles>>
+> extends BaseStyleConfig {
+  variants?: V;
+  defaultVariants?: Record<string, string | boolean | number>;
   compoundVariants?: Array<{
-    conditions: Record<string, string>;
+    conditions: Record<string, string | boolean | number>;
     styles: SlotStyles;
   }>;
 }
@@ -127,10 +144,16 @@ export interface VariantStyleConfig extends BaseStyleConfig {
  * Slot definition for compound component pattern
  */
 export interface SlotDef {
-  /** If true, this slot receives unmatched children */
+  /** Whether this slot is required (default: false) */
+  required?: boolean;
+  /** Whether this slot is the default slot (accepts unmatched children) */
   default?: boolean;
-  /** Component name that maps to this slot (e.g., "Dialog.Title") */
-  match?: string;
+
+  /**
+   * If slot value is not provided, use a value from behavior state.
+   * (React/DOM renderers can apply this generically)
+   */
+  defaultFromState?: string;
 }
 
 /**
@@ -176,41 +199,59 @@ export interface CoreComponentSpec {
   tree: CoreRootNodeSpec;
   styles?: BaseStyleConfig;
   dataProps?: readonly string[];
+  cssText?: string;
+  keyframes?: KeyframesSpec;
 }
 
-export interface UnitComponentSpec {
+export interface UnitComponentSpec<
+  Styles extends VariantStyleConfig = VariantStyleConfig,
+  Behavior extends ComponentBehavior = ComponentBehavior
+> {
   layer: "unit";
   name: string;
   tree: RootNodeSpec;
-  styles?: VariantStyleConfig;
+  styles?: Styles;
   dataProps?: readonly string[];
   /** Component behavior: state, actions, bindings */
-  behavior?: ComponentBehavior;
+  behavior?: Behavior;
+  cssText?: string;
+  keyframes?: KeyframesSpec;
 }
 
-export interface PartComponentSpec {
+export interface PartComponentSpec<
+  Styles extends VariantStyleConfig = VariantStyleConfig,
+  Behavior extends ComponentBehavior = ComponentBehavior
+> {
   layer: "part";
   name: string;
   tree: RootNodeSpec;
-  styles?: VariantStyleConfig;
+  styles?: Styles;
   dataProps?: readonly string[];
   /** Component behavior: state, actions, bindings */
-  behavior?: ComponentBehavior;
+  behavior?: Behavior;
   /** Slot definitions for compound component pattern */
   slots?: SlotsMap;
+  cssText?: string;
+  keyframes?: KeyframesSpec;
 }
 
 export type AnyComponentSpec = CoreComponentSpec | UnitComponentSpec | PartComponentSpec;
 
-export function defineCoreComponent(spec: Omit<CoreComponentSpec, "layer">): CoreComponentSpec {
+export function defineCoreComponent<const S extends Omit<CoreComponentSpec, "layer">>(
+  spec: S
+): S & { layer: "core" } {
   return { ...spec, layer: "core" };
 }
 
-export function defineUnitComponent(spec: Omit<UnitComponentSpec, "layer">): UnitComponentSpec {
+export function defineUnitComponent<const S>(
+  spec: S & Omit<UnitComponentSpec, "layer">
+): S & { layer: "unit" } {
   return { ...spec, layer: "unit" };
 }
 
-export function definePartComponent(spec: Omit<PartComponentSpec, "layer">): PartComponentSpec {
+export function definePartComponent<const S>(
+  spec: S & Omit<PartComponentSpec, "layer">
+): S & { layer: "part" } {
   return { ...spec, layer: "part" };
 }
 

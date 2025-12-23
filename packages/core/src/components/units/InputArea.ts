@@ -11,7 +11,6 @@ export const InputArea = defineUnitComponent({
     base: {
       root: {
         w: "full",
-        minH: 80,
         px: 12,
         py: 8,
         fontSize: "0.875rem",
@@ -24,13 +23,15 @@ export const InputArea = defineUnitComponent({
         rounded: "md",
         outline: "none",
         transition: "border-color 150ms ease, box-shadow 150ms ease",
+        _placeholder: {
+          color: "muted-foreground",
+        },
       },
     },
     variants: {
       size: {
         sm: {
           root: {
-            minH: 60,
             px: 10,
             py: 6,
             fontSize: "0.8125rem",
@@ -38,7 +39,6 @@ export const InputArea = defineUnitComponent({
         },
         md: {
           root: {
-            minH: 80,
             px: 12,
             py: 8,
             fontSize: "0.875rem",
@@ -46,7 +46,6 @@ export const InputArea = defineUnitComponent({
         },
         lg: {
           root: {
-            minH: 100,
             px: 14,
             py: 10,
             fontSize: "0.9375rem",

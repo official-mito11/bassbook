@@ -14,7 +14,6 @@ createRoot(el).render(
       theme={{
         colors: {
           primary: "#3b82f6",
-          ring: "#3b82f6",
         },
       }}
     >

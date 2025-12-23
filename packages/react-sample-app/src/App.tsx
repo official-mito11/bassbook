@@ -21,7 +21,6 @@ import {
   Progressbar,
   Radio,
   Select,
-  SelectOption,
   Skeleton,
   Slider,
   Switch,
@@ -33,10 +32,6 @@ import {
   Navigator,
   Sheet,
   View,
-  // Hooks
-  useSelectController,
-  useToggleController,
-  useSliderController,
 } from "@bassbook/react";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -56,43 +51,11 @@ export function App() {
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const [radioValue, setRadioValue] = React.useState("option1");
   const [switchChecked, setSwitchChecked] = React.useState(false);
-  const [selectValue, setSelectValue] = React.useState<string>("opt1");
+  const [selectValue, setSelectValue] = React.useState<string>("opt2");
+  const [sliderValue, setSliderValue] = React.useState<number>(50);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
-
-  // Checkbox controller
-  const checkbox = useToggleController({
-    checked: checkboxChecked,
-    onCheckedChange: setCheckboxChecked,
-  });
-
-  // Switch controller
-  const switchCtrl = useToggleController({
-    checked: switchChecked,
-    onCheckedChange: setSwitchChecked,
-  });
-
-  // Select controller
-  const selectCtrl = useSelectController({
-    items: [
-      { value: "opt1", label: "Option 1" },
-      { value: "opt2", label: "Option 2" },
-      { value: "opt3", label: "Option 3" },
-    ],
-    value: selectValue,
-    onValueChange: setSelectValue,
-    placeholder: "Select an option...",
-    components: { SelectOption },
-  });
-
-  // Slider controller
-  const slider = useSliderController({
-    defaultValue: 50,
-    min: 0,
-    max: 100,
-    step: 1,
-  });
 
   return (
     <Box p={24} fontFamily="ui-sans-serif, system-ui">
@@ -218,12 +181,13 @@ export function App() {
       <Section title="Checkbox">
         <VStack gap={8} alignItems="flex-start">
           <Checkbox
-            {...checkbox.props}
+            checked={checkboxChecked}
+            onClick={() => setCheckboxChecked((v) => !v)}
           >
-            Click to toggle ({checkboxChecked ? "checked" : "unchecked"})
+            Check me ({checkboxChecked ? "checked" : "unchecked"})
           </Checkbox>
-          <Checkbox checked={true} size="sm">Small checked</Checkbox>
-          <Checkbox checked={false} size="md">Medium unchecked</Checkbox>
+          <Checkbox checked={true}>Checked</Checkbox>
+          <Checkbox checked={false}>Unchecked</Checkbox>
           <Checkbox checked={true} size="lg">Large checked</Checkbox>
           <Checkbox disabled={true}>Disabled checkbox</Checkbox>
         </VStack>
@@ -255,9 +219,7 @@ export function App() {
 
       <Section title="Switch">
         <VStack gap={8} alignItems="flex-start">
-          <Switch
-            {...switchCtrl.props}
-          >
+          <Switch checked={switchChecked} onCheckedChange={setSwitchChecked}>
             Toggle me ({switchChecked ? "ON" : "OFF"})
           </Switch>
           <Switch checked={true} size="sm">Small ON</Switch>
@@ -268,7 +230,27 @@ export function App() {
       </Section>
 
       <Section title="Select">
-        <Select {...selectCtrl.props} />
+        <Select
+          value={selectValue}
+          onValueChange={setSelectValue}
+          placeholder="Select an option..."
+        >
+          <Select.Header>Fruits</Select.Header>
+          <Select.Option value="opt1" disabled>Option 1</Select.Option>
+          <Select.Option value="opt2">Option 2</Select.Option>
+          <Select.Option value="opt3">Option 3</Select.Option>
+        </Select>
+      </Section>
+
+      <Section title="Slider">
+        <VStack gap={12}>
+          <HStack gap={8} alignItems="center" w="100%">
+            <Slider value={sliderValue} onValueChange={setSliderValue} size="sm" />
+            <Text w={40}>{Math.round(sliderValue)}%</Text>
+          </HStack>
+          <Slider defaultValue={30} size="md" />
+          <Slider defaultValue={70} size="lg" />
+        </VStack>
       </Section>
 
       <Section title="Avatar">
@@ -337,17 +319,6 @@ export function App() {
           <Progressbar size="sm" style={{ "--progress-width": "25%" } as React.CSSProperties} />
           <Progressbar size="md" style={{ "--progress-width": "50%" } as React.CSSProperties} />
           <Progressbar size="lg" style={{ "--progress-width": "75%" } as React.CSSProperties} />
-        </VStack>
-      </Section>
-
-      <Section title="Slider">
-        <VStack gap={12}>
-          <HStack gap={8} alignItems="center" w="100%">
-            <Slider {...slider.props} />
-            <Text w={40}>{slider.value}%</Text>
-          </HStack>
-          <Slider size="md" style={{ "--slider-value": "30%" } as React.CSSProperties} />
-          <Slider size="lg" style={{ "--slider-value": "70%" } as React.CSSProperties} />
         </VStack>
       </Section>
 

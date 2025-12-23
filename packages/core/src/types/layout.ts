@@ -29,6 +29,11 @@ export interface DisplayProps {
   visible?: boolean;
   invisible?: boolean;
   hidden?: boolean;
+  displayFlex?: boolean;
+  displayGrid?: boolean;
+  block?: boolean;
+  inline?: boolean;
+  inlineBlock?: boolean;
 }
 
 export interface PositionProps {
@@ -99,10 +104,10 @@ export interface ObjectProps {
   objectFit?: string;
   objectPosition?: string;
   // Aliases
-  objectFitCover?: boolean;
-  objectFitContain?: boolean;
-  objectFitNone?: boolean;
-  objectFitScale?: boolean;
+  fitCover?: boolean;
+  fitContain?: boolean;
+  fitNone?: boolean;
+  fitScale?: boolean;
 }
 
 export interface FloatProps {

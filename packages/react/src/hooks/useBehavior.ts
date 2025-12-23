@@ -27,10 +27,11 @@ export function useBehavior<S extends StateSchema>(
 ): {
   state: Partial<StateValues<S>>;
   partProps: Record<string, Record<string, unknown>>;
+  dispatch: (actionName: string, payload?: unknown) => void;
 } {
   // No behavior defined - return empty
   if (!behavior) {
-    return { state: {}, partProps: {} };
+    return { state: {}, partProps: {}, dispatch: () => {} };
   }
 
   const externalPropsRef = React.useRef<Record<string, unknown>>(externalProps);
@@ -137,5 +138,5 @@ export function useBehavior<S extends StateSchema>(
     };
   }, [runtime]);
 
-  return { state: effectiveState, partProps };
+  return { state: effectiveState, partProps, dispatch: runtime.dispatch };
 }

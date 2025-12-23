@@ -57,13 +57,13 @@ export const Button = defineUnitComponent({
         },
         secondary: {
           root: {
-            bg: "secondary",
-            color: "secondary-foreground",
+            bg: "muted",
+            color: "foreground",
           },
         },
         outline: {
           root: {
-            bg: "transparent",
+            bg: "surface",
             color: "foreground",
             borderWidth: 1,
             borderStyle: "solid",

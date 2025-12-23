@@ -1,18 +1,8 @@
 import type { Preview } from "@storybook/react";
 
-import { configure } from "@bassbook/core";
+import { configure, defaultTheme } from "@bassbook/core";
 
-// Provide minimal theme tokens used by unit components (primary/secondary, etc.)
-configure({
-  theme: {
-    colors: {
-      primary: "#2563eb",
-      secondary: "#e2e8f0",
-      muted: "#f1f5f9",
-      fg: "#0f172a",
-    },
-  },
-});
+configure({ theme: defaultTheme });
 
 const preview: Preview = {
   parameters: {

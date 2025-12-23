@@ -2,7 +2,18 @@ import { defineUnitComponent, comp, slot } from "../spec";
 
 export const SelectOption = defineUnitComponent({
   name: "SelectOption",
-  dataProps: ["selected", "active", "disabled"] as const,
+  dataProps: ["selected", "disabled"] as const,
+  behavior: {
+    context: {
+      consume: (ctx, props) => {
+        const selectValue = (ctx["Select.value"] ?? undefined) as unknown;
+        const optionValue = (props.value ?? undefined) as unknown;
+        const disabled = Boolean(props.disabled);
+        const selected = !disabled && typeof selectValue === "string" && selectValue === optionValue;
+        return { selected };
+      },
+    },
+  },
   tree: comp("CoreButton", {
     part: "root",
     props: {
@@ -42,7 +53,7 @@ export const SelectOption = defineUnitComponent({
         display: "flex",
         alignCenter: true,
         justifyBetween: true,
-        w: "100%",
+        alignSelf: "stretch",
         px: 8,
         py: 6,
         mx: 4,
@@ -68,17 +79,10 @@ export const SelectOption = defineUnitComponent({
       },
     },
     variants: {
-      active: {
-        true: {
-          root: {
-            bg: "secondary",
-          },
-        },
-        false: {},
-      },
       selected: {
         true: {
           root: {
+            bg: "surface",
             fontWeight: 500,
           },
           check: {
@@ -104,7 +108,6 @@ export const SelectOption = defineUnitComponent({
     },
     defaultVariants: {
       selected: "false",
-      active: "false",
       disabled: "false",
     },
   },

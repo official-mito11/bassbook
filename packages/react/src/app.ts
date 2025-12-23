@@ -116,7 +116,6 @@ export const ComponentNames = {
   Progressbar: "Progressbar",
   Radio: "Radio",
   Select: "Select",
-  SelectOption: "SelectOption",
   Skeleton: "Skeleton",
   Slider: "Slider",
   Switch: "Switch",

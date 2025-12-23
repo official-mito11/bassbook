@@ -3,6 +3,12 @@ import { defineUnitComponent, comp, slot } from "../spec";
 export const Placeholder = defineUnitComponent({
   name: "Placeholder",
   dataProps: ["variant"] as const,
+  keyframes: {
+    "bb-spin": {
+      from: { transform: "rotate(0deg)" },
+      to: { transform: "rotate(360deg)" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     children: [

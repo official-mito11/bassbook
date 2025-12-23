@@ -37,7 +37,10 @@ export const Switch = defineUnitComponent({
       checked: { type: "boolean", default: false, controlled: true },
     },
     actions: {
-      toggle: (s) => ({ checked: !s.checked }),
+      toggle: (s: Record<string, string | number | boolean | undefined>) => {
+        const current = (s as { checked?: boolean }).checked;
+        return { checked: !current };
+      },
     },
     bindings: {
       root: {

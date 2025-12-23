@@ -10,10 +10,10 @@ const SLOT_SYMBOL = Symbol.for("bassbook.slot");
 /**
  * Props for slot components
  */
-export interface SlotComponentProps extends BassbookComponentProps {
+export type SlotComponentProps = BassbookComponentProps & {
   /** Internal: slot name this component maps to */
   __slotName?: string;
-}
+};
 
 /**
  * Create a slot component for compound component pattern
@@ -30,6 +30,25 @@ export function createSlotComponent(slotName: string): React.FC<SlotComponentPro
   SlotComponent.displayName = `Slot(${slotName})`;
   
   return SlotComponent;
+}
+
+/**
+ * Create a slotted component that renders a real component, but is also treated as
+ * a slot component for compound extraction.
+ *
+ * Example:
+ * Select.Option = createSlottedComponent(SelectOption, "options")
+ */
+export function createSlottedComponent<P extends BassbookComponentProps>(
+  Component: React.ComponentType<P>,
+  slotName: string
+): React.FC<P> {
+  const Slotted: React.FC<P> = (props) => {
+    return React.createElement(Component, props);
+  };
+  (Slotted as unknown as Record<symbol, string>)[SLOT_SYMBOL] = slotName;
+  Slotted.displayName = `Slotted(${slotName})`;
+  return Slotted;
 }
 
 /**
@@ -110,15 +129,16 @@ export function extractSlotsFromChildren(
  * Usage: const Dialog = createCompoundComponent(renderer, "Dialog", { Title: "title", Footer: "footer" })
  */
 export function createCompoundComponent<
-  T extends Record<string, string>
+  Spec extends import("@bassbook/core").AnyComponentSpec,
+  T extends Record<string, string> = Record<string, string>
 >(
   renderer: ReactRenderer,
   componentName: string,
   slotMapping: T
-): React.ForwardRefExoticComponent<BassbookComponentProps & React.RefAttributes<unknown>> & {
+): React.ForwardRefExoticComponent<BassbookComponentProps<Spec> & React.RefAttributes<unknown>> & {
   [K in keyof T]: React.FC<SlotComponentProps>;
 } {
-  const BaseComponent = renderer.createComponent(componentName);
+  const BaseComponent = renderer.createComponent<Spec>(componentName);
   
   // Create slot sub-components
   const subComponents: Record<string, React.FC<SlotComponentProps>> = {};
@@ -127,7 +147,7 @@ export function createCompoundComponent<
   }
   
   // Combine base component with sub-components
-  return Object.assign(BaseComponent, subComponents) as React.ForwardRefExoticComponent<BassbookComponentProps & React.RefAttributes<unknown>> & {
+  return Object.assign(BaseComponent, subComponents) as React.ForwardRefExoticComponent<BassbookComponentProps<Spec> & React.RefAttributes<unknown>> & {
     [K in keyof T]: React.FC<SlotComponentProps>;
   };
 }
