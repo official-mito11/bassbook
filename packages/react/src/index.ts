@@ -76,3 +76,46 @@ export {
   Modal,
   Sheet,
 } from "./components";
+
+// Component prop types
+export type {
+  // Core props
+  BoxProps,
+  CoreButtonProps,
+  CoreInputProps,
+  CoreFormProps,
+  HStackProps,
+  VStackProps,
+  TextProps,
+  LabelProps,
+  LinkProps,
+  ImageProps,
+  DividerProps,
+  SvgProps,
+  // Unit props
+  AvatarProps,
+  BadgeProps,
+  ButtonProps,
+  CheckboxProps,
+  IconProps,
+  InputProps,
+  InputAreaProps,
+  PlaceholderProps,
+  ProgressbarProps,
+  RadioProps,
+  SelectProps,
+  SelectHeaderProps,
+  SelectOptionProps,
+  SkeletonProps,
+  SliderProps,
+  SwitchProps,
+  // Part props
+  AlertProps,
+  FormProps,
+  NavigatorProps,
+  ViewProps,
+  // Compound props
+  DialogProps,
+  ModalProps,
+  SheetProps,
+} from "./components";

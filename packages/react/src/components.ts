@@ -63,6 +63,18 @@ export const Link = renderer.createComponent<typeof CoreComponents.Link>("Link")
 export const Image = renderer.createComponent<typeof CoreComponents.Image>("Image");
 export const Divider = renderer.createComponent<typeof CoreComponents.Divider>("Divider");
 export const Svg = renderer.createComponent<typeof CoreComponents.Svg>("Svg");
+export type BoxProps = BassbookComponentProps<typeof CoreComponents.Box>;
+export type CoreButtonProps = BassbookComponentProps<typeof CoreComponents.CoreButton>;
+export type CoreInputProps = BassbookComponentProps<typeof CoreComponents.CoreInput>;
+export type CoreFormProps = BassbookComponentProps<typeof CoreComponents.CoreForm>;
+export type HStackProps = BassbookComponentProps<typeof CoreComponents.HStack>;
+export type VStackProps = BassbookComponentProps<typeof CoreComponents.VStack>;
+export type TextProps = BassbookComponentProps<typeof CoreComponents.Text>;
+export type LabelProps = BassbookComponentProps<typeof CoreComponents.Label>;
+export type LinkProps = BassbookComponentProps<typeof CoreComponents.Link>;
+export type ImageProps = BassbookComponentProps<typeof CoreComponents.Image>;
+export type DividerProps = BassbookComponentProps<typeof CoreComponents.Divider>;
+export type SvgProps = BassbookComponentProps<typeof CoreComponents.Svg>;
 
 // ============================================
 // Unit Components
@@ -83,6 +95,22 @@ const BaseSelectOption = renderer.createComponent<typeof CoreComponents.SelectOp
 export const Skeleton = renderer.createComponent<typeof CoreComponents.Skeleton>("Skeleton");
 export const Slider = renderer.createComponent<typeof CoreComponents.Slider>("Slider");
 export const Switch = renderer.createComponent<typeof CoreComponents.Switch>("Switch");
+export type AvatarProps = BassbookComponentProps<typeof CoreComponents.Avatar>;
+export type BadgeProps = BassbookComponentProps<typeof CoreComponents.Badge>;
+export type ButtonProps = BassbookComponentProps<typeof CoreComponents.Button>;
+export type CheckboxProps = BassbookComponentProps<typeof CoreComponents.Checkbox>;
+export type IconProps = BassbookComponentProps<typeof CoreComponents.Icon>;
+export type InputProps = BassbookComponentProps<typeof CoreComponents.Input>;
+export type InputAreaProps = BassbookComponentProps<typeof CoreComponents.InputArea>;
+export type PlaceholderProps = BassbookComponentProps<typeof CoreComponents.Placeholder>;
+export type ProgressbarProps = BassbookComponentProps<typeof CoreComponents.Progressbar>;
+export type RadioProps = BassbookComponentProps<typeof CoreComponents.Radio>;
+export type SelectProps = BassbookComponentProps<typeof CoreComponents.Select>;
+export type SelectHeaderProps = BassbookComponentProps<typeof CoreComponents.SelectHeader>;
+export type SelectOptionProps = BassbookComponentProps<typeof CoreComponents.SelectOption>;
+export type SkeletonProps = BassbookComponentProps<typeof CoreComponents.Skeleton>;
+export type SliderProps = BassbookComponentProps<typeof CoreComponents.Slider>;
+export type SwitchProps = BassbookComponentProps<typeof CoreComponents.Switch>;
 
 const SelectHeader = createSlottedComponent(BaseSelectHeader, "header");
 const SelectOption = createSlottedComponent(BaseSelectOption, "options");
@@ -132,6 +160,10 @@ export const Alert = renderer.createComponent<typeof CoreComponents.Alert>("Aler
 export const Form = renderer.createComponent<typeof CoreComponents.Form>("Form");
 export const Navigator = renderer.createComponent<typeof CoreComponents.Navigator>("Navigator");
 export const View = renderer.createComponent<typeof CoreComponents.View>("View");
+export type AlertProps = BassbookComponentProps<typeof CoreComponents.Alert>;
+export type FormProps = BassbookComponentProps<typeof CoreComponents.Form>;
+export type NavigatorProps = BassbookComponentProps<typeof CoreComponents.Navigator>;
+export type ViewProps = BassbookComponentProps<typeof CoreComponents.View>;
 
 // ============================================
 // Compound Components
@@ -150,6 +182,9 @@ export const Modal = createCompoundComponent<typeof CoreComponents.Modal>(render
 export const Sheet = createCompoundComponent<typeof CoreComponents.Sheet>(renderer, "Sheet", {
   Backdrop: "backdrop",
 });
+export type DialogProps = BassbookComponentProps<typeof CoreComponents.Dialog>;
+export type ModalProps = BassbookComponentProps<typeof CoreComponents.Modal>;
+export type SheetProps = BassbookComponentProps<typeof CoreComponents.Sheet>;
 
 // Export the renderer for advanced use cases
 export { renderer };
