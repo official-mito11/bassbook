@@ -13,7 +13,8 @@ export const View = definePartComponent({
         display: "flex",
         flexColumn: true,
         w: "100%",
-        minH: "100%",
+        h: "100%",
+        maxH: "100vh",
       },
     },
     variants: {

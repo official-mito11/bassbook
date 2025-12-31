@@ -262,11 +262,11 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         const svgRootExtras: UnknownProps | undefined = undefined;
 
         const mergedNodeStyle = mergeReactStyles(
-          extractStyle(nodeProps.style),
           mergeReactStyles(
-            extractStyle(mergedExtraForNode?.style),
-            styleFromSpec.style as React.CSSProperties | undefined
-          )
+            styleFromSpec.style as React.CSSProperties | undefined,
+            extractStyle(nodeProps.style)
+          ),
+          extractStyle(mergedExtraForNode?.style)
         );
 
         const mergedNodeClassName = cx(

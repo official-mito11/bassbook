@@ -150,4 +150,30 @@ describe("component spec runtime", () => {
     expect(css1.length).toBeGreaterThan(0);
     expect(css2.length).toBe(0);
   });
+
+  test("user style props override spec base styles", () => {
+    const CoreInput = defineCoreComponent({
+      name: "CoreInput",
+      tree: el("input", {
+        part: "root",
+      }),
+    });
+
+    const Input = defineUnitComponent({
+      name: "Input",
+      tree: comp("CoreInput", {
+        part: "root",
+      }),
+      styles: {
+        base: {
+          root: {
+            height: "100px",
+          },
+        },
+      },
+    });
+
+    const out = renderFromSpecs([CoreInput, Input], "Input", { h: 20 });
+    expect(out.css).toContain("height:20px");
+  });
 });

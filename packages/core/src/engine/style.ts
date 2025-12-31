@@ -133,7 +133,7 @@ export function css(
   
   // Merge inline styles
   const mergedStyle = options?.style 
-    ? { ...options.style, ...inlineStyles }
+    ? { ...inlineStyles, ...options.style }
     : Object.keys(inlineStyles).length > 0 ? inlineStyles : undefined;
   
   return {

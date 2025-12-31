@@ -12,7 +12,9 @@ import type { StyleProps } from "../src/types";
 import type { ThemeTokens } from "../src/themes/tokens";
 
 import { createSSRCollector } from "../src/engine";
+import { splitProps } from "../src/engine/adapters";
 import { createComponentRegistry } from "../src/components/registry";
+import { resolvePartStyles } from "../src/components/styleResolver";
 import { validateComponentSpecs } from "../src/components/validate";
 
 export interface RenderOptions {
@@ -90,25 +92,6 @@ function resolveVariantSlotStyles(
   return slotStyles;
 }
 
-function getSpecStyles(spec: AnyComponentSpec, props: Record<string, unknown>): SlotStyles | undefined {
-  if (!spec.styles) return undefined;
-
-  if (spec.layer === "core") {
-    return spec.styles.base;
-  }
-
-  return resolveVariantSlotStyles(spec.styles, props);
-}
-
-function getStyleForPart(
-  spec: AnyComponentSpec,
-  part: string,
-  props: Record<string, unknown>
-): Partial<StyleProps> | undefined {
-  const all = getSpecStyles(spec, props);
-  return all?.[part];
-}
-
 function nodePropsToRecord(node: ElementNodeSpec | ComponentNodeSpec): Record<string, unknown> {
   return (node.kind === "component" ? node.props : undefined) ?? {};
 }
@@ -117,17 +100,21 @@ function renderNode(options: {
   node: NodeSpec;
   parentSpec: AnyComponentSpec;
   registry: ReturnType<typeof createComponentRegistry>;
+  parentProps: Record<string, unknown>;
   slotChildren?: string;
   ssr: ReturnType<typeof createSSRCollector>;
 }): string {
-  const { node, parentSpec, registry, slotChildren, ssr } = options;
+  const { node, parentSpec, registry, parentProps, slotChildren, ssr } = options;
 
   if (node.kind === "slot") {
     return slotChildren ?? "";
   }
 
   const nodeProps = nodePropsToRecord(node);
-  const styleForPart = getStyleForPart(parentSpec, node.part, nodeProps);
+  const mergedPropsForPart = { ...parentProps, ...nodeProps };
+  const { styleProps: userStyleProps } = splitProps(parentProps);
+  const partStyles = resolvePartStyles(parentSpec, mergedPropsForPart, userStyleProps);
+  const styleForPart = partStyles[node.part];
   const styleResult = styleForPart ? ssr.css(styleForPart as Record<string, unknown>) : undefined;
 
   if (node.kind === "element") {
@@ -137,6 +124,7 @@ function renderNode(options: {
           node: child as NodeSpec,
           parentSpec,
           registry,
+          parentProps,
           slotChildren,
           ssr,
         })
@@ -160,6 +148,7 @@ function renderNode(options: {
         node: child as NodeSpec,
         parentSpec,
         registry,
+        parentProps: mergedPropsForPart,
         slotChildren,
         ssr,
       })
@@ -169,7 +158,7 @@ function renderNode(options: {
   const renderedTarget = renderTree({
     spec: target,
     registry,
-    props: nodeProps,
+    props: { ...nodeProps, ...parentProps },
     childrenHtml,
     ssr,
   });
@@ -195,6 +184,7 @@ function renderTree(options: {
     node: root as unknown as NodeSpec,
     parentSpec: spec,
     registry,
+    parentProps: props,
     slotChildren: childrenHtml,
     ssr,
   });
