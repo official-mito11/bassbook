@@ -3,19 +3,19 @@ import * as React from "react";
 import { createReactComponent } from "@bassbook/react";
 import { registry } from "./_registry";
 
-const Component = createReactComponent("SelectOption", { registry });
+const Component = createReactComponent("SelectHeader", { registry });
 
 export default {
-  title: "Unit/SelectOption",
+  title: "Unit/SelectHeader",
   component: Component,
   args: {
-    "selected": false,
-    "disabled": false,
-    children: "SelectOption",
+    "variant": "default",
+    "centered": false,
+    children: "SelectHeader",
   },
   argTypes: {
-    "selected": { control: "boolean" },
-    "disabled": { control: "boolean" },
+    "variant": { control: "select", options: ["default","line","dotted"] },
+    "centered": { control: "boolean" },
   },
 };
 

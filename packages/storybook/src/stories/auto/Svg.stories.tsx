@@ -13,7 +13,7 @@ export default {
     children: "Svg",
   },
   argTypes: {
-
+    "viewBox": { control: "select", options: ["0-0-24-24","0-0-20-20","0-0-16-16","0-0-12-12","0-0-32-32","0-0-48-48"] },
   },
 };
 

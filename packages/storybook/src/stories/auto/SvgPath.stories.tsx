@@ -3,19 +3,16 @@ import * as React from "react";
 import { createReactComponent } from "@bassbook/react";
 import { registry } from "./_registry";
 
-const Component = createReactComponent("SelectOption", { registry });
+const Component = createReactComponent("SvgPath", { registry });
 
 export default {
-  title: "Unit/SelectOption",
+  title: "Core/SvgPath",
   component: Component,
   args: {
-    "selected": false,
-    "disabled": false,
-    children: "SelectOption",
+
   },
   argTypes: {
-    "selected": { control: "boolean" },
-    "disabled": { control: "boolean" },
+
   },
 };
 

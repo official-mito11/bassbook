@@ -18,13 +18,16 @@ export const Default: Story = {
     <Box h={400} position="relative">
       <Modal open={true}>
         <Dialog open={true}>
+          {/* @ts-ignore */}
           <Dialog.Title>Modal with Dialog</Dialog.Title>
+          {/* @ts-ignore */}
           <Dialog.CloseIcon>✕</Dialog.CloseIcon>
           <Text>This modal contains a dialog component.</Text>
+          {/* @ts-ignore */}
           <Dialog.Footer>
             <HStack gap={8}>
               <Button variant="outline">Cancel</Button>
-              <Button variant="primary">Confirm</Button>
+              <Button variant="default">Confirm</Button>
             </HStack>
           </Dialog.Footer>
         </Dialog>
@@ -44,7 +47,7 @@ export const WithContent: Story = {
           <Text mb={16}>
             You can put any content inside the modal container.
           </Text>
-          <Button variant="primary">Got it</Button>
+          <Button variant="default">Got it</Button>
         </Box>
       </Modal>
     </Box>

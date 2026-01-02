@@ -3,19 +3,18 @@ import * as React from "react";
 import { createReactComponent } from "@bassbook/react";
 import { registry } from "./_registry";
 
-const Component = createReactComponent("SelectOption", { registry });
+const Component = createReactComponent("IconMenu", { registry });
 
 export default {
-  title: "Unit/SelectOption",
+  title: "Unit/IconMenu",
   component: Component,
   args: {
-    "selected": false,
-    "disabled": false,
-    children: "SelectOption",
+    "size": "md",
+    "strokeWidth": "medium",
   },
   argTypes: {
-    "selected": { control: "boolean" },
-    "disabled": { control: "boolean" },
+    "size": { control: "select", options: ["xs","sm","md","lg","xl","2xl","3xl"] },
+    "strokeWidth": { control: "select", options: ["thin","medium","bold"] },
   },
 };
 

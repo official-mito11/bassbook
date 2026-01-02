@@ -1,11 +1,5 @@
 // Re-export everything from @bassbook/react for storybook stories
 export {
-  // Hooks
-  useSelectController,
-  useToggleController,
-  useSliderController,
-  useBehavior,
-  createSlotComponent,
   // Cores
   Box,
   CoreButton,
@@ -31,7 +25,6 @@ export {
   Progressbar,
   Radio,
   Select,
-  SelectOption,
   Skeleton,
   Slider,
   Switch,

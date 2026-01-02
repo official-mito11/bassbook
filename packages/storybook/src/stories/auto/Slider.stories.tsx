@@ -24,7 +24,7 @@ export function Playground(args: any) {
     React.createElement(
       "pre",
       { style: { fontSize: 12, background: "#0b1020", color: "#e2e8f0", padding: 12, borderRadius: 8, overflow: "auto" } },
-      "{\n  \"root\": {\n    \"onKeyDown\": {\n      \"action\": \"step\",\n      \"keys\": [\n        \"ArrowLeft\",\n        \"ArrowDown\",\n        \"ArrowRight\",\n        \"ArrowUp\"\n      ],\n      \"preventDefault\": true\n    }\n  }\n}"
+      "{\n  \"root\": {\n    \"onPointerDown\": {\n      \"action\": \"setFromPosition\",\n      \"preventDefault\": true\n    },\n    \"onPointerMove\": {\n      \"action\": \"setFromPosition\"\n    },\n    \"onKeyDown\": {\n      \"action\": \"step\",\n      \"keys\": [\n        \"ArrowLeft\",\n        \"ArrowDown\",\n        \"ArrowRight\",\n        \"ArrowUp\"\n      ],\n      \"preventDefault\": true\n    }\n  }\n}"
     )
   );
 }

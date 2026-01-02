@@ -9,13 +9,11 @@ export default {
   title: "Part/View",
   component: Component,
   args: {
-    "padding": "md",
     "centered": false,
     "scrollable": false,
     children: "View",
   },
   argTypes: {
-    "padding": { control: "select", options: ["none","sm","md","lg","xl"] },
     "centered": { control: "boolean" },
     "scrollable": { control: "boolean" },
   },

@@ -24,7 +24,7 @@ export const Default: Story = {
         <Link href="#">Products</Link>
         <Link href="#">About</Link>
       </HStack>
-      <Button size="sm" variant="primary">
+      <Button size="sm" variant="default">
         Sign In
       </Button>
     </Navigator>
@@ -74,7 +74,7 @@ export const WithLogo: Story = {
       </HStack>
       <HStack gap={8}>
         <Button size="sm" variant="outline">Log In</Button>
-        <Button size="sm" variant="primary">Sign Up</Button>
+        <Button size="sm" variant="default">Sign Up</Button>
       </HStack>
     </Navigator>
   ),

@@ -9,10 +9,13 @@ export default {
   title: "Core/Image",
   component: Component,
   args: {
-
+    "loading": "lazy",
+    "decoding": "async",
   },
   argTypes: {
-
+    "objectFit": { control: "select", options: ["contain","cover","fill","none","scale-down"] },
+    "loading": { control: "select", options: ["eager","lazy"] },
+    "decoding": { control: "select", options: ["sync","async","auto"] },
   },
 };
 

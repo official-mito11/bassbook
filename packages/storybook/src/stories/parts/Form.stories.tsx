@@ -24,7 +24,7 @@ export const Default: Story = {
         <Label>Email</Label>
         <Input placeholder="Enter your email" type="email" />
       </VStack>
-      <Button variant="primary">Submit</Button>
+      <Button variant="default">Submit</Button>
     </Form>
   ),
 };
@@ -46,7 +46,7 @@ export const Vertical: Story = {
       </VStack>
       <HStack gap={8}>
         <Button variant="outline">Cancel</Button>
-        <Button variant="primary">Save</Button>
+        <Button variant="default">Save</Button>
       </HStack>
     </Form>
   ),
@@ -73,7 +73,7 @@ export const ContactForm: Story = {
         <Label>Message</Label>
         <InputArea placeholder="Your message..." />
       </VStack>
-      <Button variant="primary">Send Message</Button>
+      <Button variant="default">Send Message</Button>
     </Form>
   ),
 };
