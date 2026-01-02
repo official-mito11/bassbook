@@ -384,20 +384,28 @@ export const LoginForm: Story = {
         <VStack gap={16} w="full">
           <VStack gap={6}>
             <Label>Email</Label>
-            <Input 
-              placeholder="email@example.com" 
-              type="email"
-              leftAddon={<Text color="gray.400">📧</Text>}
-            />
+            <HStack gap={0}>
+              <Box p={8} bg="gray.100" rounded="md" border="1px solid" borderColor="gray.200">
+                <Text color="gray.400">📧</Text>
+              </Box>
+              <Input 
+                placeholder="email@example.com" 
+                type="email"
+              />
+            </HStack>
           </VStack>
           
           <VStack gap={6}>
             <Label>Password</Label>
-            <Input 
-              placeholder="••••••••" 
-              type="password"
-              leftAddon={<Text color="gray.400">🔒</Text>}
-            />
+            <HStack gap={0}>
+              <Box p={8} bg="gray.100" rounded="md" border="1px solid" borderColor="gray.200">
+                <Text color="gray.400">🔒</Text>
+              </Box>
+              <Input 
+                placeholder="••••••••" 
+                type="password"
+              />
+            </HStack>
           </VStack>
         </VStack>
         
@@ -451,7 +459,7 @@ export const ContactForm: Story = {
         
         <VStack gap={6}>
           <Label>Message</Label>
-          <InputArea placeholder="Your message..." rows={5} />
+          <InputArea placeholder="Your message..." />
         </VStack>
         
         <HStack gap={8}>
@@ -547,7 +555,7 @@ const ValidationForm = () => {
 
 export const InputWithCopyButton: Story = {
   render: () => {
-    const [value, setValue] = useState("https://example.com/very-long-url-to-copy");
+    const [value] = useState("https://example.com/very-long-url-to-copy");
     const [copied, setCopied] = useState(false);
     
     const handleCopy = () => {
