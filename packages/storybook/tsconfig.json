@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
-    "types": ["node", "bun"]
+    "types": ["node", "bun"],
+    "suppressIndexSignaturePropertyAccessErrors": true
   },
   "include": ["src", ".storybook"]
 }

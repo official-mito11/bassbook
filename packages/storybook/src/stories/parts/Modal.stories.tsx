@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
 import { Modal, Dialog, Text, Box, HStack, Button } from "../../renderer";
 

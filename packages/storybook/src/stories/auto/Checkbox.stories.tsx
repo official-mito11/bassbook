@@ -12,10 +12,12 @@ export default {
     "checked": false,
     "disabled": false,
     "size": "md",
+    "indeterminate": false,
     children: "Checkbox",
   },
   argTypes: {
     "checked": { control: "boolean" },
+    "indeterminate": { control: "boolean" },
     "disabled": { control: "boolean" },
     "size": { control: "select", options: ["sm","md","lg"] },
   },

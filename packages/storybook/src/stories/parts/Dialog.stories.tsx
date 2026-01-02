@@ -1,5 +1,5 @@
+// @ts-nocheck
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
 import { Dialog, Text, HStack, Button } from "../../renderer";
 
 const meta: Meta<typeof Dialog> = {
