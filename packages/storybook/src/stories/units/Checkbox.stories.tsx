@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Checkbox, VStack, HStack, Box, Text, Label, Button } from "../../renderer";
+import { Checkbox, VStack, HStack, Box, Text, Button } from "../../renderer";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Units/Checkbox",
@@ -180,19 +180,19 @@ export const HorizontalGroup: Story = {
 export const CustomColors: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
-      <Checkbox checked={true} colorScheme="blue">
-        Blue theme
+      <Checkbox checked={true}>
+        Default theme
       </Checkbox>
-      <Checkbox checked={true} colorScheme="green">
+      <Checkbox checked={true}>
         Green theme
       </Checkbox>
-      <Checkbox checked={true} colorScheme="purple">
+      <Checkbox checked={true}>
         Purple theme
       </Checkbox>
-      <Checkbox checked={true} colorScheme="orange">
+      <Checkbox checked={true}>
         Orange theme
       </Checkbox>
-      <Checkbox checked={true} colorScheme="pink">
+      <Checkbox checked={true}>
         Pink theme
       </Checkbox>
     </VStack>
@@ -462,16 +462,16 @@ export const ThemeStyles: Story = {
       <Box p={16} border="1px solid" borderColor="gray.600" rounded="lg" w="full" bg="gray.800">
         <Text fontWeight="medium" mb={8} color="gray.200">Dark Theme</Text>
         <VStack gap={8} alignItems="flex-start">
-          <Checkbox checked={true} colorScheme="blue">Checked item</Checkbox>
-          <Checkbox checked={false} colorScheme="blue">Unchecked item</Checkbox>
+          <Checkbox checked={true}>Checked item</Checkbox>
+          <Checkbox checked={false}>Unchecked item</Checkbox>
         </VStack>
       </Box>
       
       <Box p={16} border="1px solid" borderColor="blue.200" rounded="lg" w="full" bg="blue.50">
         <Text fontWeight="medium" mb={8} color="blue.700">Brand Theme (Blue)</Text>
         <VStack gap={8} alignItems="flex-start">
-          <Checkbox checked={true} colorScheme="blue">Checked item</Checkbox>
-          <Checkbox checked={false} colorScheme="blue">Unchecked item</Checkbox>
+          <Checkbox checked={true}>Checked item</Checkbox>
+          <Checkbox checked={false}>Unchecked item</Checkbox>
         </VStack>
       </Box>
     </VStack>

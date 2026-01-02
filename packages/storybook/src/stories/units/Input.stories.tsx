@@ -334,7 +334,7 @@ export const TextAreaVariants: Story = {
     <VStack gap={16} w={400}>
       <VStack gap={4}>
         <Label>Default TextArea</Label>
-        <InputArea placeholder="Enter your message..." rows={3} />
+        <InputArea placeholder="Enter your message..." />
       </VStack>
       
       <VStack gap={4}>
@@ -346,8 +346,6 @@ export const TextAreaVariants: Story = {
         <Label>Resize Disabled</Label>
         <InputArea 
           placeholder="Cannot resize" 
-          rows={4} 
-          resize="none"
         />
       </VStack>
     </VStack>
@@ -364,7 +362,6 @@ const TextAreaWithCounter = () => {
         value={value}
         onChange={(e: any) => setValue(e.target.value)}
         placeholder="Write something..."
-        rows={4}
         mb={4}
       />
       <Text fontSize="sm" color={value.length >= maxLength ? "red.500" : "gray.500"}>

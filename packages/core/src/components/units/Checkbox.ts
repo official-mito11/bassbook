@@ -3,7 +3,7 @@ import { slot } from "../spec";
 
 export const Checkbox = defineUnitComponent({
   name: "Checkbox",
-  dataProps: ["checked", "disabled", "size"] as const,
+  dataProps: ["checked", "disabled", "size", "indeterminate"] as const,
   tree: comp("Box", {
     part: "root",
     props: {
@@ -17,6 +17,12 @@ export const Checkbox = defineUnitComponent({
           "aria-hidden": true,
         },
         children: [
+          comp("Box", {
+            part: "dash",
+            props: {
+              "aria-hidden": true,
+            },
+          }),
           comp("Svg", {
             part: "icon",
             props: {
@@ -68,6 +74,13 @@ export const Checkbox = defineUnitComponent({
         bg: "background",
         transition: "all 150ms ease",
       },
+      dash: {
+        display: "none",
+        w: 8,
+        h: 2,
+        bg: "currentColor",
+        borderRadius: "full",
+      },
       icon: {
         display: "block",
         w: 12,
@@ -104,6 +117,21 @@ export const Checkbox = defineUnitComponent({
           },
         },
       },
+      indeterminate: {
+        true: {
+          indicator: {
+            bg: "primary",
+            borderColor: "primary",
+          },
+          dash: {
+            display: "block",
+          },
+          icon: {
+            opacity: 0,
+          },
+        },
+        false: {},
+      },
       disabled: {
         true: {
           root: {
@@ -118,16 +146,19 @@ export const Checkbox = defineUnitComponent({
         sm: {
           indicator: { w: 14, h: 14 },
           icon: { w: 10, h: 10 },
+          dash: { w: 8, h: 2 },
           label: { fontSize: "0.8125rem" },
         },
         md: {
           indicator: { w: 16, h: 16 },
           icon: { w: 12, h: 12 },
+          dash: { w: 10, h: 2 },
           label: { fontSize: "0.875rem" },
         },
         lg: {
           indicator: { w: 20, h: 20 },
           icon: { w: 16, h: 16 },
+          dash: { w: 12, h: 2 },
           label: { fontSize: "1rem" },
         },
       },
@@ -136,6 +167,7 @@ export const Checkbox = defineUnitComponent({
       checked: "false",
       disabled: "false",
       size: "md",
+      indeterminate: "false",
     },
   },
 });

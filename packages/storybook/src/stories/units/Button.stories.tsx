@@ -142,10 +142,10 @@ export const LoadingState: Story = {
     return (
       <VStack gap={16} alignItems="flex-start">
         <HStack gap={8}>
-          <Button loading={loading} onClick={handleClick}>
+          <Button onClick={handleClick}>
             {loading ? "Loading..." : "Click to Load"}
           </Button>
-          <Button variant="secondary" loading={loading} onClick={handleClick}>
+          <Button variant="secondary" onClick={handleClick}>
             {loading ? "Processing" : "Process"}
           </Button>
         </HStack>

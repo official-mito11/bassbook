@@ -195,7 +195,7 @@ const ErrorStateExample = () => {
       )}
       
       {error && (
-        <Button onClick={retry} variant="destructive" w="full" loading={retrying}>
+        <Button onClick={retry} variant="destructive" w="full">
           {retrying ? "Retrying..." : "Retry Connection"}
         </Button>
       )}

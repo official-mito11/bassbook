@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Switch, VStack, HStack, Box, Text, Label } from "../../renderer";
+import { Switch, VStack, HStack, Box, Text } from "../../renderer";
 
 const meta: Meta<typeof Switch> = {
   title: "Units/Switch",
@@ -168,11 +168,11 @@ const ThemeToggleExample = () => {
 export const CustomColors: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
-      <Switch checked={true} colorScheme="blue">Blue theme</Switch>
-      <Switch checked={true} colorScheme="green">Green theme</Switch>
-      <Switch checked={true} colorScheme="purple">Purple theme</Switch>
-      <Switch checked={true} colorScheme="orange">Orange theme</Switch>
-      <Switch checked={true} colorScheme="pink">Pink theme</Switch>
+      <Switch checked={true}>Blue theme</Switch>
+      <Switch checked={true}>Green theme</Switch>
+      <Switch checked={true}>Purple theme</Switch>
+      <Switch checked={true}>Orange theme</Switch>
+      <Switch checked={true}>Pink theme</Switch>
     </VStack>
   ),
 };
@@ -519,16 +519,16 @@ export const ThemeStyles: Story = {
       <Box p={16} border="1px solid" borderColor="gray.600" rounded="lg" w="full" bg="gray.800">
         <Text fontWeight="medium" mb={8} color="gray.200">Dark Theme</Text>
         <VStack gap={8} alignItems="flex-start">
-          <Switch checked={true} colorScheme="blue">Switch On</Switch>
-          <Switch checked={false} colorScheme="blue">Switch Off</Switch>
+          <Switch checked={true}>Switch On</Switch>
+          <Switch checked={false}>Switch Off</Switch>
         </VStack>
       </Box>
       
       <Box p={16} border="1px solid" borderColor="purple.200" rounded="lg" w="full" bg="purple.50">
         <Text fontWeight="medium" mb={8} color="purple.700">Brand Theme (Purple)</Text>
         <VStack gap={8} alignItems="flex-start">
-          <Switch checked={true} colorScheme="purple">Switch On</Switch>
-          <Switch checked={false} colorScheme="purple">Switch Off</Switch>
+          <Switch checked={true}>Switch On</Switch>
+          <Switch checked={false}>Switch Off</Switch>
         </VStack>
       </Box>
     </VStack>

@@ -123,7 +123,6 @@ const VolumeControlExample = () => {
           }}
           min={0}
           max={100}
-          colorScheme={volume > 70 ? "green" : volume > 30 ? "blue" : "orange"}
         />
         
         <HStack justifyContent="space-between" fontSize="xs" color="gray.400">
@@ -168,7 +167,6 @@ const BrightnessControlExample = () => {
           onChange={(e: any) => setBrightness(Number(e.target.value))}
           min={10}
           max={100}
-          colorScheme="yellow"
         />
         
         <Box 
@@ -218,7 +216,6 @@ const TemperatureControlExample = () => {
           onChange={(e: any) => setTemperature(Number(e.target.value))}
           min={32}
           max={100}
-          colorScheme={getColor()}
         />
         
         <HStack justifyContent="space-between" fontSize="xs" color="gray.400">
@@ -248,7 +245,7 @@ export const RangeSlider: Story = {
 };
 
 const RangeSliderExample = () => {
-  const [range, setRange] = useState([25, 75]);
+  const [range, setRange] = useState<[number, number]>([25, 75]);
   
   return (
     <Box w={320} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
@@ -313,7 +310,6 @@ const StepsSliderExample = () => {
           min={1}
           max={5}
           step={1}
-          colorScheme="purple"
         />
         
         <HStack justifyContent="space-between" px={8}>
@@ -361,19 +357,19 @@ export const CustomColors: Story = {
     <VStack gap={24} w={300}>
       <Box w="full">
         <Label>Blue Theme</Label>
-        <Slider defaultValue={30} min={0} max={100} colorScheme="blue" />
+        <Slider defaultValue={30} min={0} max={100} />
       </Box>
       <Box w="full">
         <Label>Green Theme</Label>
-        <Slider defaultValue={50} min={0} max={100} colorScheme="green" />
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
       <Box w="full">
         <Label>Orange Theme</Label>
-        <Slider defaultValue={70} min={0} max={100} colorScheme="orange" />
+        <Slider defaultValue={70} min={0} max={100} />
       </Box>
       <Box w="full">
         <Label>Red Theme</Label>
-        <Slider defaultValue={90} min={0} max={100} colorScheme="red" />
+        <Slider defaultValue={90} min={0} max={100} />
       </Box>
     </VStack>
   ),
@@ -388,8 +384,6 @@ export const CustomStyles: Story = {
           defaultValue={50} 
           min={0} 
           max={100} 
-          bg="pink.100"
-          _fill={{ bg: "pink.500" }}
         />
       </Box>
       
@@ -399,10 +393,6 @@ export const CustomStyles: Story = {
           defaultValue={50} 
           min={0} 
           max={100} 
-          rounded="full"
-          bg="gray.200"
-          _fill={{ bg: "blue.500" }}
-          _thumb={{ bg: "blue.600", rounded: "full" }}
         />
       </Box>
       
@@ -412,8 +402,6 @@ export const CustomStyles: Story = {
           defaultValue={50} 
           min={0} 
           max={100} 
-          shadow="md"
-          _thumb={{ shadow: "md" }}
         />
       </Box>
     </VStack>
@@ -558,7 +546,6 @@ const AudioMixerExample = () => {
                 w={40}
                 h={100}
                 transform="rotate(-90deg)"
-                colorScheme={channel.color}
               />
               <Text fontSize="xs" color="gray.400">{channel.name}</Text>
               <Text fontSize="sm" color="white" fontWeight="bold">{volumes[channel.name]}</Text>
@@ -588,9 +575,6 @@ export const ThemeStyles: Story = {
           defaultValue={50} 
           min={0} 
           max={100} 
-          bg="gray.700"
-          _fill={{ bg: "blue.400" }}
-          _thumb={{ bg: "blue.400" }}
         />
       </Box>
       
@@ -600,7 +584,6 @@ export const ThemeStyles: Story = {
           defaultValue={50} 
           min={0} 
           max={100} 
-          colorScheme="purple"
         />
       </Box>
     </VStack>

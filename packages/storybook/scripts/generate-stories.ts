@@ -15,10 +15,10 @@ function isComponentSpec(value: unknown): value is AnyComponentSpec {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
   return (
-    (v.layer === "core" || v.layer === "unit" || v.layer === "part") &&
-    typeof v.name === "string" &&
-    typeof v.tree === "object" &&
-    v.tree !== null
+    (v["layer"] === "core" || v["layer"] === "unit" || v["layer"] === "part") &&
+    typeof v["name"] === "string" &&
+    typeof v["tree"] === "object" &&
+    v["tree"] !== null
   );
 }
 
@@ -64,7 +64,7 @@ function getVariantOptions(styles: AnyComponentSpec["styles"]): Record<string, s
 
 function getDefaultVariants(styles: AnyComponentSpec["styles"]): Record<string, string> {
   const cfg = styles as VariantStyleConfig | undefined;
-  return cfg?.defaultVariants ?? {};
+  return (cfg?.defaultVariants ?? {}) as Record<string, string>;
 }
 
 function getBehaviorBindings(spec: AnyComponentSpec): BindingsMap | undefined {
