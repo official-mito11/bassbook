@@ -24,7 +24,8 @@ interface ClickOutsideHandler {
   dispatch: (action: string, payload?: unknown) => void;
 }
 
-const clickOutsideHandlers = new Set<ClickOutsideHandler>();
+// Use array to preserve insertion order (Set does not guarantee order)
+const clickOutsideHandlers: ClickOutsideHandler[] = [];
 let globalListenerInstalled = false;
 let globalListenerCleanup: (() => void) | null = null;
 
@@ -181,12 +182,13 @@ export function useBehavior<S extends StateSchema>(
     };
 
     handlerRef.current = handler;
-    clickOutsideHandlers.add(handler);
+    clickOutsideHandlers.push(handler);
     installGlobalListener();
 
     return () => {
-      clickOutsideHandlers.delete(handler);
-      if (clickOutsideHandlers.size === 0) {
+      const index = clickOutsideHandlers.indexOf(handler);
+      if (index > -1) clickOutsideHandlers.splice(index, 1);
+      if (clickOutsideHandlers.length === 0) {
         uninstallGlobalListener();
       }
     };

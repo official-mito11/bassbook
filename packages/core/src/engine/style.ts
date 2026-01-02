@@ -132,9 +132,9 @@ export function css(
   }
   
   // Merge inline styles
-  const mergedStyle = options?.style 
+  const mergedStyle = options?.style
     ? { ...inlineStyles, ...options.style }
-    : Object.keys(inlineStyles).length > 0 ? inlineStyles : undefined;
+    : inlineStyles;
   
   return {
     className: classNames.join(" "),

@@ -27,6 +27,25 @@ export function asNumeric(value: unknown): string | number | undefined {
 }
 
 /**
+ * Type guard for Length type
+ * Safely narrows unknown to Length | undefined
+ */
+export function isLength(value: unknown): value is Length {
+  if (value === undefined || value === null) return false;
+  if (typeof value === "number") return true;
+  if (typeof value === "string") return true;
+  return false;
+}
+
+/**
+ * Type guard for numeric values (string | number)
+ */
+export function isNumeric(value: unknown): value is string | number {
+  if (value === undefined || value === null) return false;
+  return typeof value === "number" || typeof value === "string";
+}
+
+/**
  * Resolve a length value to CSS string
  */
 export function resolveLength(value: Length | undefined, ctx: StyleContext): string | undefined {

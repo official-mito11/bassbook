@@ -23,16 +23,29 @@ import { resolveVisualProps, visualKeys } from "./background";
 import { resolveTypographyProps, typographyKeys } from "./typography";
 import { resolveLayoutProps, layoutKeys } from "./layout";
 
-const spacingKeySet = new Set<string>(spacingKeys);
-const sizingKeySet = new Set<string>(sizingKeys);
-const flexKeySet = new Set<string>(flexKeys);
-const borderKeySet = new Set<string>(borderKeys);
-const visualKeySet = new Set<string>(visualKeys);
-const typographyKeySet = new Set<string>(typographyKeys);
-const layoutKeySet = new Set<string>(layoutKeys);
+// Build unified key lookup map for O(1) classification
+const keyCategoryMap = new Map<string, "spacing" | "sizing" | "flex" | "border" | "visual" | "typography" | "layout">();
+
+function buildKeyMap(): Map<string, "spacing" | "sizing" | "flex" | "border" | "visual" | "typography" | "layout"> {
+  if (keyCategoryMap.size > 0) return keyCategoryMap;
+
+  for (const key of spacingKeys) keyCategoryMap.set(key, "spacing");
+  for (const key of sizingKeys) keyCategoryMap.set(key, "sizing");
+  for (const key of flexKeys) keyCategoryMap.set(key, "flex");
+  for (const key of borderKeys) keyCategoryMap.set(key, "border");
+  for (const key of visualKeys) keyCategoryMap.set(key, "visual");
+  for (const key of typographyKeys) keyCategoryMap.set(key, "typography");
+  for (const key of layoutKeys) keyCategoryMap.set(key, "layout");
+
+  return keyCategoryMap;
+}
+
+// Initialize key map once at module load
+buildKeyMap();
 
 /**
  * Resolve all style properties to CSS declarations
+ * Optimized with single-pass key classification using unified lookup map
  */
 export function resolveAllProps(
   props: Record<string, unknown>,
@@ -46,16 +59,18 @@ export function resolveAllProps(
   const typographyProps: Record<string, unknown> = {};
   const layoutProps: Record<string, unknown> = {};
 
+  // Single pass: classify and collect each property
   for (const [key, value] of Object.entries(props)) {
     if (value === undefined || value === null) continue;
 
-    if (spacingKeySet.has(key)) spacingProps[key] = value;
-    if (sizingKeySet.has(key)) sizingProps[key] = value;
-    if (flexKeySet.has(key)) flexProps[key] = value;
-    if (borderKeySet.has(key)) borderProps[key] = value;
-    if (visualKeySet.has(key)) visualProps[key] = value;
-    if (typographyKeySet.has(key)) typographyProps[key] = value;
-    if (layoutKeySet.has(key)) layoutProps[key] = value;
+    const category = keyCategoryMap.get(key);
+    if (category === "spacing") spacingProps[key] = value;
+    else if (category === "sizing") sizingProps[key] = value;
+    else if (category === "flex") flexProps[key] = value;
+    else if (category === "border") borderProps[key] = value;
+    else if (category === "visual") visualProps[key] = value;
+    else if (category === "typography") typographyProps[key] = value;
+    else if (category === "layout") layoutProps[key] = value;
   }
 
   return {
