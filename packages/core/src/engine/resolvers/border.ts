@@ -5,7 +5,7 @@
 
 import type { StyleContext } from "../context";
 import type { CSSDeclarations } from "./base";
-import { resolveLength, resolveColor, resolveRadius } from "./length";
+import { resolveLength, resolveColor, resolveRadius, asLength } from "./length";
 
 // Border prop keys
 type BorderKey =
@@ -67,23 +67,23 @@ export function resolveBorderProps(
 
   // Border width
   if (props.borderWidth !== undefined) {
-    result.borderWidth = resolveLength(props.borderWidth as any, ctx) ?? String(props.borderWidth);
+    result.borderWidth = resolveLength(asLength(props.borderWidth), ctx) ?? String(props.borderWidth);
   }
   const borderTopWidth = props.borderTopWidth ?? props.btWidth;
   if (borderTopWidth !== undefined) {
-    result.borderTopWidth = resolveLength(borderTopWidth as any, ctx) ?? String(borderTopWidth);
+    result.borderTopWidth = resolveLength(asLength(borderTopWidth), ctx) ?? String(borderTopWidth);
   }
   const borderRightWidth = props.borderRightWidth ?? props.brWidth;
   if (borderRightWidth !== undefined) {
-    result.borderRightWidth = resolveLength(borderRightWidth as any, ctx) ?? String(borderRightWidth);
+    result.borderRightWidth = resolveLength(asLength(borderRightWidth), ctx) ?? String(borderRightWidth);
   }
   const borderBottomWidth = props.borderBottomWidth ?? props.bbWidth;
   if (borderBottomWidth !== undefined) {
-    result.borderBottomWidth = resolveLength(borderBottomWidth as any, ctx) ?? String(borderBottomWidth);
+    result.borderBottomWidth = resolveLength(asLength(borderBottomWidth), ctx) ?? String(borderBottomWidth);
   }
   const borderLeftWidth = props.borderLeftWidth ?? props.blWidth;
   if (borderLeftWidth !== undefined) {
-    result.borderLeftWidth = resolveLength(borderLeftWidth as any, ctx) ?? String(borderLeftWidth);
+    result.borderLeftWidth = resolveLength(asLength(borderLeftWidth), ctx) ?? String(borderLeftWidth);
   }
 
   // Border color
@@ -117,49 +117,49 @@ export function resolveBorderProps(
   // Border radius
   const radiusValue = props.borderRadius ?? props.rounded ?? props.r;
   if (radiusValue !== undefined) {
-    result.borderRadius = resolveRadius(radiusValue as any, ctx) ?? String(radiusValue);
+    result.borderRadius = resolveRadius(asLength(radiusValue), ctx) ?? String(radiusValue);
   }
 
   // Individual corner radius
   if (props.borderTopLeftRadius !== undefined || props.roundedTl !== undefined || props.rtl !== undefined) {
     const val = props.borderTopLeftRadius ?? props.roundedTl ?? props.rtl;
-    result.borderTopLeftRadius = resolveRadius(val as any, ctx) ?? String(val);
+    result.borderTopLeftRadius = resolveRadius(asLength(val), ctx) ?? String(val);
   }
   if (props.borderTopRightRadius !== undefined || props.roundedTr !== undefined || props.rtr !== undefined) {
     const val = props.borderTopRightRadius ?? props.roundedTr ?? props.rtr;
-    result.borderTopRightRadius = resolveRadius(val as any, ctx) ?? String(val);
+    result.borderTopRightRadius = resolveRadius(asLength(val), ctx) ?? String(val);
   }
   if (props.borderBottomLeftRadius !== undefined || props.roundedBl !== undefined || props.rbl !== undefined) {
     const val = props.borderBottomLeftRadius ?? props.roundedBl ?? props.rbl;
-    result.borderBottomLeftRadius = resolveRadius(val as any, ctx) ?? String(val);
+    result.borderBottomLeftRadius = resolveRadius(asLength(val), ctx) ?? String(val);
   }
   if (props.borderBottomRightRadius !== undefined || props.roundedBr !== undefined || props.rbr !== undefined) {
     const val = props.borderBottomRightRadius ?? props.roundedBr ?? props.rbr;
-    result.borderBottomRightRadius = resolveRadius(val as any, ctx) ?? String(val);
+    result.borderBottomRightRadius = resolveRadius(asLength(val), ctx) ?? String(val);
   }
 
   // Rounded top/bottom/left/right
   if (props.roundedTop !== undefined || props.rt !== undefined) {
     const v = props.roundedTop ?? props.rt;
-    const val = resolveRadius(v as any, ctx) ?? String(v);
+    const val = resolveRadius(asLength(v), ctx) ?? String(v);
     result.borderTopLeftRadius = val;
     result.borderTopRightRadius = val;
   }
   if (props.roundedBottom !== undefined || props.rb !== undefined) {
     const v = props.roundedBottom ?? props.rb;
-    const val = resolveRadius(v as any, ctx) ?? String(v);
+    const val = resolveRadius(asLength(v), ctx) ?? String(v);
     result.borderBottomLeftRadius = val;
     result.borderBottomRightRadius = val;
   }
   if (props.roundedLeft !== undefined || props.rl !== undefined) {
     const v = props.roundedLeft ?? props.rl;
-    const val = resolveRadius(v as any, ctx) ?? String(v);
+    const val = resolveRadius(asLength(v), ctx) ?? String(v);
     result.borderTopLeftRadius = val;
     result.borderBottomLeftRadius = val;
   }
   if (props.roundedRight !== undefined || props.rr !== undefined) {
     const v = props.roundedRight ?? props.rr;
-    const val = resolveRadius(v as any, ctx) ?? String(v);
+    const val = resolveRadius(asLength(v), ctx) ?? String(v);
     result.borderTopRightRadius = val;
     result.borderBottomRightRadius = val;
   }
@@ -167,29 +167,29 @@ export function resolveBorderProps(
   // Outline
   if (props.outline !== undefined) result.outline = String(props.outline);
   if (props.outlineWidth !== undefined) {
-    result.outlineWidth = resolveLength(props.outlineWidth as any, ctx) ?? String(props.outlineWidth);
+    result.outlineWidth = resolveLength(asLength(props.outlineWidth), ctx) ?? String(props.outlineWidth);
   }
   if (props.outlineColor !== undefined) {
     result.outlineColor = resolveColor(String(props.outlineColor), ctx) ?? String(props.outlineColor);
   }
   if (props.outlineStyle !== undefined) result.outlineStyle = String(props.outlineStyle);
   if (props.outlineOffset !== undefined) {
-    result.outlineOffset = resolveLength(props.outlineOffset as any, ctx) ?? String(props.outlineOffset);
+    result.outlineOffset = resolveLength(asLength(props.outlineOffset), ctx) ?? String(props.outlineOffset);
   }
 
   // Ring (box-shadow based)
   if (props.ring !== undefined || props.ringWidth !== undefined) {
-    const width = resolveLength((props.ringWidth ?? props.ring) as any, ctx) ?? "3px";
-    const color = props.ringColor 
+    const width = resolveLength(asLength(props.ringWidth ?? props.ring), ctx) ?? "3px";
+    const color = props.ringColor
       ? (resolveColor(String(props.ringColor), ctx) ?? String(props.ringColor))
       : "rgb(59 130 246 / 0.5)";
-    const offset = props.ringOffset 
-      ? (resolveLength(props.ringOffset as any, ctx) ?? "0px")
+    const offset = props.ringOffset
+      ? (resolveLength(asLength(props.ringOffset), ctx) ?? "0px")
       : "0px";
     const offsetColor = props.ringOffsetColor
       ? (resolveColor(String(props.ringOffsetColor), ctx) ?? String(props.ringOffsetColor))
       : "transparent";
-    
+
     result.boxShadow = `0 0 0 ${offset} ${offsetColor}, 0 0 0 calc(${width} + ${offset}) ${color}`;
   }
 

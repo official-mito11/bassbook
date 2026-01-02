@@ -31,7 +31,7 @@ type FlexKey = FlexContainerKey | FlexChildKey;
  */
 export function resolveFlexContainer(
   props: Partial<Record<FlexContainerKey, unknown>>,
-  ctx: StyleContext
+  _ctx: StyleContext
 ): CSSDeclarations {
   const result: CSSDeclarations = {};
 

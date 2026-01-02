@@ -32,10 +32,10 @@ function isComponentSpec(value: unknown): value is AnyComponentSpec {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
   return (
-    (v.layer === "core" || v.layer === "unit" || v.layer === "part") &&
-    typeof v.name === "string" &&
-    typeof v.tree === "object" &&
-    v.tree !== null
+    (v['layer'] === "core" || v['layer'] === "unit" || v['layer'] === "part") &&
+    typeof v['name'] === "string" &&
+    typeof v['tree'] === "object" &&
+    v['tree'] !== null
   );
 }
 
@@ -115,28 +115,52 @@ export type SwitchProps = BassbookComponentProps<typeof CoreComponents.Switch>;
 const SelectHeader = createSlottedComponent(BaseSelectHeader, "header");
 const SelectOption = createSlottedComponent(BaseSelectOption, "options");
 
+function findSelectOptionLabel(
+  children: React.ReactNode,
+  targetValue: string
+): React.ReactNode | undefined {
+  let result: React.ReactNode | undefined = undefined;
+
+  function traverse(nodes: React.ReactNode): void {
+    if (result !== undefined) return;
+
+    React.Children.forEach(nodes, (child) => {
+      if (result !== undefined) return;
+      if (!React.isValidElement(child)) return;
+
+      if (isSlotComponent(child) && isSlottedComponent(child)) {
+        const slotName = getSlotName(child);
+        if (slotName === "options") {
+          const el = child as React.ReactElement<{ value?: unknown; children?: React.ReactNode }>;
+          if (el.props.value === targetValue) {
+            result = el.props.children;
+            return;
+          }
+        }
+      }
+
+      const childElem = child as React.ReactElement<{ children?: React.ReactNode }>;
+      if (childElem.props && typeof childElem.props === "object" && "children" in childElem.props) {
+        traverse(childElem.props.children as React.ReactNode);
+      }
+    });
+  }
+
+  traverse(children);
+  return result;
+}
+
 const SelectWithLabel = React.forwardRef<unknown, BassbookComponentProps<typeof CoreComponents.Select>>(
   function SelectWithLabel(props, ref) {
     const selectedValue = typeof props.value === "string" ? props.value : undefined;
 
-    let selectedLabel: React.ReactNode = undefined;
-    if (selectedValue !== undefined) {
-      React.Children.forEach(props.children, (child) => {
-        if (selectedLabel !== undefined) return;
-        if (!isSlotComponent(child)) return;
-        if (!isSlottedComponent(child)) return;
-        const slotName = getSlotName(child);
-        if (slotName !== "options") return;
-        const el = child as React.ReactElement<{ value?: unknown; children?: React.ReactNode }>;
-        if (el.props.value === selectedValue) {
-          selectedLabel = el.props.children;
-        }
-      });
-    }
+    const selectedLabel = selectedValue !== undefined
+      ? findSelectOptionLabel(props.children, selectedValue)
+      : undefined;
 
-    const existingSlots = (props.__slots ?? undefined) as SlotValues | undefined;
+    const existingSlots = (props['__slots'] ?? undefined) as SlotValues | undefined;
     const nextSlots: SlotValues | undefined =
-      selectedLabel !== undefined && (existingSlots?.value === undefined)
+      selectedLabel !== undefined && (existingSlots?.['value'] === undefined)
         ? { ...(existingSlots ?? {}), value: selectedLabel }
         : existingSlots;
 

@@ -5,7 +5,7 @@
 
 import type { StyleContext } from "../context";
 import type { CSSDeclarations } from "./base";
-import { resolveLength, resolveZIndex, resolveShadow } from "./length";
+import { resolveLength, resolveZIndex, resolveShadow, asLength } from "./length";
 
 // Layout prop keys
 type LayoutKey =
@@ -82,26 +82,26 @@ export function resolveLayoutProps(
   if (props.sticky === true) result.position = "sticky";
 
   // Position offsets
-  if (props.top !== undefined) result.top = resolveLength(props.top as any, ctx) ?? String(props.top);
-  if (props.right !== undefined) result.right = resolveLength(props.right as any, ctx) ?? String(props.right);
-  if (props.bottom !== undefined) result.bottom = resolveLength(props.bottom as any, ctx) ?? String(props.bottom);
-  if (props.left !== undefined) result.left = resolveLength(props.left as any, ctx) ?? String(props.left);
+  if (props.top !== undefined) result.top = resolveLength(asLength(props.top), ctx) ?? String(props.top);
+  if (props.right !== undefined) result.right = resolveLength(asLength(props.right), ctx) ?? String(props.right);
+  if (props.bottom !== undefined) result.bottom = resolveLength(asLength(props.bottom), ctx) ?? String(props.bottom);
+  if (props.left !== undefined) result.left = resolveLength(asLength(props.left), ctx) ?? String(props.left);
 
   // Inset
   if (props.inset !== undefined) {
-    const val = resolveLength(props.inset as any, ctx) ?? String(props.inset);
+    const val = resolveLength(asLength(props.inset), ctx) ?? String(props.inset);
     result.top = val;
     result.right = val;
     result.bottom = val;
     result.left = val;
   }
   if (props.insetX !== undefined) {
-    const val = resolveLength(props.insetX as any, ctx) ?? String(props.insetX);
+    const val = resolveLength(asLength(props.insetX), ctx) ?? String(props.insetX);
     result.left = val;
     result.right = val;
   }
   if (props.insetY !== undefined) {
-    const val = resolveLength(props.insetY as any, ctx) ?? String(props.insetY);
+    const val = resolveLength(asLength(props.insetY), ctx) ?? String(props.insetY);
     result.top = val;
     result.bottom = val;
   }
@@ -109,7 +109,7 @@ export function resolveLayoutProps(
   // Z-index
   const zIndex = props.zIndex ?? props.z;
   if (zIndex !== undefined) {
-    result.zIndex = resolveZIndex(zIndex as any, ctx) ?? String(zIndex);
+    result.zIndex = resolveZIndex(asLength(zIndex), ctx) ?? String(zIndex);
   }
 
   // Overflow
@@ -185,11 +185,11 @@ export function resolveLayoutProps(
     transforms.push(`skewY(${val})`);
   }
   if (props.translateX !== undefined) {
-    const val = resolveLength(props.translateX as any, ctx) ?? String(props.translateX);
+    const val = resolveLength(asLength(props.translateX), ctx) ?? String(props.translateX);
     transforms.push(`translateX(${val})`);
   }
   if (props.translateY !== undefined) {
-    const val = resolveLength(props.translateY as any, ctx) ?? String(props.translateY);
+    const val = resolveLength(asLength(props.translateY), ctx) ?? String(props.translateY);
     transforms.push(`translateY(${val})`);
   }
   if (transforms.length > 0 && !props.transform) {

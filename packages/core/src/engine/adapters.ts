@@ -5,7 +5,7 @@
 
 import type { StyleProps } from "../types";
 import type { StyleResult, StyleOptions } from "./style";
-import { css, extractCSS, createSSRContext } from "./style";
+import { css, createSSRContext } from "./style";
 import type { ThemeTokens } from "../themes/tokens";
 
 import { spacingKeys } from "./resolvers/spacing";
@@ -65,7 +65,7 @@ export function splitProps<T extends Record<string, unknown>>(
 /**
  * Create a styled component factory for any framework
  */
-export interface StyledComponentOptions<P = {}> {
+export interface StyledComponentOptions<_P = {}> {
   // Base styles
   base?: Partial<StyleProps>;
   // Variant styles

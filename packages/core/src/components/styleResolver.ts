@@ -25,7 +25,7 @@ function coerceVariantSelection(value: unknown): string | undefined {
 export function getVariantKeys(spec: { styles?: unknown }): string[] {
   const styles = spec.styles as Record<string, unknown> | undefined;
   if (!styles || !isObject(styles)) return [];
-  const variants = styles.variants as Record<string, unknown> | undefined;
+  const variants = styles["variants"] as Record<string, unknown> | undefined;
   if (!variants || !isObject(variants)) return [];
   return Object.keys(variants);
 }
@@ -40,15 +40,15 @@ export function resolvePartStyles(
   const styles = spec.styles as Record<string, unknown> | undefined;
   if (!styles || !isObject(styles)) {
     if (Object.keys(userStyleProps).length > 0) {
-      result.root = { ...(result.root ?? {}), ...userStyleProps };
+      result["root"] = { ...(result["root"] ?? {}), ...userStyleProps };
     }
     return result;
   }
 
-  mergePartStyles(result, styles.base as SlotStyles | undefined);
+  mergePartStyles(result, styles["base"] as SlotStyles | undefined);
 
-  const variants = styles.variants as Record<string, Record<string, SlotStyles>> | undefined;
-  const defaultVariants = styles.defaultVariants as Record<string, string> | undefined;
+  const variants = styles["variants"] as Record<string, Record<string, SlotStyles>> | undefined;
+  const defaultVariants = styles["defaultVariants"] as Record<string, string> | undefined;
 
   if (variants && isObject(variants)) {
     for (const [variantKey, variantMap] of Object.entries(variants)) {
@@ -60,7 +60,7 @@ export function resolvePartStyles(
     }
   }
 
-  const compoundVariants = styles.compoundVariants as
+  const compoundVariants = styles["compoundVariants"] as
     | Array<{ conditions: Record<string, string>; styles: SlotStyles }>
     | undefined;
 
@@ -76,7 +76,7 @@ export function resolvePartStyles(
   }
 
   if (Object.keys(userStyleProps).length > 0) {
-    result.root = { ...(result.root ?? {}), ...userStyleProps };
+    result["root"] = { ...(result["root"] ?? {}), ...userStyleProps };
   }
 
   return result;

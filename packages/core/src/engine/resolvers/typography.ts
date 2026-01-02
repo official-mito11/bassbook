@@ -4,7 +4,6 @@
  */
 
 import type { StyleContext } from "../context";
-import { resolveToken } from "../context";
 import type { CSSDeclarations } from "./base";
 import { resolveLength, resolveColor } from "./length";
 

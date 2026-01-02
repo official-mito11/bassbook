@@ -17,6 +17,59 @@ type StateValues<S extends StateSchema> = {
     : unknown;
 };
 
+// Centralized click-outside delegation system to avoid multiple document listeners
+interface ClickOutsideHandler {
+  element: HTMLElement | null;
+  binding: EventBinding;
+  dispatch: (action: string, payload?: unknown) => void;
+}
+
+const clickOutsideHandlers = new Set<ClickOutsideHandler>();
+let globalListenerInstalled = false;
+let globalListenerCleanup: (() => void) | null = null;
+
+function installGlobalListener() {
+  if (globalListenerInstalled) return;
+
+  function onPointerDownCapture(ev: PointerEvent) {
+    const target = ev.target as Node | null;
+    if (!target) return;
+
+    for (const handler of clickOutsideHandlers) {
+      const el = handler.element;
+      if (!el) continue;
+      if (typeof el.contains === "function" && el.contains(target)) continue;
+
+      if (handler.binding.preventDefault) {
+        ev.preventDefault();
+      }
+      if (handler.binding.stopPropagation) {
+        ev.stopPropagation();
+      }
+
+      const maybeFn = handler.binding.payload as unknown;
+      const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : handler.binding.payload;
+      handler.dispatch(handler.binding.action, payload ?? ev);
+    }
+  }
+
+  const doc = (globalThis as { document?: Document }).document;
+  if (doc) {
+    doc.addEventListener("pointerdown", onPointerDownCapture, true);
+    globalListenerCleanup = () => {
+      doc.removeEventListener("pointerdown", onPointerDownCapture, true);
+    };
+    globalListenerInstalled = true;
+  }
+}
+
+function uninstallGlobalListener() {
+  if (!globalListenerInstalled) return;
+  globalListenerCleanup?.();
+  globalListenerCleanup = null;
+  globalListenerInstalled = false;
+}
+
 /**
  * Hook that implements component behavior from spec
  * Handles internal state, actions, and event bindings
@@ -51,6 +104,8 @@ export function useBehavior<S extends StateSchema>(
   const outsideTargetsRef = React.useRef<Record<string, HTMLElement | null>>({});
   const outsideBindingsRef = React.useRef<Record<string, EventBinding>>({});
 
+  const handlerRef = React.useRef<ClickOutsideHandler | null>(null);
+
   // Create event handlers from bindings
   const partProps = React.useMemo(() => {
     const result: Record<string, Record<string, unknown>> = {};
@@ -71,7 +126,7 @@ export function useBehavior<S extends StateSchema>(
 
         if (eventName === "onClickOutside") {
           outsideBindingsRef.current[partName] = eventBinding;
-          result[partName].ref = (node: unknown) => {
+          result[partName]["ref"] = (node: unknown) => {
             outsideTargetsRef.current[partName] = (node as HTMLElement | null) ?? null;
           };
           continue;
@@ -104,37 +159,36 @@ export function useBehavior<S extends StateSchema>(
   }, [behavior.bindings, runtime]);
 
   React.useEffect(() => {
-    const doc = (globalThis as { document?: Document }).document;
-    if (!doc) return;
-
     const hasOutsideBindings = Object.keys(outsideBindingsRef.current).length > 0;
     if (!hasOutsideBindings) return;
 
-    function onPointerDownCapture(ev: PointerEvent) {
-      const target = ev.target as Node | null;
-      if (!target) return;
-
-      for (const [partName, binding] of Object.entries(outsideBindingsRef.current)) {
-        const el = outsideTargetsRef.current[partName];
-        if (!el) continue;
-        if (typeof el.contains === "function" && el.contains(target)) continue;
-
-        if (binding.preventDefault) {
-          ev.preventDefault();
+    // Create handler for this component
+    const handler: ClickOutsideHandler = {
+      get element() {
+        // Dynamically get the latest element for each part
+        const elements: Record<string, HTMLElement | null> = {};
+        for (const partName of Object.keys(outsideBindingsRef.current)) {
+          elements[partName] = outsideTargetsRef.current[partName] ?? null;
         }
-        if (binding.stopPropagation) {
-          ev.stopPropagation();
-        }
+        // Return the first element that contains the target (for click-outside detection)
+        return Object.values(elements)[0] ?? null;
+      },
+      get binding() {
+        const values = Object.values(outsideBindingsRef.current);
+        return values[0] as EventBinding;
+      },
+      dispatch: runtime.dispatch.bind(runtime),
+    };
 
-        const maybeFn = binding.payload as unknown;
-        const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : binding.payload;
-        runtime.dispatch(binding.action, payload ?? ev);
-      }
-    }
+    handlerRef.current = handler;
+    clickOutsideHandlers.add(handler);
+    installGlobalListener();
 
-    doc.addEventListener("pointerdown", onPointerDownCapture, true);
     return () => {
-      doc.removeEventListener("pointerdown", onPointerDownCapture, true);
+      clickOutsideHandlers.delete(handler);
+      if (clickOutsideHandlers.size === 0) {
+        uninstallGlobalListener();
+      }
     };
   }, [runtime]);
 

@@ -53,7 +53,6 @@ export const Dialog = definePartComponent({
         shadow: "xl",
         maxW: 480,
         w: "100%",
-        maxH: "85vh",
         overflow: "hidden",
         borderWidth: 1,
         borderStyle: "solid",

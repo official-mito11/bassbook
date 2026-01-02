@@ -1,45 +1,158 @@
 import { defineUnitComponent, comp, slot } from "../spec";
 
+// Icon provider type - icons from different libraries
+export type IconProvider = "lucide" | "mui" | "heroicons" | "feather" | "custom";
+
+// Built-in icon names available in the default set
+export type BuiltInIconName = 
+  | "home" | "search" | "settings" | "user" | "mail" | "bell" | "heart" | "star"
+  | "menu" | "close" | "plus" | "minus" | "check" | "x" | "chevron-right" | "chevron-left"
+  | "chevron-down" | "chevron-up" | "arrow-right" | "arrow-left" | "arrow-down" | "arrow-up"
+  | "trash" | "edit" | "copy" | "share" | "download" | "upload" | "refresh" | "loading"
+  | "eye" | "eye-off" | "lock" | "unlock" | "camera" | "image" | "video" | "audio"
+  | "file" | "folder" | "calendar" | "clock" | "map" | "location" | "link" | "external"
+  | "facebook" | "twitter" | "instagram" | "github" | "discord" | "youtube";
+
 export const Icon = defineUnitComponent({
   name: "Icon",
-  dataProps: ["size"] as const,
+  dataProps: ["name", "provider", "size", "viewBox", "color", "strokeWidth"] as const,
   tree: comp("Svg", {
     part: "root",
     props: {
       "aria-hidden": true,
-      viewBox: "0 0 24 24",
     },
     children: [slot("children")],
   }),
   styles: {
     base: {
       root: {
-        display: "inline-block",
+        display: "inline-flex",
         flexShrink: 0,
         color: "currentColor",
+        fill: "none",
+        stroke: "currentColor",
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
       },
     },
     variants: {
       size: {
-        xs: {
-          root: { w: 12, h: 12 },
-        },
-        sm: {
-          root: { w: 16, h: 16 },
-        },
-        md: {
-          root: { w: 20, h: 20 },
-        },
-        lg: {
-          root: { w: 24, h: 24 },
-        },
-        xl: {
-          root: { w: 32, h: 32 },
-        },
+        xs: { root: { w: 12, h: 12 } },
+        sm: { root: { w: 16, h: 16 } },
+        md: { root: { w: 20, h: 20 } },
+        lg: { root: { w: 24, h: 24 } },
+        xl: { root: { w: 32, h: 32 } },
+        "2xl": { root: { w: 48, h: 48 } },
+        "3xl": { root: { w: 64, h: 64 } },
+      },
+      strokeWidth: {
+        thin: { root: { strokeWidth: 1 } },
+        medium: { root: { strokeWidth: 2 } },
+        bold: { root: { strokeWidth: 3 } },
       },
     },
+    compoundVariants: [
+      {
+        conditions: { size: "xs" },
+        styles: { root: { strokeWidth: 1.5 } },
+      },
+      {
+        conditions: { size: "sm" },
+        styles: { root: { strokeWidth: 1.5 } },
+      },
+    ] as const,
     defaultVariants: {
       size: "md",
+      strokeWidth: "medium",
     },
   },
+});
+
+// Pre-configured icons for common actions
+export const IconArrowRight = defineUnitComponent({
+  name: "IconArrowRight",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "arrow-right" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconArrowLeft = defineUnitComponent({
+  name: "IconArrowLeft",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "arrow-left" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconChevronRight = defineUnitComponent({
+  name: "IconChevronRight",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "chevron-right" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconChevronDown = defineUnitComponent({
+  name: "IconChevronDown",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "chevron-down" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconClose = defineUnitComponent({
+  name: "IconClose",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "close" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconMenu = defineUnitComponent({
+  name: "IconMenu",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "menu" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconCheck = defineUnitComponent({
+  name: "IconCheck",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "check" },
+  }),
+  styles: Icon.styles,
+});
+
+export const IconLoading = defineUnitComponent({
+  name: "IconLoading",
+  layer: "unit",
+  dataProps: ["size"] as const,
+  tree: comp("Icon", {
+    part: "root",
+    props: { name: "loading" },
+  }),
+  styles: Icon.styles,
 });

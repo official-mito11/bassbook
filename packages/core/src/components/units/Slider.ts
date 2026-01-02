@@ -106,10 +106,10 @@ export const Slider = defineUnitComponent({
     },
     context: {
       consume: (_ctx, props) => {
-        const value = typeof props.value === "number" && Number.isFinite(props.value) ? (props.value as number) : 0;
-        const min = typeof props.min === "number" && Number.isFinite(props.min) ? (props.min as number) : 0;
-        const max = typeof props.max === "number" && Number.isFinite(props.max) ? (props.max as number) : 100;
-        const disabled = Boolean(props.disabled);
+        const value = typeof props["value"] === "number" && Number.isFinite(props["value"]) ? (props["value"] as number) : 0;
+        const min = typeof props["min"] === "number" && Number.isFinite(props["min"]) ? (props["min"] as number) : 0;
+        const max = typeof props["max"] === "number" && Number.isFinite(props["max"]) ? (props["max"] as number) : 100;
+        const disabled = Boolean(props["disabled"]);
 
         const denom = max - min;
         const t = denom !== 0 ? (value - min) / denom : 0;

@@ -7,14 +7,14 @@ export const SelectOption = defineUnitComponent({
     context: {
       consume: (ctx, props) => {
         const selectValue = (ctx["Select.value"] ?? undefined) as unknown;
-        const optionValue = (props.value ?? undefined) as unknown;
-        const disabled = Boolean(props.disabled);
+        const optionValue = (props["value"] ?? undefined) as unknown;
+        const disabled = Boolean(props["disabled"]);
         const selected = !disabled && typeof selectValue === "string" && selectValue === optionValue;
         const label =
-          typeof props.label === "string"
-            ? props.label
-            : typeof props.children === "string"
-              ? props.children
+          typeof props["label"] === "string"
+            ? props["label"]
+            : typeof props["children"] === "string"
+              ? props["children"]
               : undefined;
         return {
           selected,

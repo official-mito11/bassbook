@@ -10,6 +10,23 @@ import { resolveToken, isTokenRef, parseAndResolveToken } from "../context";
 import type { Length } from "../../types/length";
 
 /**
+ * Type utility for casting unknown props to Length type
+ * This replaces `as any` with a type-safe cast through `unknown`
+ */
+export function asLength(value: unknown): Length | undefined {
+  return value as Length | undefined;
+}
+
+/**
+ * Type utility for casting unknown to string | number
+ */
+export function asNumeric(value: unknown): string | number | undefined {
+  if (value === undefined || value === null) return undefined;
+  if (typeof value === "number" || typeof value === "string") return value;
+  return undefined;
+}
+
+/**
  * Resolve a length value to CSS string
  */
 export function resolveLength(value: Length | undefined, ctx: StyleContext): string | undefined {

@@ -5,7 +5,7 @@
 
 import type { StyleContext } from "../context";
 import type { CSSDeclarations } from "./base";
-import { resolveColor, resolveSizing } from "./length";
+import { resolveColor, resolveSizing, asNumeric } from "./length";
 
 // Background prop keys
 type BackgroundKey =
@@ -64,7 +64,7 @@ export function resolveBackgroundProps(
   // Background size
   const bgSize = props.backgroundSize ?? props.bgSize;
   if (bgSize !== undefined) {
-    result.backgroundSize = resolveSizing(bgSize as any, ctx) ?? String(bgSize);
+    result.backgroundSize = resolveSizing(asNumeric(bgSize), ctx) ?? String(bgSize);
   }
 
   // Background position

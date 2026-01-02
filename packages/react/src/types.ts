@@ -2,8 +2,6 @@ import type * as React from "react";
 import type {
   AnyComponentSpec,
   ComponentBehavior,
-  ControlledPropsMap,
-  ControlledPropDef,
   StateSchema,
   StyleProps,
 } from "@bassbook/core";

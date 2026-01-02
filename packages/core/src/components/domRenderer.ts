@@ -24,7 +24,7 @@ function normalizeSlots(
   children: SlotValue | undefined
 ): Record<string, SlotValue> {
   const base: Record<string, SlotValue> = { ...(slots ?? {}) };
-  if (children !== undefined) base.children = children;
+  if (children !== undefined) base["children"] = children;
   return base;
 }
 
@@ -50,8 +50,9 @@ function setAttrs(el: Element, attrs: Record<string, unknown> | undefined) {
       try {
         (el as any)[key] = value;
         continue;
-      } catch {
-        // fallthrough
+      } catch (e) {
+        // Property set failed, fallthrough to setAttribute
+        console.debug(`[bassbook] Failed to set property "${key}" on <${el.tagName}>, using setAttribute instead`);
       }
     }
     el.setAttribute(key, String(value));
@@ -132,20 +133,38 @@ export function renderDomComponent(
     const effectiveState = behaviorRuntime.getState() as Record<string, unknown>;
     const effectiveProps: UnknownProps = { ...rawProps, ...effectiveState };
 
-    // apply component-level vars (e.g. slider)
-    if (componentSpec.name === "Slider") {
-      const v = effectiveProps.value;
-      if (typeof v === "number" && Number.isFinite(v)) {
-        effectiveProps.__vars = { "--slider-value": `${Math.min(100, Math.max(0, v))}%` };
+    const behavior = componentSpec.layer === "core" ? undefined : componentSpec.behavior;
+    let consumedPartProps: Record<string, Record<string, unknown>> | undefined;
+
+    if (behavior?.context?.consume) {
+      const consumed = behavior.context.consume({}, effectiveProps);
+      if (consumed && typeof consumed === "object") {
+        consumedPartProps = (consumed as { __partProps?: Record<string, Record<string, unknown>> }).__partProps;
       }
+    }
+
+    const userPartProps = (effectiveProps["__partProps"] ?? {}) as Record<string, Record<string, unknown>>;
+
+    // Merge partProps: consumedPartProps -> userPartProps
+    const mergedPartProps: Record<string, Record<string, unknown>> = {};
+    if (consumedPartProps) {
+      for (const [partName, partObj] of Object.entries(consumedPartProps)) {
+        mergedPartProps[partName] = { ...(mergedPartProps[partName] ?? {}), ...(partObj ?? {}) };
+      }
+    }
+    for (const [partName, partObj] of Object.entries(userPartProps)) {
+      mergedPartProps[partName] = { ...(mergedPartProps[partName] ?? {}), ...(partObj ?? {}) };
     }
 
     const partStyles = resolvePartStyles(componentSpec, effectiveProps, userStyleProps);
 
     function renderNode(node: NodeSpec, extraForThisNode?: UnknownProps): Node {
+      const partProps = node.kind !== "slot" ? (mergedPartProps[node.part] ?? {}) : {};
+      const nodeExtra = { ...(extraForThisNode ?? {}), ...partProps };
+
       if (node.kind === "slot") {
         const slotNode = node as SlotNodeSpec;
-        const normalized = normalizeSlots(currentSlots, rawProps.children as SlotValue | undefined);
+        const normalized = normalizeSlots(currentSlots, rawProps["children"] as SlotValue | undefined);
         const value = normalized[slotNode.slot] as SlotValue;
         const children = flattenSlotValue(value);
         if (children.length === 0) return document.createTextNode("");
@@ -176,7 +195,7 @@ export function renderDomComponent(
         currentProps = { ...prevProps, ...nodeProps };
         currentSlots = { ...prevSlots, children: (node.children ?? []).map((c) => renderNode(c as NodeSpec)) };
 
-        const childRootNode = renderBySpec(childSpec, extraForThisNode, stack);
+        const childRootNode = renderBySpec(childSpec, nodeExtra, stack);
 
         currentProps = prevProps;
         currentSlots = prevSlots;
@@ -199,7 +218,7 @@ export function renderDomComponent(
       partElements.set(node.part, el);
 
       const attrs = (node.attrs ?? {}) as UnknownProps;
-      const merged = { ...(attrs ?? {}), ...(extraForThisNode ?? {}) };
+      const merged = { ...(attrs ?? {}), ...nodeExtra };
 
       setAttrs(el, merged);
 
@@ -218,7 +237,7 @@ export function renderDomComponent(
 
     if (rootNode instanceof HTMLElement) {
       // Apply vars on root if provided
-      const vars = effectiveProps.__vars;
+      const vars = effectiveProps["__vars"];
       if (isObject(vars)) {
         for (const [k, v] of Object.entries(vars)) {
           if (v === undefined || v === null) continue;
@@ -325,7 +344,7 @@ export function renderDomComponent(
     const { styleProps: userStyleProps } = splitProps(rawProps);
 
     if (rootSpec.name === "Slider") {
-      const v = effectiveProps.value;
+      const v = effectiveProps["value"];
       if (typeof v === "number" && Number.isFinite(v)) {
         const rootEl = partElements.get("root");
         if (rootEl) rootEl.style.setProperty("--slider-value", `${Math.min(100, Math.max(0, v))}%`);

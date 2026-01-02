@@ -14,7 +14,7 @@ export type PropertyResolver<T> = (
   ctx: StyleContext
 ) => CSSDeclarations | null;
 
-// Property definition with resolver
+// Property definition with resolver - uses never for cssProperty when custom resolver is provided
 export interface PropertyDefinition<T = unknown> {
   // CSS property name(s) this maps to
   cssProperty: keyof Properties | (keyof Properties)[];
@@ -26,8 +26,12 @@ export interface PropertyDefinition<T = unknown> {
   resolver?: PropertyResolver<T>;
 }
 
-// Registry of property definitions
-export type PropertyRegistry = Record<string, PropertyDefinition>;
+/**
+ * Type guard to check if property has custom resolver
+ */
+function hasCustomResolver<T>(def: PropertyDefinition<T>): def is PropertyDefinition<T> & { resolver: PropertyResolver<T> } {
+  return def.resolver !== undefined;
+}
 
 /**
  * Create a simple property definition
@@ -54,7 +58,8 @@ export function defineCustomProperty<T>(
   aliases?: string[]
 ): PropertyDefinition<T> {
   return {
-    cssProperty: [] as any,
+    // When custom resolver is provided, cssProperty is not used
+    cssProperty: undefined as never,
     aliases,
     resolver,
   };
@@ -69,20 +74,20 @@ export function applyProperty<T>(
   ctx: StyleContext
 ): CSSDeclarations | null {
   // Use custom resolver if provided
-  if (def.resolver) {
+  if (hasCustomResolver(def)) {
     return def.resolver(value, ctx);
   }
 
   // Transform value
-  const transformed = def.transform 
-    ? def.transform(value, ctx) 
+  const transformed = def.transform
+    ? def.transform(value, ctx)
     : String(value);
 
   if (transformed === undefined) return null;
 
   // Apply to CSS properties
-  const props = Array.isArray(def.cssProperty) 
-    ? def.cssProperty 
+  const props = Array.isArray(def.cssProperty)
+    ? def.cssProperty
     : [def.cssProperty];
 
   const result: CSSDeclarations = {};

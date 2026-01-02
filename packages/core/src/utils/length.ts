@@ -3,7 +3,7 @@
  * @deprecated Use engine/resolvers/length instead
  */
 
-import type { Length, SizingKeyword, ResolvedLength } from "../types";
+import type { Length, SizingKeyword } from "../types";
 
 const SIZING_MAP: Record<SizingKeyword, string> = {
   auto: "auto",

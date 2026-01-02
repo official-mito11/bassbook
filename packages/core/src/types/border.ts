@@ -39,6 +39,8 @@ export interface BorderProps {
   borderTopRightRadius?: Length;
   borderBottomLeftRadius?: Length;
   borderBottomRightRadius?: Length;
+  // SVG stroke width (for icons, SVGs)
+  strokeWidth?: Length;
   // Aliases
   bt?: string;
   br?: string;
@@ -48,10 +50,10 @@ export interface BorderProps {
   brWidth?: Length;
   bbWidth?: Length;
   blWidth?: Length;
-  btColor?: string;
-  brColor?: string;
-  bbColor?: string;
-  blColor?: string;
+  btColor?: Length;
+  brColor?: Length;
+  bbColor?: Length;
+  blColor?: Length;
   rounded?: Length;
   roundedTl?: Length;
   roundedTr?: Length;
@@ -76,6 +78,11 @@ export interface BorderProps {
   ringWidth?: Length;
   ringOffset?: Length;
   ringOffsetColor?: string;
+  // SVG stroke properties
+  strokeLinecap?: "butt" | "round" | "square";
+  strokeLinejoin?: "miter" | "round" | "bevel";
+  strokeDasharray?: string;
+  strokeDashoffset?: Length;
 }
 
 export interface OutlineProps {
