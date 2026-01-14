@@ -41,7 +41,9 @@ export const Sizes: Story = {
   render: () => (
     <VStack gap={24} w={300}>
       <Box w="full">
-        <Label fontSize="sm" mb={4}>Small</Label>
+        <Label fontSize="sm" mb={4}>
+          Small
+        </Label>
         <Slider size="sm" defaultValue={25} min={0} max={100} />
       </Box>
       <Box w="full">
@@ -77,7 +79,7 @@ export const States: Story = {
 
 const SliderWithValueDisplay = () => {
   const [value, setValue] = useState(50);
-  
+
   return (
     <Box w="full">
       <Slider value={value} onChange={(e: any) => setValue(Number(e.target.value))} min={0} max={100} />
@@ -99,9 +101,9 @@ export const VolumeControl: Story = {
 const VolumeControlExample = () => {
   const [volume, setVolume] = useState(50);
   const [muted, setMuted] = useState(false);
-  
+
   const displayValue = muted ? 0 : volume;
-  
+
   return (
     <Box w={280} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={12}>
@@ -112,9 +114,11 @@ const VolumeControlExample = () => {
             </Text>
             <Text fontWeight="medium">Volume</Text>
           </HStack>
-          <Text fontWeight="bold" color="primary">{displayValue}%</Text>
+          <Text fontWeight="bold" color="primary">
+            {displayValue}%
+          </Text>
         </HStack>
-        
+
         <Slider
           value={muted ? 0 : volume}
           onChange={(e: any) => {
@@ -124,7 +128,7 @@ const VolumeControlExample = () => {
           min={0}
           max={100}
         />
-        
+
         <HStack justifyContent="space-between" fontSize="xs" color="gray.400">
           <Text>0</Text>
           <Text>25</Text>
@@ -143,13 +147,13 @@ export const BrightnessControl: Story = {
 
 const BrightnessControlExample = () => {
   const [brightness, setBrightness] = useState(80);
-  
+
   return (
-    <Box 
-      w={280} 
-      p={16} 
-      border="1px solid" 
-      borderColor="gray.200" 
+    <Box
+      w={280}
+      p={16}
+      border="1px solid"
+      borderColor="gray.200"
       rounded="lg"
       bg={`rgba(255, 255, 200, ${brightness / 100})`}
     >
@@ -161,20 +165,15 @@ const BrightnessControlExample = () => {
           </HStack>
           <Text fontWeight="bold">{brightness}%</Text>
         </HStack>
-        
-        <Slider
-          value={brightness}
-          onChange={(e: any) => setBrightness(Number(e.target.value))}
-          min={10}
-          max={100}
-        />
-        
-        <Box 
-          h={60} 
-          bg="white" 
-          rounded="md" 
-          display="flex" 
-          alignItems="center" 
+
+        <Slider value={brightness} onChange={(e: any) => setBrightness(Number(e.target.value))} min={10} max={100} />
+
+        <Box
+          h={60}
+          bg="white"
+          rounded="md"
+          display="flex"
+          alignItems="center"
           justifyContent="center"
           border="1px solid"
           borderColor="gray.200"
@@ -192,14 +191,14 @@ export const TemperatureControl: Story = {
 
 const TemperatureControlExample = () => {
   const [temperature, setTemperature] = useState(72);
-  
+
   const getColor = () => {
     if (temperature < 60) return "blue";
     if (temperature < 70) return "cyan";
     if (temperature < 80) return "orange";
     return "red";
   };
-  
+
   return (
     <Box w={280} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={12}>
@@ -208,29 +207,20 @@ const TemperatureControlExample = () => {
             <Text fontSize="xl">🌡️</Text>
             <Text fontWeight="medium">Temperature</Text>
           </HStack>
-          <Text fontWeight="bold" color={`${getColor()}.500`}>{temperature}°F</Text>
+          <Text fontWeight="bold" color={`${getColor()}.500`}>
+            {temperature}°F
+          </Text>
         </HStack>
-        
-        <Slider
-          value={temperature}
-          onChange={(e: any) => setTemperature(Number(e.target.value))}
-          min={32}
-          max={100}
-        />
-        
+
+        <Slider value={temperature} onChange={(e: any) => setTemperature(Number(e.target.value))} min={32} max={100} />
+
         <HStack justifyContent="space-between" fontSize="xs" color="gray.400">
           <Text>32°F</Text>
           <Text>66°F</Text>
           <Text>100°F</Text>
         </HStack>
-        
-        <Box 
-          p={8} 
-          bg={`${getColor()}.50`} 
-          rounded="md"
-          border="1px solid"
-          borderColor={`${getColor()}.200`}
-        >
+
+        <Box p={8} bg={`${getColor()}.50`} rounded="md" border="1px solid" borderColor={`${getColor()}.200`}>
           <Text fontSize="sm" color={`${getColor()}.700`}>
             {temperature < 60 ? "❄️ Cool" : temperature < 80 ? "☀️ Warm" : "🔥 Hot"}
           </Text>
@@ -246,12 +236,12 @@ export const RangeSlider: Story = {
 
 const RangeSliderExample = () => {
   const [range, setRange] = useState<[number, number]>([25, 75]);
-  
+
   return (
     <Box w={320} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={12}>
         <Text fontWeight="bold">Price Range</Text>
-        
+
         <Slider
           value={range[0]}
           onChange={(e: any) => setRange([Number(e.target.value), range[1]])}
@@ -259,7 +249,7 @@ const RangeSliderExample = () => {
           max={100}
           w="full"
         />
-        
+
         <Slider
           value={range[1]}
           onChange={(e: any) => setRange([range[0], Number(e.target.value)])}
@@ -267,18 +257,22 @@ const RangeSliderExample = () => {
           max={100}
           w="full"
         />
-        
+
         <HStack justifyContent="space-between" pt={8}>
           <Box p={8} bg="gray.50" rounded="md">
-            <Text fontSize="xs" color="gray.500">Min</Text>
+            <Text fontSize="xs" color="gray.500">
+              Min
+            </Text>
             <Text fontWeight="bold">${range[0]}</Text>
           </Box>
           <Box p={8} bg="gray.50" rounded="md">
-            <Text fontSize="xs" color="gray.500">Max</Text>
+            <Text fontSize="xs" color="gray.500">
+              Max
+            </Text>
             <Text fontWeight="bold">${range[1]}</Text>
           </Box>
         </HStack>
-        
+
         <Box p={8} bg="blue.50" rounded="md" w="full">
           <Text fontSize="sm" color="blue.700">
             Selected range: ${range[0]} - ${range[1]}
@@ -295,28 +289,24 @@ export const WithSteps: Story = {
 
 const StepsSliderExample = () => {
   const [value, setValue] = useState(3);
-  
+
   const options = [1, 2, 3, 4, 5];
   const labels = ["Poor", "Fair", "Good", "Very Good", "Excellent"];
-  
+
   return (
     <Box w={300} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={16}>
-        <Text fontWeight="bold" fontSize="lg" textAlign="center">Rate Your Experience</Text>
-        
-        <Slider
-          value={value}
-          onChange={(e: any) => setValue(Number(e.target.value))}
-          min={1}
-          max={5}
-          step={1}
-        />
-        
+        <Text fontWeight="bold" fontSize="lg" textAlign="center">
+          Rate Your Experience
+        </Text>
+
+        <Slider value={value} onChange={(e: any) => setValue(Number(e.target.value))} min={1} max={5} step={1} />
+
         <HStack justifyContent="space-between" px={8}>
           {options.map((num) => (
             <Box key={num} textAlign="center">
-              <Text 
-                fontSize="lg" 
+              <Text
+                fontSize="lg"
                 fontWeight={value === num ? "bold" : "normal"}
                 color={value === num ? "purple.500" : "gray.400"}
               >
@@ -325,20 +315,16 @@ const StepsSliderExample = () => {
             </Box>
           ))}
         </HStack>
-        
+
         <Box p={12} bg="purple.50" rounded="md" w="full" textAlign="center">
           <Text fontWeight="medium" color="purple.700">
             {labels[value - 1]}
           </Text>
         </Box>
-        
+
         <HStack gap={4} justifyContent="center" flexWrap="wrap">
           {options.map((num) => (
-            <Text 
-              key={num}
-              fontSize="xs"
-              color={value === num ? "purple.600" : "gray.400"}
-            >
+            <Text key={num} fontSize="xs" color={value === num ? "purple.600" : "gray.400"}>
               {labels[num - 1]}
             </Text>
           ))}
@@ -380,29 +366,17 @@ export const CustomStyles: Story = {
     <VStack gap={24} w={300}>
       <Box w="full">
         <Label>Custom Track Color</Label>
-        <Slider 
-          defaultValue={50} 
-          min={0} 
-          max={100} 
-        />
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
-      
+
       <Box w="full">
         <Label>Custom Thumb</Label>
-        <Slider 
-          defaultValue={50} 
-          min={0} 
-          max={100} 
-        />
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
-      
+
       <Box w="full">
         <Label>With Shadow</Label>
-        <Slider 
-          defaultValue={50} 
-          min={0} 
-          max={100} 
-        />
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
     </VStack>
   ),
@@ -422,20 +396,26 @@ const SettingsPanelExample = () => {
     contrast: 60,
     saturation: 70,
   });
-  
+
   return (
     <Box w={320} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box bg="gray.50" p={16} borderBottom="1px solid" borderColor="gray.200">
-        <Text fontWeight="bold" fontSize="lg">Display Settings</Text>
+        <Text fontWeight="bold" fontSize="lg">
+          Display Settings
+        </Text>
       </Box>
-      
+
       <VStack gap={0}>
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Brightness</Text>
-            <Text fontSize="xs" color="gray.500">Screen brightness level</Text>
+            <Text fontSize="xs" color="gray.500">
+              Screen brightness level
+            </Text>
           </VStack>
-          <Text fontWeight="bold" color="primary">{settings.brightness}%</Text>
+          <Text fontWeight="bold" color="primary">
+            {settings.brightness}%
+          </Text>
         </HStack>
         <Slider
           value={settings.brightness}
@@ -445,13 +425,17 @@ const SettingsPanelExample = () => {
           p={16}
           pt={0}
         />
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Contrast</Text>
-            <Text fontSize="xs" color="gray.500">Image contrast level</Text>
+            <Text fontSize="xs" color="gray.500">
+              Image contrast level
+            </Text>
           </VStack>
-          <Text fontWeight="bold" color="primary">{settings.contrast}%</Text>
+          <Text fontWeight="bold" color="primary">
+            {settings.contrast}%
+          </Text>
         </HStack>
         <Slider
           value={settings.contrast}
@@ -461,13 +445,17 @@ const SettingsPanelExample = () => {
           p={16}
           pt={0}
         />
-        
+
         <HStack p={16} justifyContent="space-between">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Saturation</Text>
-            <Text fontSize="xs" color="gray.500">Color saturation level</Text>
+            <Text fontSize="xs" color="gray.500">
+              Color saturation level
+            </Text>
           </VStack>
-          <Text fontWeight="bold" color="primary">{settings.saturation}%</Text>
+          <Text fontWeight="bold" color="primary">
+            {settings.saturation}%
+          </Text>
         </HStack>
         <Slider
           value={settings.saturation}
@@ -493,41 +481,36 @@ const AudioMixerExample = () => {
     { name: "Bass", value: 80, color: "green" },
     { name: "Drums", value: 65, color: "orange" },
   ]);
-  
+
   const [volumes, setVolumes] = useState<Record<string, number>>(
     channels.reduce((acc, ch) => ({ ...acc, [ch.name]: ch.value }), {})
   );
-  
+
   const updateVolume = (name: string, value: number) => {
     setVolumes((prev) => ({ ...prev, [name]: value }));
   };
-  
-  const masterVolume = Math.round(
-    Object.values(volumes).reduce((a, b) => a + b, 0) / channels.length
-  );
-  
+
+  const masterVolume = Math.round(Object.values(volumes).reduce((a, b) => a + b, 0) / channels.length);
+
   return (
     <Box w={350} p={20} border="1px solid" borderColor="gray.200" rounded="lg" bg="gray.900">
       <VStack gap={20}>
         <HStack justifyContent="space-between" alignItems="center">
-          <Text fontWeight="bold" fontSize="lg" color="white">🎚️ Audio Mixer</Text>
+          <Text fontWeight="bold" fontSize="lg" color="white">
+            🎚️ Audio Mixer
+          </Text>
           <Box px={12} py={4} bg="gray.700" rounded="md">
-            <Text fontWeight="bold" color="green.400">Master: {masterVolume}%</Text>
+            <Text fontWeight="bold" color="green.400">
+              Master: {masterVolume}%
+            </Text>
           </Box>
         </HStack>
-        
+
         <HStack gap={16} alignItems="flex-end" justifyContent="center">
           {channels.map((channel) => (
             <VStack key={channel.name} gap={8}>
-              <Box 
-                h={120} 
-                w={40} 
-                bg="gray.800" 
-                rounded="md" 
-                position="relative"
-                overflow="hidden"
-              >
-                <Box 
+              <Box h={120} w={40} bg="gray.800" rounded="md" position="relative" overflow="hidden">
+                <Box
                   position="absolute"
                   bottom={0}
                   left={0}
@@ -547,8 +530,12 @@ const AudioMixerExample = () => {
                 h={100}
                 transform="rotate(-90deg)"
               />
-              <Text fontSize="xs" color="gray.400">{channel.name}</Text>
-              <Text fontSize="sm" color="white" fontWeight="bold">{volumes[channel.name]}</Text>
+              <Text fontSize="xs" color="gray.400">
+                {channel.name}
+              </Text>
+              <Text fontSize="sm" color="white" fontWeight="bold">
+                {volumes[channel.name]}
+              </Text>
             </VStack>
           ))}
         </HStack>
@@ -565,26 +552,24 @@ export const ThemeStyles: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
       <Box p={16} border="1px solid" borderColor="gray.200" rounded="lg" w="full">
-        <Text fontWeight="medium" mb={8}>Light Theme (Default)</Text>
+        <Text fontWeight="medium" mb={8}>
+          Light Theme (Default)
+        </Text>
         <Slider defaultValue={50} min={0} max={100} />
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="gray.600" rounded="lg" w="full" bg="gray.800">
-        <Text fontWeight="medium" mb={8} color="gray.200">Dark Theme</Text>
-        <Slider 
-          defaultValue={50} 
-          min={0} 
-          max={100} 
-        />
+        <Text fontWeight="medium" mb={8} color="gray.200">
+          Dark Theme
+        </Text>
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="purple.200" rounded="lg" w="full" bg="purple.50">
-        <Text fontWeight="medium" mb={8} color="purple.700">Brand Theme (Purple)</Text>
-        <Slider 
-          defaultValue={50} 
-          min={0} 
-          max={100} 
-        />
+        <Text fontWeight="medium" mb={8} color="purple.700">
+          Brand Theme (Purple)
+        </Text>
+        <Slider defaultValue={50} min={0} max={100} />
       </Box>
     </VStack>
   ),

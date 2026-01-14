@@ -5,12 +5,12 @@ export const Modal = definePartComponent({
   dataProps: ["open"] as const,
   keyframes: {
     fadeIn: {
-      from: { opacity: 0 },
-      to: { opacity: 1 },
+      "0%": { opacity: 0 },
+      "100%": { opacity: 1 },
     },
     modalIn: {
-      from: { opacity: 0, transform: "scale(0.95)" },
-      to: { opacity: 1, transform: "scale(1)" },
+      "0%": { opacity: 0, transform: "scale(0.96) translateY(-8px)" },
+      "100%": { opacity: 1, transform: "scale(1) translateY(0)" },
     },
   },
   tree: comp("Box", {
@@ -37,20 +37,20 @@ export const Modal = definePartComponent({
         display: "flex",
         alignCenter: true,
         justifyCenter: true,
-        p: 16,
+        p: 20,
       },
       backdrop: {
         position: "absolute",
         inset: 0,
         bg: "overlay",
-        animation: "fadeIn 200ms ease-out",
+        animation: "fadeIn 250ms ease-out",
       },
       container: {
         position: "relative",
         zIndex: 1,
         maxW: "100%",
         maxH: "100%",
-        animation: "modalIn 200ms ease-out",
+        animation: "modalIn 300ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
     variants: {

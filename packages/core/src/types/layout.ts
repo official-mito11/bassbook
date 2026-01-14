@@ -6,11 +6,17 @@
 import type { Length } from "./length";
 
 // Display values
-export type Display = 
-  | "block" | "inline" | "inline-block" 
-  | "flex" | "inline-flex" 
-  | "grid" | "inline-grid"
-  | "flow-root" | "contents" | "none";
+export type Display =
+  | "block"
+  | "inline"
+  | "inline-block"
+  | "flex"
+  | "inline-flex"
+  | "grid"
+  | "inline-grid"
+  | "flow-root"
+  | "contents"
+  | "none";
 
 // Position values
 export type Position = "static" | "relative" | "absolute" | "fixed" | "sticky";
@@ -137,15 +143,16 @@ export interface AnimationProps {
   animationPlayState?: string;
 }
 
-export interface LayoutProps extends 
-  DisplayProps, 
-  PositionProps, 
-  OverflowProps, 
-  TransformProps, 
-  TransitionProps,
-  InteractionProps,
-  ObjectProps,
-  FloatProps,
-  IsolationProps,
-  AnimationProps,
-  EffectProps {}
+export interface LayoutProps
+  extends
+    DisplayProps,
+    PositionProps,
+    OverflowProps,
+    TransformProps,
+    TransitionProps,
+    InteractionProps,
+    ObjectProps,
+    FloatProps,
+    IsolationProps,
+    AnimationProps,
+    EffectProps {}

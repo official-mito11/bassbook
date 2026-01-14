@@ -26,10 +26,7 @@ export type StateSchema = Record<string, StateFieldDef>;
 /**
  * Action function type - receives current state and optional payload, returns partial state update
  */
-export type ActionFn<S = Record<string, unknown>> = (
-  state: S,
-  payload?: unknown
-) => Partial<S>;
+export type ActionFn<S = Record<string, unknown>> = (state: S, payload?: unknown) => Partial<S>;
 
 /**
  * Actions map for a component
@@ -105,29 +102,42 @@ export interface ComponentBehavior<S extends StateSchema = StateSchema> {
    * - consume: derive extra props (e.g., selected) from ancestor-provided context
    */
   context?: {
-    provide?: Record<string, (api: { state: Record<string, unknown>; dispatch: (action: string, payload?: unknown) => void; props: Record<string, unknown> }) => unknown>;
+    provide?: Record<
+      string,
+      (api: {
+        state: Record<string, unknown>;
+        dispatch: (action: string, payload?: unknown) => void;
+        props: Record<string, unknown>;
+      }) => unknown
+    >;
     consume?: (ctx: Record<string, unknown>, props: Record<string, unknown>) => Record<string, unknown>;
   };
 }
 
-export type DOMTagName =
-  | keyof HTMLElementTagNameMap
-  | keyof SVGElementTagNameMap
-  | (string & {});
+export type DOMTagName = keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap | (string & {});
 
 export type SlotStyles = Record<string, Partial<StyleProps>>;
 
-export type KeyframesSpec = Record<
-  string,
-  Record<string, Record<string, string | number | undefined>>
->;
+export type KeyframesSpec = Record<string, Record<string, Record<string, string | number | undefined>>>;
+
+/**
+ * CSS variable binding - maps state/props to CSS custom properties
+ */
+export interface CSSVarBinding {
+  /** State or prop key to read from */
+  from: string;
+  /** Optional transform function to convert value to CSS string */
+  transform?: (value: unknown) => string;
+}
+
+export type CSSVarsMap = Record<string, CSSVarBinding>;
 
 export interface BaseStyleConfig<B extends SlotStyles = SlotStyles> {
   base?: B;
 }
 
 export interface VariantStyleConfig<
-  V extends Record<string, Record<string, SlotStyles>> = Record<string, Record<string, SlotStyles>>
+  V extends Record<string, Record<string, SlotStyles>> = Record<string, Record<string, SlotStyles>>,
 > extends BaseStyleConfig {
   variants?: V;
   defaultVariants?: Record<string, string | boolean | number>;
@@ -202,11 +212,12 @@ export interface CoreComponentSpec {
   dataProps?: readonly string[];
   cssText?: string;
   keyframes?: KeyframesSpec;
+  cssVars?: CSSVarsMap;
 }
 
 export interface UnitComponentSpec<
   Styles extends VariantStyleConfig = VariantStyleConfig,
-  Behavior extends ComponentBehavior = ComponentBehavior
+  Behavior extends ComponentBehavior = ComponentBehavior,
 > {
   layer: "unit";
   name: string;
@@ -217,11 +228,12 @@ export interface UnitComponentSpec<
   behavior?: Behavior;
   cssText?: string;
   keyframes?: KeyframesSpec;
+  cssVars?: CSSVarsMap;
 }
 
 export interface PartComponentSpec<
   Styles extends VariantStyleConfig = VariantStyleConfig,
-  Behavior extends ComponentBehavior = ComponentBehavior
+  Behavior extends ComponentBehavior = ComponentBehavior,
 > {
   layer: "part";
   name: string;
@@ -234,25 +246,20 @@ export interface PartComponentSpec<
   slots?: SlotsMap;
   cssText?: string;
   keyframes?: KeyframesSpec;
+  cssVars?: CSSVarsMap;
 }
 
 export type AnyComponentSpec = CoreComponentSpec | UnitComponentSpec | PartComponentSpec;
 
-export function defineCoreComponent<const S extends Omit<CoreComponentSpec, "layer">>(
-  spec: S
-): S & { layer: "core" } {
+export function defineCoreComponent<const S extends Omit<CoreComponentSpec, "layer">>(spec: S): S & { layer: "core" } {
   return { ...spec, layer: "core" };
 }
 
-export function defineUnitComponent<const S>(
-  spec: S & Omit<UnitComponentSpec, "layer">
-): S & { layer: "unit" } {
+export function defineUnitComponent<const S>(spec: S & Omit<UnitComponentSpec, "layer">): S & { layer: "unit" } {
   return { ...spec, layer: "unit" };
 }
 
-export function definePartComponent<const S>(
-  spec: S & Omit<PartComponentSpec, "layer">
-): S & { layer: "part" } {
+export function definePartComponent<const S>(spec: S & Omit<PartComponentSpec, "layer">): S & { layer: "part" } {
   return { ...spec, layer: "part" };
 }
 

@@ -9,12 +9,9 @@ export default {
   title: "Core/CoreForm",
   component: Component,
   args: {
-
     children: "CoreForm",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

@@ -9,13 +9,13 @@ export default {
   title: "Unit/SelectOption",
   component: Component,
   args: {
-    "selected": false,
-    "disabled": false,
+    selected: false,
+    disabled: false,
     children: "SelectOption",
   },
   argTypes: {
-    "selected": { control: "boolean" },
-    "disabled": { control: "boolean" },
+    selected: { control: "boolean" },
+    disabled: { control: "boolean" },
   },
 };
 

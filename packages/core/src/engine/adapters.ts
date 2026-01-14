@@ -7,6 +7,7 @@ import type { StyleProps } from "../types";
 import type { StyleResult, StyleOptions } from "./style";
 import { css, createSSRContext } from "./style";
 import type { ThemeTokens } from "../themes/tokens";
+import { setStyleProperty } from "../utils/dom";
 
 import { spacingKeys } from "./resolvers/spacing";
 import { sizingKeys } from "./resolvers/sizing";
@@ -95,18 +96,14 @@ export function createStyled<V extends Record<string, Record<string, Partial<Sty
     [K in keyof V]?: keyof V[K];
   };
 
-  return function styled(
-    props: Partial<StyleProps> & VariantProps,
-    additionalOptions?: StyleOptions
-  ): StyleResult {
+  return function styled(props: Partial<StyleProps> & VariantProps, additionalOptions?: StyleOptions): StyleResult {
     const allStyles: Partial<StyleProps> = { ...options.base };
 
     // Apply variant styles
     if (options.variants) {
       for (const [variantKey, variantValue] of Object.entries(options.variants)) {
-        const selectedVariant = (props as Record<string, unknown>)[variantKey] 
-          ?? options.defaultVariants?.[variantKey];
-        
+        const selectedVariant = (props as Record<string, unknown>)[variantKey] ?? options.defaultVariants?.[variantKey];
+
         if (selectedVariant && typeof selectedVariant === "string") {
           const variantStyles = variantValue[selectedVariant];
           if (variantStyles) {
@@ -120,8 +117,7 @@ export function createStyled<V extends Record<string, Record<string, Partial<Sty
     if (options.compoundVariants) {
       for (const compound of options.compoundVariants) {
         const matches = Object.entries(compound.conditions).every(([key, value]) => {
-          const propValue = (props as Record<string, unknown>)[key] 
-            ?? options.defaultVariants?.[key];
+          const propValue = (props as Record<string, unknown>)[key] ?? options.defaultVariants?.[key];
           return propValue === value;
         });
 
@@ -184,28 +180,20 @@ export function createSSRCollector(options?: { theme?: Partial<ThemeTokens>; pre
 /**
  * Vanilla JS helper - Apply styles to an element
  */
-export function applyStyles(
-  element: HTMLElement,
-  props: Partial<StyleProps>,
-  options?: StyleOptions
-): void {
+export function applyStyles(element: HTMLElement, props: Partial<StyleProps>, options?: StyleOptions): void {
   const result = css(props as Record<string, unknown>, options);
-  
+
   // Add class names
   if (result.className) {
     element.className = result.className;
   }
-  
+
   // Apply inline styles
   if (result.style) {
     for (const [key, value] of Object.entries(result.style)) {
       if (value === undefined || value === null) continue;
       const stringValue = String(value);
-      if (key.startsWith("--") || key.includes("-")) {
-        element.style.setProperty(key, stringValue);
-      } else {
-        (element.style as any)[key] = stringValue;
-      }
+      setStyleProperty(element, key, stringValue);
     }
   }
 }
@@ -220,23 +208,19 @@ export function createElement<K extends keyof HTMLElementTagNameMap>(
 ): HTMLElementTagNameMap[K] {
   const element = document.createElement(tag);
   const result = css(props as Record<string, unknown>, { className: props.className });
-  
+
   if (result.className) {
     element.className = result.className;
   }
-  
+
   if (result.style) {
     for (const [key, value] of Object.entries(result.style)) {
       if (value === undefined || value === null) continue;
       const stringValue = String(value);
-      if (key.startsWith("--") || key.includes("-")) {
-        element.style.setProperty(key, stringValue);
-      } else {
-        (element.style as any)[key] = stringValue;
-      }
+      setStyleProperty(element, key, stringValue);
     }
   }
-  
+
   if (children) {
     for (const child of children) {
       if (typeof child === "string") {
@@ -246,6 +230,6 @@ export function createElement<K extends keyof HTMLElementTagNameMap>(
       }
     }
   }
-  
+
   return element;
 }

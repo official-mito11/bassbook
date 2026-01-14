@@ -9,20 +9,49 @@ import { resolveSizing } from "./length";
 
 // Flex container prop keys
 type FlexContainerKey =
-  | "flexDirection" | "flexRow" | "flexColumn" | "flexRowReverse" | "flexColumnReverse"
-  | "flexWrap" | "flexNowrap" | "flexDoWrap" | "flexDowrap" | "flexWrapReverse"
-  | "justifyContent" | "justify" | "justifyStart" | "justifyEnd" | "justifyCenter" 
-  | "justifyBetween" | "justifyAround" | "justifyEvenly"
-  | "alignItems" | "align" | "alignStart" | "alignEnd" | "alignCenter" 
-  | "alignBaseline" | "alignStretch"
-  | "alignContent" | "placeContent" | "placeItems";
+  | "flexDirection"
+  | "flexRow"
+  | "flexColumn"
+  | "flexRowReverse"
+  | "flexColumnReverse"
+  | "flexWrap"
+  | "flexNowrap"
+  | "flexDoWrap"
+  | "flexDowrap"
+  | "flexWrapReverse"
+  | "justifyContent"
+  | "justify"
+  | "justifyStart"
+  | "justifyEnd"
+  | "justifyCenter"
+  | "justifyBetween"
+  | "justifyAround"
+  | "justifyEvenly"
+  | "alignItems"
+  | "align"
+  | "alignStart"
+  | "alignEnd"
+  | "alignCenter"
+  | "alignBaseline"
+  | "alignStretch"
+  | "alignContent"
+  | "placeContent"
+  | "placeItems";
 
 // Flex child prop keys
 type FlexChildKey =
-  | "flex" | "flexGrow" | "flexShrink" | "flexBasis"
-  | "grow" | "shrink" | "basis"
-  | "flexAuto" | "flexInitial" | "flexNone"
-  | "alignSelf" | "order";
+  | "flex"
+  | "flexGrow"
+  | "flexShrink"
+  | "flexBasis"
+  | "grow"
+  | "shrink"
+  | "basis"
+  | "flexAuto"
+  | "flexInitial"
+  | "flexNone"
+  | "alignSelf"
+  | "order";
 
 type FlexKey = FlexContainerKey | FlexChildKey;
 
@@ -79,15 +108,12 @@ export function resolveFlexContainer(
 /**
  * Resolve flex child properties
  */
-export function resolveFlexChild(
-  props: Partial<Record<FlexChildKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveFlexChild(props: Partial<Record<FlexChildKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   // Flex shorthand
   if (props.flex !== undefined) result.flex = String(props.flex);
-  
+
   // Flex aliases
   if (props.flexAuto) result.flex = "1 1 auto";
   if (props.flexInitial) result.flex = "0 1 auto";
@@ -96,10 +122,10 @@ export function resolveFlexChild(
   // Individual flex properties
   if (props.flexGrow !== undefined) result.flexGrow = String(props.flexGrow);
   if (props.grow !== undefined) result.flexGrow = String(props.grow);
-  
+
   if (props.flexShrink !== undefined) result.flexShrink = String(props.flexShrink);
   if (props.shrink !== undefined) result.flexShrink = String(props.shrink);
-  
+
   if (props.flexBasis !== undefined) {
     result.flexBasis = resolveSizing(props.flexBasis as string | number, ctx) ?? String(props.flexBasis);
   }
@@ -109,7 +135,7 @@ export function resolveFlexChild(
 
   // Align self
   if (props.alignSelf) result.alignSelf = props.alignSelf as string;
-  
+
   // Order
   if (props.order !== undefined) result.order = String(props.order);
 
@@ -119,10 +145,7 @@ export function resolveFlexChild(
 /**
  * Resolve all flex properties
  */
-export function resolveFlexProps(
-  props: Partial<Record<FlexKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveFlexProps(props: Partial<Record<FlexKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   return {
     ...resolveFlexContainer(props, ctx),
     ...resolveFlexChild(props, ctx),
@@ -133,17 +156,46 @@ export function resolveFlexProps(
  * Extract flex props from a props object
  */
 export const flexKeys: FlexKey[] = [
-  "flexDirection", "flexRow", "flexColumn", "flexRowReverse", "flexColumnReverse",
-  "flexWrap", "flexNowrap", "flexDoWrap", "flexDowrap", "flexWrapReverse",
-  "justifyContent", "justify", "justifyStart", "justifyEnd", "justifyCenter",
-  "justifyBetween", "justifyAround", "justifyEvenly",
-  "alignItems", "align", "alignStart", "alignEnd", "alignCenter",
-  "alignBaseline", "alignStretch",
-  "alignContent", "placeContent", "placeItems",
-  "flex", "flexGrow", "flexShrink", "flexBasis",
-  "grow", "shrink", "basis",
-  "flexAuto", "flexInitial", "flexNone",
-  "alignSelf", "order",
+  "flexDirection",
+  "flexRow",
+  "flexColumn",
+  "flexRowReverse",
+  "flexColumnReverse",
+  "flexWrap",
+  "flexNowrap",
+  "flexDoWrap",
+  "flexDowrap",
+  "flexWrapReverse",
+  "justifyContent",
+  "justify",
+  "justifyStart",
+  "justifyEnd",
+  "justifyCenter",
+  "justifyBetween",
+  "justifyAround",
+  "justifyEvenly",
+  "alignItems",
+  "align",
+  "alignStart",
+  "alignEnd",
+  "alignCenter",
+  "alignBaseline",
+  "alignStretch",
+  "alignContent",
+  "placeContent",
+  "placeItems",
+  "flex",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
+  "grow",
+  "shrink",
+  "basis",
+  "flexAuto",
+  "flexInitial",
+  "flexNone",
+  "alignSelf",
+  "order",
 ];
 
 export function extractFlexProps<T extends Record<string, unknown>>(

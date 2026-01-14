@@ -9,11 +9,11 @@ export default {
   title: "Part/Form",
   component: Component,
   args: {
-    "layout": "vertical",
+    layout: "vertical",
     children: "Form",
   },
   argTypes: {
-    "layout": { control: "select", options: ["vertical","horizontal"] },
+    layout: { control: "select", options: ["vertical", "horizontal"] },
   },
 };
 

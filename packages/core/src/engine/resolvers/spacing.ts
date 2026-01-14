@@ -10,18 +10,44 @@ import type { CSSDeclarations } from "./base";
 import { resolveLength } from "./length";
 
 // Spacing prop keys (aligned with types/spacing.ts)
-type SpacingKey = 
+type SpacingKey =
   // Padding
-  | "padding" | "paddingTop" | "paddingRight" | "paddingBottom" | "paddingLeft"
-  | "paddingBlock" | "paddingInline"
-  | "p" | "pt" | "pr" | "pb" | "pl" | "px" | "py"
+  | "padding"
+  | "paddingTop"
+  | "paddingRight"
+  | "paddingBottom"
+  | "paddingLeft"
+  | "paddingBlock"
+  | "paddingInline"
+  | "p"
+  | "pt"
+  | "pr"
+  | "pb"
+  | "pl"
+  | "px"
+  | "py"
   // Margin
-  | "margin" | "marginTop" | "marginRight" | "marginBottom" | "marginLeft"
-  | "marginBlock" | "marginInline"
-  | "m" | "mt" | "mr" | "mb" | "ml" | "mx" | "my"
+  | "margin"
+  | "marginTop"
+  | "marginRight"
+  | "marginBottom"
+  | "marginLeft"
+  | "marginBlock"
+  | "marginInline"
+  | "m"
+  | "mt"
+  | "mr"
+  | "mb"
+  | "ml"
+  | "mx"
+  | "my"
   // Gap
-  | "gap" | "rowGap" | "columnGap"
-  | "g" | "gx" | "gy";
+  | "gap"
+  | "rowGap"
+  | "columnGap"
+  | "g"
+  | "gx"
+  | "gy";
 
 // Mapping from prop keys to CSS properties
 const spacingMap: Record<SpacingKey, (keyof CSSDeclarations)[]> = {
@@ -69,10 +95,7 @@ export const spacingKeys = Object.keys(spacingMap) as SpacingKey[];
 /**
  * Resolve spacing properties
  */
-export function resolveSpacing(
-  props: Partial<Record<SpacingKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveSpacing(props: Partial<Record<SpacingKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   for (const [key, value] of Object.entries(props)) {

@@ -52,7 +52,7 @@ export const Sizes: Story = {
           <Select.Option value="sm2">Small Option 2</Select.Option>
         </Select>
       </VStack>
-      
+
       <VStack gap={4}>
         <Label>Medium (Default)</Label>
         <Select placeholder="Medium" size="md">
@@ -60,7 +60,7 @@ export const Sizes: Story = {
           <Select.Option value="md2">Medium Option 2</Select.Option>
         </Select>
       </VStack>
-      
+
       <VStack gap={4}>
         <Label>Large</Label>
         <Select placeholder="Large" size="lg">
@@ -82,30 +82,26 @@ export const ControlledSelect: Story = {
 
 const ControlledSelectExample = () => {
   const [value, setValue] = useState("");
-  
+
   const options = [
     { value: "react", label: "React", description: "A JavaScript library for building user interfaces" },
     { value: "vue", label: "Vue.js", description: "The Progressive JavaScript Framework" },
     { value: "angular", label: "Angular", description: "A platform for building mobile and desktop web applications" },
     { value: "svelte", label: "Svelte", description: "Cybernetically enhanced web apps" },
   ];
-  
+
   const selectedOption = options.find((opt) => opt.value === value);
-  
+
   return (
     <VStack gap={16} w={300}>
-      <Select 
-        value={value} 
-        onChange={(e: any) => setValue(e.target.value)}
-        placeholder="Choose a framework"
-      >
+      <Select value={value} onChange={(e: any) => setValue(e.target.value)} placeholder="Choose a framework">
         {options.map((option) => (
           <Select.Option key={option.value} value={option.value}>
             {option.label}
           </Select.Option>
         ))}
       </Select>
-      
+
       {selectedOption && (
         <Box p={12} bg="blue.50" rounded="md" w="full">
           <Text fontWeight="medium" color="blue.700">
@@ -126,7 +122,7 @@ export const WithSearch: Story = {
 
 const SearchableSelectExample = () => {
   const [value, setValue] = useState("");
-  
+
   const allOptions = [
     { value: "us", label: "United States", code: "+1" },
     { value: "uk", label: "United Kingdom", code: "+44" },
@@ -139,23 +135,18 @@ const SearchableSelectExample = () => {
     { value: "cn", label: "China", code: "+86" },
     { value: "in", label: "India", code: "+91" },
   ];
-  
+
   const filteredOptions = allOptions;
-  
+
   return (
     <VStack gap={16} w={280}>
       <Text fontWeight="medium">Country Code Selector</Text>
-      
+
       <Box position="relative">
         <Box position="absolute" left={12} top="50%" transform="translateY(-50%)" color="gray.400">
           🔍
         </Box>
-        <Select
-          value={value}
-          onChange={(e: any) => setValue(e.target.value)}
-          placeholder="Search countries..."
-          pl={40}
-        >
+        <Select value={value} onChange={(e: any) => setValue(e.target.value)} placeholder="Search countries..." pl={40}>
           {filteredOptions.map((option) => (
             // @ts-ignore
             <Select.Option key={option.value} value={option.value}>
@@ -163,15 +154,16 @@ const SearchableSelectExample = () => {
                 <Text>{option.code}</Text>
                 <Text>{option.label}</Text>
               </HStack>
-            // @ts-ignore
+              // @ts-ignore
             </Select.Option>
           ))}
         </Select>
       </Box>
-      
+
       {value && (
         <Text fontSize="sm" color="gray.500">
-          Selected: {allOptions.find((o) => o.value === value)?.label} ({allOptions.find((o) => o.value === value)?.code})
+          Selected: {allOptions.find((o) => o.value === value)?.label} (
+          {allOptions.find((o) => o.value === value)?.code})
         </Text>
       )}
     </VStack>
@@ -182,7 +174,7 @@ export const WithGroups: Story = {
   render: () => (
     <VStack gap={16} w={300}>
       <Text fontWeight="medium">Payment Method</Text>
-      
+
       <Select placeholder="Select payment method">
         <optgroup label="Credit Cards">
           <Select.Option value="visa">💳 Visa</Select.Option>
@@ -207,7 +199,7 @@ export const WithIcons: Story = {
   render: () => (
     <VStack gap={16} w={280}>
       <Text fontWeight="medium">Select with Icons</Text>
-      
+
       <Select placeholder="Choose your avatar">
         <Select.Option value="👨‍💻">👨‍💻 Developer</Select.Option>
         <Select.Option value="👩‍🎨">👩‍🎨 Designer</Select.Option>
@@ -229,7 +221,7 @@ export const DisabledState: Story = {
           <Select.Option value="2">Option 2</Select.Option>
         </Select>
       </VStack>
-      
+
       <VStack gap={4}>
         <Label>Disabled with Value</Label>
         <Select value="selected" disabled>
@@ -250,8 +242,8 @@ export const CustomStyles: Story = {
       {/* 커스텀 배경색 */}
       <VStack gap={4}>
         <Label>Custom Background</Label>
-        <Select 
-          placeholder="Custom styled" 
+        <Select
+          placeholder="Custom styled"
           bg="purple.50"
           borderColor="purple.300"
           _hover={{ borderColor: "purple.400" }}
@@ -261,28 +253,20 @@ export const CustomStyles: Story = {
           <Select.Option value="2">Purple Option 2</Select.Option>
         </Select>
       </VStack>
-      
+
       {/* 둥근 모서리 */}
       <VStack gap={4}>
         <Label>Rounded Style</Label>
-        <Select 
-          placeholder="Rounded" 
-          rounded="lg"
-          borderWidth={2}
-        >
+        <Select placeholder="Rounded" rounded="lg" borderWidth={2}>
           <Select.Option value="1">Rounded Option 1</Select.Option>
           <Select.Option value="2">Rounded Option 2</Select.Option>
         </Select>
       </VStack>
-      
+
       {/* 그림자 */}
       <VStack gap={4}>
         <Label>With Shadow</Label>
-        <Select 
-          placeholder="With shadow" 
-          shadow="md"
-          _focus={{ shadow: "lg" }}
-        >
+        <Select placeholder="With shadow" shadow="md" _focus={{ shadow: "lg" }}>
           <Select.Option value="1">Shadow Option 1</Select.Option>
           <Select.Option value="2">Shadow Option 2</Select.Option>
         </Select>
@@ -305,12 +289,14 @@ const ProfileFormExample = () => {
     language: "",
     timezone: "",
   });
-  
+
   return (
     <Box w={350} p={24} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={16}>
-        <Text fontWeight="bold" fontSize="lg">Profile Settings</Text>
-        
+        <Text fontWeight="bold" fontSize="lg">
+          Profile Settings
+        </Text>
+
         <VStack gap={12} w="full">
           <VStack gap={4}>
             <Label>Country</Label>
@@ -326,7 +312,7 @@ const ProfileFormExample = () => {
               <Select.Option value="de">🇩🇪 Germany</Select.Option>
             </Select>
           </VStack>
-          
+
           <VStack gap={4}>
             <Label>Preferred Language</Label>
             <Select
@@ -341,7 +327,7 @@ const ProfileFormExample = () => {
               <Select.Option value="es">🇪🇸 Español</Select.Option>
             </Select>
           </VStack>
-          
+
           <VStack gap={4}>
             <Label>Timezone</Label>
             <Select
@@ -369,24 +355,27 @@ export const ProductFilter: Story = {
 const ProductFilterExample = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
-  
+
   return (
     <Box w={320} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
       <VStack gap={12}>
         <HStack justifyContent="space-between" alignItems="center">
           <Text fontWeight="bold">Filters</Text>
           {(category || sort) && (
-            <Text 
-              fontSize="sm" 
-              color="blue.500" 
+            <Text
+              fontSize="sm"
+              color="blue.500"
               cursor="pointer"
-              onClick={() => { setCategory(""); setSort(""); }}
+              onClick={() => {
+                setCategory("");
+                setSort("");
+              }}
             >
               Clear all
             </Text>
           )}
         </HStack>
-        
+
         <VStack gap={8}>
           <VStack gap={4}>
             <Label fontSize="sm">Category</Label>
@@ -403,15 +392,10 @@ const ProductFilterExample = () => {
               <Select.Option value="sports">⚽ Sports</Select.Option>
             </Select>
           </VStack>
-          
+
           <VStack gap={4}>
             <Label fontSize="sm">Sort by</Label>
-            <Select
-              value={sort}
-              onChange={(e: any) => setSort(e.target.value)}
-              placeholder="Default"
-              size="sm"
-            >
+            <Select value={sort} onChange={(e: any) => setSort(e.target.value)} placeholder="Default" size="sm">
               <Select.Option value="price-low">💰 Price: Low to High</Select.Option>
               <Select.Option value="price-high">💰 Price: High to Low</Select.Option>
               <Select.Option value="newest">🆕 Newest First</Select.Option>
@@ -433,17 +417,21 @@ export const ThemeStyles: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
       <Box p={16} border="1px solid" borderColor="gray.200" rounded="lg" w="full">
-        <Text fontWeight="medium" mb={8}>Light Theme (Default)</Text>
+        <Text fontWeight="medium" mb={8}>
+          Light Theme (Default)
+        </Text>
         <Select placeholder="Default select" w={200}>
           <Select.Option value="1">Option 1</Select.Option>
           <Select.Option value="2">Option 2</Select.Option>
         </Select>
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="gray.600" rounded="lg" w="full" bg="gray.800">
-        <Text fontWeight="medium" mb={8} color="gray.200">Dark Theme</Text>
-        <Select 
-          placeholder="Dark select" 
+        <Text fontWeight="medium" mb={8} color="gray.200">
+          Dark Theme
+        </Text>
+        <Select
+          placeholder="Dark select"
           w={200}
           bg="gray.700"
           borderColor="gray.600"
@@ -454,11 +442,13 @@ export const ThemeStyles: Story = {
           <Select.Option value="2">Dark Option 2</Select.Option>
         </Select>
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="blue.200" rounded="lg" w="full" bg="blue.50">
-        <Text fontWeight="medium" mb={8} color="blue.700">Brand Theme (Blue)</Text>
-        <Select 
-          placeholder="Brand select" 
+        <Text fontWeight="medium" mb={8} color="blue.700">
+          Brand Theme (Blue)
+        </Text>
+        <Select
+          placeholder="Brand select"
           w={200}
           borderColor="blue.300"
           _focus={{ borderColor: "blue.500", boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)" }}

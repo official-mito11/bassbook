@@ -1,4 +1,5 @@
 import { defineUnitComponent, comp } from "../spec";
+import { hasBoundingRect } from "../../utils/dom";
 
 function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n));
@@ -14,6 +15,12 @@ function clampAndStep(value: number, min: number, max: number, step: number): nu
 export const Slider = defineUnitComponent({
   name: "Slider",
   dataProps: ["size", "value", "disabled", "min", "max", "step"] as const,
+  cssVars: {
+    "--slider-value": {
+      from: "value",
+      transform: (v) => `${Math.min(100, Math.max(0, Number(v) || 0))}%`,
+    },
+  },
   behavior: {
     state: {
       value: { type: "number", default: 50 as number, controlled: true },
@@ -24,7 +31,8 @@ export const Slider = defineUnitComponent({
     },
     actions: {
       set: (s: Record<string, string | number | boolean | undefined>, payload?: unknown) => {
-        const disabled = typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
+        const disabled =
+          typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
         if (disabled) return {};
 
         const min = typeof (s as { min?: unknown }).min === "number" ? (s as { min: number }).min : 0;
@@ -35,7 +43,8 @@ export const Slider = defineUnitComponent({
         return { value: clampAndStep(raw, min, max, step) };
       },
       setFromPosition: (s: Record<string, string | number | boolean | undefined>, payload?: unknown) => {
-        const disabled = typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
+        const disabled =
+          typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
         if (disabled) return {};
 
         const min = typeof (s as { min?: unknown }).min === "number" ? (s as { min: number }).min : 0;
@@ -53,7 +62,8 @@ export const Slider = defineUnitComponent({
         return { value: clampAndStep(raw, min, max, step) };
       },
       step: (s: Record<string, string | number | boolean | undefined>, payload?: unknown) => {
-        const disabled = typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
+        const disabled =
+          typeof (s as { disabled?: unknown }).disabled === "boolean" ? (s as { disabled: boolean }).disabled : false;
         if (disabled) return {};
 
         const current = typeof (s as { value?: unknown }).value === "number" ? (s as { value: number }).value : 0;
@@ -73,9 +83,9 @@ export const Slider = defineUnitComponent({
           preventDefault: true,
           payload: (ev: unknown) => {
             const e = ev as { clientX?: number; currentTarget?: unknown };
-            const ct = e.currentTarget as Element | null;
-            if (!ct || typeof (ct as any).getBoundingClientRect !== "function") return undefined;
-            const rect = (ct as any).getBoundingClientRect() as { left: number; width: number };
+            const ct = e.currentTarget;
+            if (!hasBoundingRect(ct)) return undefined;
+            const rect = ct.getBoundingClientRect();
             return { clientX: e.clientX, left: rect.left, width: rect.width };
           },
         },
@@ -84,9 +94,9 @@ export const Slider = defineUnitComponent({
           payload: (ev: unknown) => {
             const e = ev as { buttons?: number; clientX?: number; currentTarget?: unknown };
             if (typeof e.buttons === "number" && e.buttons === 0) return undefined;
-            const ct = e.currentTarget as Element | null;
-            if (!ct || typeof (ct as any).getBoundingClientRect !== "function") return undefined;
-            const rect = (ct as any).getBoundingClientRect() as { left: number; width: number };
+            const ct = e.currentTarget;
+            if (!hasBoundingRect(ct)) return undefined;
+            const rect = ct.getBoundingClientRect();
             return { clientX: e.clientX, left: rect.left, width: rect.width };
           },
         },
@@ -106,7 +116,8 @@ export const Slider = defineUnitComponent({
     },
     context: {
       consume: (_ctx, props) => {
-        const value = typeof props["value"] === "number" && Number.isFinite(props["value"]) ? (props["value"] as number) : 0;
+        const value =
+          typeof props["value"] === "number" && Number.isFinite(props["value"]) ? (props["value"] as number) : 0;
         const min = typeof props["min"] === "number" && Number.isFinite(props["min"]) ? (props["min"] as number) : 0;
         const max = typeof props["max"] === "number" && Number.isFinite(props["max"]) ? (props["max"] as number) : 100;
         const disabled = Boolean(props["disabled"]);

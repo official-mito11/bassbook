@@ -9,12 +9,9 @@ export default {
   title: "Core/Label",
   component: Component,
   args: {
-
     children: "Label",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

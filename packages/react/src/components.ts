@@ -1,10 +1,10 @@
 /**
  * Pre-built React components from @bassbook/react
  * These can be imported directly without creating a renderer
- * 
+ *
  * @example
  * import { VStack, Button, Text } from "@bassbook/react";
- * 
+ *
  * const App = () => (
  *   <VStack>
  *     <Text>Hello</Text>
@@ -32,10 +32,10 @@ function isComponentSpec(value: unknown): value is AnyComponentSpec {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
   return (
-    (v['layer'] === "core" || v['layer'] === "unit" || v['layer'] === "part") &&
-    typeof v['name'] === "string" &&
-    typeof v['tree'] === "object" &&
-    v['tree'] !== null
+    (v["layer"] === "core" || v["layer"] === "unit" || v["layer"] === "part") &&
+    typeof v["name"] === "string" &&
+    typeof v["tree"] === "object" &&
+    v["tree"] !== null
   );
 }
 
@@ -115,10 +115,7 @@ export type SwitchProps = BassbookComponentProps<typeof CoreComponents.Switch>;
 const SelectHeader = createSlottedComponent(BaseSelectHeader, "header");
 const SelectOption = createSlottedComponent(BaseSelectOption, "options");
 
-function findSelectOptionLabel(
-  children: React.ReactNode,
-  targetValue: string
-): React.ReactNode | undefined {
+function findSelectOptionLabel(children: React.ReactNode, targetValue: string): React.ReactNode | undefined {
   let result: React.ReactNode | undefined = undefined;
 
   function traverse(nodes: React.ReactNode): void {
@@ -154,13 +151,12 @@ const SelectWithLabel = React.forwardRef<unknown, BassbookComponentProps<typeof 
   function SelectWithLabel(props, ref) {
     const selectedValue = typeof props.value === "string" ? props.value : undefined;
 
-    const selectedLabel = selectedValue !== undefined
-      ? findSelectOptionLabel(props.children, selectedValue)
-      : undefined;
+    const selectedLabel =
+      selectedValue !== undefined ? findSelectOptionLabel(props.children, selectedValue) : undefined;
 
-    const existingSlots = (props['__slots'] ?? undefined) as SlotValues | undefined;
+    const existingSlots = (props["__slots"] ?? undefined) as SlotValues | undefined;
     const nextSlots: SlotValues | undefined =
-      selectedLabel !== undefined && (existingSlots?.['value'] === undefined)
+      selectedLabel !== undefined && existingSlots?.["value"] === undefined
         ? { ...(existingSlots ?? {}), value: selectedLabel }
         : existingSlots;
 
@@ -197,6 +193,7 @@ export const Dialog = createCompoundComponent<typeof CoreComponents.Dialog>(rend
   Description: "description",
   Footer: "footer",
   CloseIcon: "closeIcon",
+  Body: "children",
 });
 
 export const Modal = createCompoundComponent<typeof CoreComponents.Modal>(renderer, "Modal", {
@@ -206,9 +203,22 @@ export const Modal = createCompoundComponent<typeof CoreComponents.Modal>(render
 export const Sheet = createCompoundComponent<typeof CoreComponents.Sheet>(renderer, "Sheet", {
   Backdrop: "backdrop",
 });
+
+export const Dropdown = createCompoundComponent<typeof CoreComponents.Dropdown>(renderer, "Dropdown", {
+  Trigger: "trigger",
+  Content: "content",
+});
+
+export const ContextMenu = createCompoundComponent<typeof CoreComponents.ContextMenu>(renderer, "ContextMenu", {
+  Trigger: "trigger",
+  Content: "content",
+});
+
 export type DialogProps = BassbookComponentProps<typeof CoreComponents.Dialog>;
 export type ModalProps = BassbookComponentProps<typeof CoreComponents.Modal>;
 export type SheetProps = BassbookComponentProps<typeof CoreComponents.Sheet>;
+export type DropdownProps = BassbookComponentProps<typeof CoreComponents.Dropdown>;
+export type ContextMenuProps = BassbookComponentProps<typeof CoreComponents.ContextMenu>;
 
 // Export the renderer for advanced use cases
 export { renderer };

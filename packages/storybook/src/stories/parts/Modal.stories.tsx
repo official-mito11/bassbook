@@ -45,9 +45,7 @@ export const WithContent: Story = {
           <Text fontWeight="bold" fontSize="1.25rem" mb={12}>
             Custom Modal Content
           </Text>
-          <Text mb={16}>
-            You can put any content inside the modal container.
-          </Text>
+          <Text mb={16}>You can put any content inside the modal container.</Text>
           <Button variant="default">Got it</Button>
         </Box>
       </Modal>

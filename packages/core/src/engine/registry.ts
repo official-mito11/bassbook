@@ -3,6 +3,8 @@
  * Manages atomic CSS classes with deduplication and caching
  */
 
+import { devWarn } from "../utils/debug";
+
 // Hash function for generating unique class names
 function hashString(str: string): string {
   let hash = 5381;
@@ -64,7 +66,7 @@ export class CSSRegistry {
    */
   register(property: string, value: string, options?: { media?: string; selector?: string }): string {
     const cssKey = this.buildCSSKey(property, value, options);
-    
+
     // Check for existing rule
     const existing = this.rulesByCSS.get(cssKey);
     if (existing) {
@@ -74,7 +76,7 @@ export class CSSRegistry {
     // Create new rule
     const className = generateClassName(property, value, options, this.prefix);
     const cssText = this.buildCSSText(className, property, value, options);
-    
+
     const rule: CSSRule = {
       className,
       property,
@@ -120,12 +122,15 @@ export class CSSRegistry {
   /**
    * Build CSS text for a rule
    */
-  private buildCSSText(className: string, property: string, value: string, options?: { media?: string; selector?: string }): string {
-    const selector = options?.selector 
-      ? `.${className}${options.selector}` 
-      : `.${className}`;
+  private buildCSSText(
+    className: string,
+    property: string,
+    value: string,
+    options?: { media?: string; selector?: string }
+  ): string {
+    const selector = options?.selector ? `.${className}${options.selector}` : `.${className}`;
     const declaration = `${property}:${value}`;
-    
+
     if (options?.media) {
       return `@media ${options.media}{${selector}{${declaration}}}`;
     }
@@ -146,6 +151,7 @@ export class CSSRegistry {
       try {
         this.styleElement.sheet.insertRule(rule.cssText, this.styleElement.sheet.cssRules.length);
       } catch (e) {
+        devWarn("insertRule failed, using textContent fallback:", e);
         // Fallback: append to textContent
         this.styleElement.textContent += rule.cssText;
       }
@@ -168,7 +174,7 @@ export class CSSRegistry {
    * Get all generated CSS as a string (for SSR)
    */
   getCSS(): string {
-    return this.rules.map(r => r.cssText).join("");
+    return this.rules.map((r) => r.cssText).join("");
   }
 
   /**
@@ -176,7 +182,7 @@ export class CSSRegistry {
    */
   getCSSForClasses(classNames: string[]): string {
     return classNames
-      .map(cn => this.rulesByClass.get(cn)?.cssText)
+      .map((cn) => this.rulesByClass.get(cn)?.cssText)
       .filter(Boolean)
       .join("");
   }
@@ -199,7 +205,7 @@ export class CSSRegistry {
    * Get statistics about the registry
    */
   getStats(): { totalRules: number; uniqueProperties: number } {
-    const uniqueProps = new Set(this.rules.map(r => r.property));
+    const uniqueProps = new Set(this.rules.map((r) => r.property));
     return {
       totalRules: this.rules.length,
       uniqueProperties: uniqueProps.size,

@@ -9,12 +9,9 @@ export default {
   title: "Core/CoreButton",
   component: Component,
   args: {
-
     children: "CoreButton",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

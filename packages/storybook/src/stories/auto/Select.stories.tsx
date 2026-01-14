@@ -9,14 +9,14 @@ export default {
   title: "Part/Select",
   component: Component,
   args: {
-    "open": false,
-    "disabled": false,
-    "size": "md",
+    open: false,
+    disabled: false,
+    size: "md",
   },
   argTypes: {
-    "open": { control: "boolean" },
-    "disabled": { control: "boolean" },
-    "size": { control: "select", options: ["sm","md","lg"] },
+    open: { control: "boolean" },
+    disabled: { control: "boolean" },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };
 
@@ -27,8 +27,17 @@ export function Playground(args: any) {
     React.createElement(Component as any, args as any),
     React.createElement(
       "pre",
-      { style: { fontSize: 12, background: "#0b1020", color: "#e2e8f0", padding: 12, borderRadius: 8, overflow: "auto" } },
-      "{\n  \"trigger\": {\n    \"onClick\": \"toggle\"\n  },\n  \"menu\": {\n    \"onClick\": {\n      \"action\": \"select\"\n    },\n    \"onClickOutside\": \"close\"\n  }\n}"
+      {
+        style: {
+          fontSize: 12,
+          background: "#0b1020",
+          color: "#e2e8f0",
+          padding: 12,
+          borderRadius: 8,
+          overflow: "auto",
+        },
+      },
+      '{\n  "trigger": {\n    "onClick": "toggle"\n  },\n  "menu": {\n    "onClick": {\n      "action": "select"\n    },\n    "onClickOutside": "close"\n  }\n}'
     )
   );
 }

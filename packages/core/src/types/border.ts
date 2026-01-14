@@ -6,10 +6,17 @@
 import type { Length } from "./length";
 
 // Border style values
-export type BorderStyle = 
-  | "none" | "hidden" | "dotted" | "dashed" 
-  | "solid" | "double" | "groove" | "ridge" 
-  | "inset" | "outset";
+export type BorderStyle =
+  | "none"
+  | "hidden"
+  | "dotted"
+  | "dashed"
+  | "solid"
+  | "double"
+  | "groove"
+  | "ridge"
+  | "inset"
+  | "outset";
 
 export interface BorderProps {
   border?: string;

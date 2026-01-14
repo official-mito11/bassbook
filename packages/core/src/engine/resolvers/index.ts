@@ -47,10 +47,7 @@ buildKeyMap();
  * Resolve all style properties to CSS declarations
  * Optimized with single-pass key classification using unified lookup map
  */
-export function resolveAllProps(
-  props: Record<string, unknown>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveAllProps(props: Record<string, unknown>, ctx: StyleContext): CSSDeclarations {
   const spacingProps: Record<string, unknown> = {};
   const sizingProps: Record<string, unknown> = {};
   const flexProps: Record<string, unknown> = {};
@@ -58,6 +55,7 @@ export function resolveAllProps(
   const visualProps: Record<string, unknown> = {};
   const typographyProps: Record<string, unknown> = {};
   const layoutProps: Record<string, unknown> = {};
+  const unknownProps: CSSDeclarations = {};
 
   // Single pass: classify and collect each property
   for (const [key, value] of Object.entries(props)) {
@@ -71,6 +69,10 @@ export function resolveAllProps(
     else if (category === "visual") visualProps[key] = value;
     else if (category === "typography") typographyProps[key] = value;
     else if (category === "layout") layoutProps[key] = value;
+    else {
+      // Pass through unknown props (CSS variables, custom CSS properties)
+      (unknownProps as Record<string, string>)[key] = String(value);
+    }
   }
 
   return {
@@ -81,5 +83,6 @@ export function resolveAllProps(
     ...resolveVisualProps(visualProps, ctx),
     ...resolveTypographyProps(typographyProps, ctx),
     ...resolveLayoutProps(layoutProps, ctx),
+    ...unknownProps,
   };
 }

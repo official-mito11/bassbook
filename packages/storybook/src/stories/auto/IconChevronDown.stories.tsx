@@ -9,12 +9,12 @@ export default {
   title: "Unit/IconChevronDown",
   component: Component,
   args: {
-    "size": "md",
-    "strokeWidth": "medium",
+    size: "md",
+    strokeWidth: "medium",
   },
   argTypes: {
-    "size": { control: "select", options: ["xs","sm","md","lg","xl","2xl","3xl"] },
-    "strokeWidth": { control: "select", options: ["thin","medium","bold"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl"] },
+    strokeWidth: { control: "select", options: ["thin", "medium", "bold"] },
   },
 };
 

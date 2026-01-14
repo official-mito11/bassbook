@@ -9,14 +9,14 @@ export default {
   title: "Core/Divider",
   component: Component,
   args: {
-    "orientation": "horizontal",
-    "thickness": "thin",
-    "style": "solid",
+    orientation: "horizontal",
+    thickness: "thin",
+    style: "solid",
   },
   argTypes: {
-    "orientation": { control: "select", options: ["horizontal","vertical"] },
-    "thickness": { control: "select", options: ["thin","medium","thick"] },
-    "style": { control: "select", options: ["solid","dashed","dotted"] },
+    orientation: { control: "select", options: ["horizontal", "vertical"] },
+    thickness: { control: "select", options: ["thin", "medium", "thick"] },
+    style: { control: "select", options: ["solid", "dashed", "dotted"] },
   },
 };
 

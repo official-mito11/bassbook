@@ -8,12 +8,8 @@ const Component = createReactComponent("CorePath", { registry });
 export default {
   title: "Core/CorePath",
   component: Component,
-  args: {
-
-  },
-  argTypes: {
-
-  },
+  args: {},
+  argTypes: {},
 };
 
 export function Playground(args: any) {

@@ -4,14 +4,59 @@ import { defineUnitComponent, comp, slot } from "../spec";
 export type IconProvider = "lucide" | "mui" | "heroicons" | "feather" | "custom";
 
 // Built-in icon names available in the default set
-export type BuiltInIconName = 
-  | "home" | "search" | "settings" | "user" | "mail" | "bell" | "heart" | "star"
-  | "menu" | "close" | "plus" | "minus" | "check" | "x" | "chevron-right" | "chevron-left"
-  | "chevron-down" | "chevron-up" | "arrow-right" | "arrow-left" | "arrow-down" | "arrow-up"
-  | "trash" | "edit" | "copy" | "share" | "download" | "upload" | "refresh" | "loading"
-  | "eye" | "eye-off" | "lock" | "unlock" | "camera" | "image" | "video" | "audio"
-  | "file" | "folder" | "calendar" | "clock" | "map" | "location" | "link" | "external"
-  | "facebook" | "twitter" | "instagram" | "github" | "discord" | "youtube";
+export type BuiltInIconName =
+  | "home"
+  | "search"
+  | "settings"
+  | "user"
+  | "mail"
+  | "bell"
+  | "heart"
+  | "star"
+  | "menu"
+  | "close"
+  | "plus"
+  | "minus"
+  | "check"
+  | "x"
+  | "chevron-right"
+  | "chevron-left"
+  | "chevron-down"
+  | "chevron-up"
+  | "arrow-right"
+  | "arrow-left"
+  | "arrow-down"
+  | "arrow-up"
+  | "trash"
+  | "edit"
+  | "copy"
+  | "share"
+  | "download"
+  | "upload"
+  | "refresh"
+  | "loading"
+  | "eye"
+  | "eye-off"
+  | "lock"
+  | "unlock"
+  | "camera"
+  | "image"
+  | "video"
+  | "audio"
+  | "file"
+  | "folder"
+  | "calendar"
+  | "clock"
+  | "map"
+  | "location"
+  | "link"
+  | "external"
+  | "facebook"
+  | "twitter"
+  | "instagram"
+  | "github"
+  | "discord"
+  | "youtube";
 
 export const Icon = defineUnitComponent({
   name: "Icon",
@@ -60,7 +105,7 @@ export const Icon = defineUnitComponent({
         conditions: { size: "sm" },
         styles: { root: { strokeWidth: 1.5 } },
       },
-    ] as const,
+    ],
     defaultVariants: {
       size: "md",
       strokeWidth: "medium",

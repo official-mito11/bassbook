@@ -9,10 +9,10 @@ export default {
   title: "Unit/Progressbar",
   component: Component,
   args: {
-    "size": "md",
+    size: "md",
   },
   argTypes: {
-    "size": { control: "select", options: ["sm","md","lg"] },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };
 

@@ -68,24 +68,48 @@ export const AllCombinations: Story = {
   render: () => (
     <VStack gap={16}>
       <HStack gap={8} alignItems="center">
-        <Button variant="default" size="sm">Default SM</Button>
-        <Button variant="default" size="md">Default MD</Button>
-        <Button variant="default" size="lg">Default LG</Button>
+        <Button variant="default" size="sm">
+          Default SM
+        </Button>
+        <Button variant="default" size="md">
+          Default MD
+        </Button>
+        <Button variant="default" size="lg">
+          Default LG
+        </Button>
       </HStack>
       <HStack gap={8} alignItems="center">
-        <Button variant="secondary" size="sm">Secondary SM</Button>
-        <Button variant="secondary" size="md">Secondary MD</Button>
-        <Button variant="secondary" size="lg">Secondary LG</Button>
+        <Button variant="secondary" size="sm">
+          Secondary SM
+        </Button>
+        <Button variant="secondary" size="md">
+          Secondary MD
+        </Button>
+        <Button variant="secondary" size="lg">
+          Secondary LG
+        </Button>
       </HStack>
       <HStack gap={8} alignItems="center">
-        <Button variant="outline" size="sm">Outline SM</Button>
-        <Button variant="outline" size="md">Outline MD</Button>
-        <Button variant="outline" size="lg">Outline LG</Button>
+        <Button variant="outline" size="sm">
+          Outline SM
+        </Button>
+        <Button variant="outline" size="md">
+          Outline MD
+        </Button>
+        <Button variant="outline" size="lg">
+          Outline LG
+        </Button>
       </HStack>
       <HStack gap={8} alignItems="center">
-        <Button variant="ghost" size="sm">Ghost SM</Button>
-        <Button variant="ghost" size="md">Ghost MD</Button>
-        <Button variant="ghost" size="lg">Ghost LG</Button>
+        <Button variant="ghost" size="sm">
+          Ghost SM
+        </Button>
+        <Button variant="ghost" size="md">
+          Ghost MD
+        </Button>
+        <Button variant="ghost" size="lg">
+          Ghost LG
+        </Button>
       </HStack>
     </VStack>
   ),
@@ -133,18 +157,16 @@ export const IconOnly: Story = {
 export const LoadingState: Story = {
   render: () => {
     const [loading, setLoading] = useState(false);
-    
+
     const handleClick = () => {
       setLoading(true);
       setTimeout(() => setLoading(false), 2000);
     };
-    
+
     return (
       <VStack gap={16} alignItems="flex-start">
         <HStack gap={8}>
-          <Button onClick={handleClick}>
-            {loading ? "Loading..." : "Click to Load"}
-          </Button>
+          <Button onClick={handleClick}>{loading ? "Loading..." : "Click to Load"}</Button>
           <Button variant="secondary" onClick={handleClick}>
             {loading ? "Processing" : "Process"}
           </Button>
@@ -184,7 +206,9 @@ export const ButtonGroup: Story = {
     <VStack gap={24}>
       {/* 수평 버튼 그룹 */}
       <Box>
-        <Text fontWeight="medium" mb={8}>Horizontal Group</Text>
+        <Text fontWeight="medium" mb={8}>
+          Horizontal Group
+        </Text>
         <HStack gap={0}>
           <Button variant="outline" rounded="none" borderRight="none">
             Left
@@ -197,10 +221,12 @@ export const ButtonGroup: Story = {
           </Button>
         </HStack>
       </Box>
-      
+
       {/* 선택된 상태가 있는 버튼 그룹 */}
       <Box>
-        <Text fontWeight="medium" mb={8}>Toggle Group (Interactive)</Text>
+        <Text fontWeight="medium" mb={8}>
+          Toggle Group (Interactive)
+        </Text>
         <ButtonToggleGroup />
       </Box>
     </VStack>
@@ -210,27 +236,27 @@ export const ButtonGroup: Story = {
 // 버튼 그룹 상태 관리 컴포넌트
 const ButtonToggleGroup = () => {
   const [selected, setSelected] = useState<string>("day");
-  
+
   return (
     <HStack gap={0}>
-      <Button 
-        variant={selected === "day" ? "default" : "outline"} 
+      <Button
+        variant={selected === "day" ? "default" : "outline"}
         rounded="none"
         borderRight="none"
         onClick={() => setSelected("day")}
       >
         Day
       </Button>
-      <Button 
-        variant={selected === "week" ? "default" : "outline"} 
+      <Button
+        variant={selected === "week" ? "default" : "outline"}
         rounded="none"
         borderRight="none"
         onClick={() => setSelected("week")}
       >
         Week
       </Button>
-      <Button 
-        variant={selected === "month" ? "default" : "outline"} 
+      <Button
+        variant={selected === "month" ? "default" : "outline"}
         rounded="none"
         onClick={() => setSelected("month")}
       >
@@ -245,23 +271,14 @@ export const CustomStyles: Story = {
     <VStack gap={16}>
       {/* 인라인 스타일로 커스터마이징 */}
       <HStack gap={8}>
-        <Button 
-          variant="default" 
-          bg="purple.600" 
-          _hover={{ bg: "purple.700" }}
-        >
+        <Button variant="default" bg="purple.600" _hover={{ bg: "purple.700" }}>
           Purple Button
         </Button>
-        <Button 
-          variant="secondary" 
-          bg="orange.400" 
-          color="white"
-          _hover={{ bg: "orange.500" }}
-        >
+        <Button variant="secondary" bg="orange.400" color="white" _hover={{ bg: "orange.500" }}>
           Orange Secondary
         </Button>
       </HStack>
-      
+
       {/* 둥근 모서리 커스터마이징 */}
       <HStack gap={8}>
         <Button variant="default" rounded="full">
@@ -274,7 +291,7 @@ export const CustomStyles: Story = {
           Square
         </Button>
       </HStack>
-      
+
       {/* 그림자 커스터마이징 */}
       <HStack gap={8}>
         <Button variant="default" shadow="lg">
@@ -295,10 +312,14 @@ export const AsTextLink: Story = {
   render: () => (
     <HStack gap={16}>
       <Button variant="ghost">
-        <a href="#" onClick={(e) => e.preventDefault()}>Link Style Button</a>
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          Link Style Button
+        </a>
       </Button>
       <Button variant="ghost" color="blue.500">
-        <a href="#" onClick={(e) => e.preventDefault()}>Colored Link</a>
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          Colored Link
+        </a>
       </Button>
     </HStack>
   ),
@@ -326,13 +347,10 @@ export const DisabledState: Story = {
 export const ActiveState: Story = {
   render: () => {
     const [active, setActive] = useState(false);
-    
+
     return (
       <HStack gap={8}>
-        <Button 
-          variant={active ? "default" : "outline"}
-          onClick={() => setActive(!active)}
-        >
+        <Button variant={active ? "default" : "outline"} onClick={() => setActive(!active)}>
           {active ? "Active ✨" : "Click to Activate"}
         </Button>
       </HStack>
@@ -344,9 +362,15 @@ export const Destructive: Story = {
   render: () => (
     <VStack gap={12} alignItems="flex-start">
       <HStack gap={8}>
-        <Button variant="destructive" size="sm">Delete Small</Button>
-        <Button variant="destructive" size="md">Delete Medium</Button>
-        <Button variant="destructive" size="lg">Delete Large</Button>
+        <Button variant="destructive" size="sm">
+          Delete Small
+        </Button>
+        <Button variant="destructive" size="md">
+          Delete Medium
+        </Button>
+        <Button variant="destructive" size="lg">
+          Delete Large
+        </Button>
       </HStack>
       <Text fontSize="sm" color="gray.500">
         삭제, 취소, 경고 등 위험한 작업에 사용하세요.
@@ -376,7 +400,9 @@ export const LoginButtons: Story = {
   render: () => (
     <Box w={300} p={24} border="1px solid" borderColor="gray.200" rounded="lg" shadow="sm">
       <VStack gap={16}>
-        <Text fontSize="xl" fontWeight="bold" textAlign="center">Welcome Back</Text>
+        <Text fontSize="xl" fontWeight="bold" textAlign="center">
+          Welcome Back
+        </Text>
         <VStack gap={12}>
           <Button variant="default" w="full" size="lg">
             Sign In
@@ -386,9 +412,13 @@ export const LoginButtons: Story = {
           </Button>
         </VStack>
         <HStack gap={8} justifyContent="center">
-          <Button variant="ghost" size="sm">Forgot Password?</Button>
+          <Button variant="ghost" size="sm">
+            Forgot Password?
+          </Button>
           <Text color="gray.400">|</Text>
-          <Button variant="ghost" size="sm">Help</Button>
+          <Button variant="ghost" size="sm">
+            Help
+          </Button>
         </HStack>
       </VStack>
     </Box>
@@ -399,13 +429,21 @@ export const CardActions: Story = {
   render: () => (
     <Box w={350} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box bg="gray.50" p={16}>
-        <Text fontWeight="bold" fontSize="lg">Card Title</Text>
-        <Text fontSize="sm" color="gray.500">Card description goes here</Text>
+        <Text fontWeight="bold" fontSize="lg">
+          Card Title
+        </Text>
+        <Text fontSize="sm" color="gray.500">
+          Card description goes here
+        </Text>
       </Box>
       <Box h={1} bg="gray.200" />
       <HStack p={12} gap={8} justifyContent="flex-end">
-        <Button variant="ghost" size="sm">Cancel</Button>
-        <Button variant="default" size="sm">Save Changes</Button>
+        <Button variant="ghost" size="sm">
+          Cancel
+        </Button>
+        <Button variant="default" size="sm">
+          Save Changes
+        </Button>
       </HStack>
     </Box>
   ),
@@ -417,27 +455,39 @@ export const CardActions: Story = {
 
 const buttonThemes = [
   { name: "Default", tokens: {} },
-  { name: "Brand Blue", tokens: { 
-    colorPrimary: "#3b82f6", 
-    colorPrimaryForeground: "#ffffff",
-    radius: "8px" 
-  }},
-  { name: "Warm Orange", tokens: { 
-    colorPrimary: "#f97316", 
-    colorPrimaryForeground: "#ffffff",
-    radius: "4px" 
-  }},
-  { name: "Elegant Purple", tokens: { 
-    colorPrimary: "#8b5cf6", 
-    colorPrimaryForeground: "#ffffff",
-    radius: "12px" 
-  }},
-  { name: "Dark Mode", tokens: { 
-    colorPrimary: "#6366f1", 
-    colorPrimaryForeground: "#ffffff",
-    colorBackground: "#1f2937",
-    radius: "8px" 
-  }},
+  {
+    name: "Brand Blue",
+    tokens: {
+      colorPrimary: "#3b82f6",
+      colorPrimaryForeground: "#ffffff",
+      radius: "8px",
+    },
+  },
+  {
+    name: "Warm Orange",
+    tokens: {
+      colorPrimary: "#f97316",
+      colorPrimaryForeground: "#ffffff",
+      radius: "4px",
+    },
+  },
+  {
+    name: "Elegant Purple",
+    tokens: {
+      colorPrimary: "#8b5cf6",
+      colorPrimaryForeground: "#ffffff",
+      radius: "12px",
+    },
+  },
+  {
+    name: "Dark Mode",
+    tokens: {
+      colorPrimary: "#6366f1",
+      colorPrimaryForeground: "#ffffff",
+      colorBackground: "#1f2937",
+      radius: "8px",
+    },
+  },
 ];
 
 export const ThemeCustomization: Story = {
@@ -446,7 +496,7 @@ export const ThemeCustomization: Story = {
 
 const ThemeShowcase = () => {
   const [selectedTheme, setSelectedTheme] = useState(0);
-  
+
   return (
     <VStack gap={24}>
       {/* Theme Selector */}
@@ -462,53 +512,48 @@ const ThemeShowcase = () => {
           </Button>
         ))}
       </HStack>
-      
+
       {/* Theme Preview */}
-      <Box 
-        p={24} 
-        rounded="lg" 
-        border="1px solid" 
+      <Box
+        p={24}
+        rounded="lg"
+        border="1px solid"
         borderColor="gray.200"
         bg={selectedTheme === 4 ? "gray.800" : "white"}
       >
         <VStack gap={16}>
-          <Text 
-            fontWeight="bold" 
-            fontSize="lg"
-            color={selectedTheme === 4 ? "white" : "gray.900"}
-          >
+          <Text fontWeight="bold" fontSize="lg" color={selectedTheme === 4 ? "white" : "gray.900"}>
             {buttonThemes[selectedTheme]?.name ?? "Default"} Theme
           </Text>
-          
+
           <HStack gap={8} flexWrap="wrap">
             <Button variant="default">Default</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="destructive">Destructive</Button>
           </HStack>
-          
+
           <HStack gap={8}>
-            <Button variant="default" size="sm">Small</Button>
-            <Button variant="default" size="md">Medium</Button>
-            <Button variant="default" size="lg">Large</Button>
+            <Button variant="default" size="sm">
+              Small
+            </Button>
+            <Button variant="default" size="md">
+              Medium
+            </Button>
+            <Button variant="default" size="lg">
+              Large
+            </Button>
           </HStack>
         </VStack>
       </Box>
-      
+
       {/* 코드 예시 */}
-      <Box 
-        p={16} 
-        rounded="md" 
-        bg="gray.900" 
-        fontFamily="mono"
-        fontSize="sm"
-        w="full"
-      >
+      <Box p={16} rounded="md" bg="gray.900" fontFamily="mono" fontSize="sm" w="full">
         <Text color="green.400">// ThemeProvider로 브랜드 컬러 적용</Text>
         <Text color="gray.300">
-          {`<ThemeProvider tokens={{ colorPrimary: "${buttonThemes[selectedTheme]?.tokens?.colorPrimary ?? '#3b82f6'}" }}>`}
+          {`<ThemeProvider tokens={{ colorPrimary: "${buttonThemes[selectedTheme]?.tokens?.colorPrimary ?? "#3b82f6"}" }}>`}
         </Text>
-        <Text color="gray.300">  {`<Button variant="default">Button</Button>`}</Text>
+        <Text color="gray.300"> {`<Button variant="default">Button</Button>`}</Text>
         <Text color="gray.300">{`</ThemeProvider>`}</Text>
       </Box>
     </VStack>

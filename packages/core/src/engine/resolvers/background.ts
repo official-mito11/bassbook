@@ -9,24 +9,34 @@ import { resolveColor, resolveSizing, asNumeric } from "./length";
 
 // Background prop keys
 type BackgroundKey =
-  | "background" | "bg"
-  | "backgroundColor" | "bgColor"
-  | "backgroundImage" | "bgImage"
-  | "backgroundSize" | "bgSize"
-  | "backgroundPosition" | "bgPosition"
-  | "backgroundRepeat" | "bgRepeat"
-  | "backgroundAttachment" | "bgAttachment"
-  | "backgroundClip" | "bgClip"
-  | "backgroundOrigin" | "bgOrigin"
-  | "backgroundBlendMode" | "bgBlend"
+  | "background"
+  | "bg"
+  | "backgroundColor"
+  | "bgColor"
+  | "backgroundImage"
+  | "bgImage"
+  | "backgroundSize"
+  | "bgSize"
+  | "backgroundPosition"
+  | "bgPosition"
+  | "backgroundRepeat"
+  | "bgRepeat"
+  | "backgroundAttachment"
+  | "bgAttachment"
+  | "backgroundClip"
+  | "bgClip"
+  | "backgroundOrigin"
+  | "bgOrigin"
+  | "backgroundBlendMode"
+  | "bgBlend"
   // Gradient shortcuts
-  | "bgGradient" | "gradientFrom" | "gradientVia" | "gradientTo";
+  | "bgGradient"
+  | "gradientFrom"
+  | "gradientVia"
+  | "gradientTo";
 
 // Color prop keys
-type ColorKey =
-  | "color" | "textColor"
-  | "opacity" | "alpha"
-  | "fill" | "stroke";
+type ColorKey = "color" | "textColor" | "opacity" | "alpha" | "fill" | "stroke";
 
 type VisualKey = BackgroundKey | ColorKey;
 
@@ -93,15 +103,13 @@ export function resolveBackgroundProps(
 
   // Gradient
   if (props.bgGradient !== undefined) {
-    const from = props.gradientFrom 
+    const from = props.gradientFrom
       ? (resolveColor(String(props.gradientFrom), ctx) ?? String(props.gradientFrom))
       : "transparent";
-    const to = props.gradientTo 
+    const to = props.gradientTo
       ? (resolveColor(String(props.gradientTo), ctx) ?? String(props.gradientTo))
       : "transparent";
-    const via = props.gradientVia 
-      ? (resolveColor(String(props.gradientVia), ctx) ?? String(props.gradientVia))
-      : null;
+    const via = props.gradientVia ? (resolveColor(String(props.gradientVia), ctx) ?? String(props.gradientVia)) : null;
 
     const direction = String(props.bgGradient);
     const stops = via ? `${from}, ${via}, ${to}` : `${from}, ${to}`;
@@ -114,10 +122,7 @@ export function resolveBackgroundProps(
 /**
  * Resolve color properties
  */
-export function resolveColorProps(
-  props: Partial<Record<ColorKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveColorProps(props: Partial<Record<ColorKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   // Text color
@@ -148,10 +153,7 @@ export function resolveColorProps(
 /**
  * Resolve all visual properties
  */
-export function resolveVisualProps(
-  props: Partial<Record<VisualKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveVisualProps(props: Partial<Record<VisualKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   return {
     ...resolveBackgroundProps(props, ctx),
     ...resolveColorProps(props, ctx),
@@ -162,20 +164,36 @@ export function resolveVisualProps(
  * Extract visual props from a props object
  */
 export const visualKeys: VisualKey[] = [
-  "background", "bg",
-  "backgroundColor", "bgColor",
-  "backgroundImage", "bgImage",
-  "backgroundSize", "bgSize",
-  "backgroundPosition", "bgPosition",
-  "backgroundRepeat", "bgRepeat",
-  "backgroundAttachment", "bgAttachment",
-  "backgroundClip", "bgClip",
-  "backgroundOrigin", "bgOrigin",
-  "backgroundBlendMode", "bgBlend",
-  "bgGradient", "gradientFrom", "gradientVia", "gradientTo",
-  "color", "textColor",
-  "opacity", "alpha",
-  "fill", "stroke",
+  "background",
+  "bg",
+  "backgroundColor",
+  "bgColor",
+  "backgroundImage",
+  "bgImage",
+  "backgroundSize",
+  "bgSize",
+  "backgroundPosition",
+  "bgPosition",
+  "backgroundRepeat",
+  "bgRepeat",
+  "backgroundAttachment",
+  "bgAttachment",
+  "backgroundClip",
+  "bgClip",
+  "backgroundOrigin",
+  "bgOrigin",
+  "backgroundBlendMode",
+  "bgBlend",
+  "bgGradient",
+  "gradientFrom",
+  "gradientVia",
+  "gradientTo",
+  "color",
+  "textColor",
+  "opacity",
+  "alpha",
+  "fill",
+  "stroke",
 ];
 
 export function extractVisualProps<T extends Record<string, unknown>>(

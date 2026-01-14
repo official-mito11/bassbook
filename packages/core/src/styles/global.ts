@@ -12,7 +12,7 @@ let injected = false;
 export function injectGlobalStyles(): void {
   if (injected) return;
   if (typeof document === "undefined") return;
-  
+
   const style = document.createElement("style");
   style.setAttribute("data-bassbook", "global");
   style.textContent = globalStyles;

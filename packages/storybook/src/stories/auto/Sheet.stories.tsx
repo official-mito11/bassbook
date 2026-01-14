@@ -9,13 +9,13 @@ export default {
   title: "Part/Sheet",
   component: Component,
   args: {
-    "open": false,
-    "side": "right",
+    open: false,
+    side: "right",
     children: "Sheet",
   },
   argTypes: {
-    "open": { control: "boolean" },
-    "side": { control: "select", options: ["left","right","top","bottom"] },
+    open: { control: "boolean" },
+    side: { control: "select", options: ["left", "right", "top", "bottom"] },
   },
 };
 

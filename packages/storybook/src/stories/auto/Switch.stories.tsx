@@ -9,15 +9,15 @@ export default {
   title: "Unit/Switch",
   component: Component,
   args: {
-    "checked": false,
-    "disabled": false,
-    "size": "md",
+    checked: false,
+    disabled: false,
+    size: "md",
     children: "Switch",
   },
   argTypes: {
-    "checked": { control: "boolean" },
-    "disabled": { control: "boolean" },
-    "size": { control: "select", options: ["sm","md","lg"] },
+    checked: { control: "boolean" },
+    disabled: { control: "boolean" },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };
 
@@ -28,8 +28,17 @@ export function Playground(args: any) {
     React.createElement(Component as any, args as any),
     React.createElement(
       "pre",
-      { style: { fontSize: 12, background: "#0b1020", color: "#e2e8f0", padding: 12, borderRadius: 8, overflow: "auto" } },
-      "{\n  \"root\": {\n    \"onClick\": \"toggle\",\n    \"onKeyDown\": {\n      \"action\": \"toggle\",\n      \"keys\": [\n        \"Enter\",\n        \" \"\n      ],\n      \"preventDefault\": true\n    }\n  }\n}"
+      {
+        style: {
+          fontSize: 12,
+          background: "#0b1020",
+          color: "#e2e8f0",
+          padding: 12,
+          borderRadius: 8,
+          overflow: "auto",
+        },
+      },
+      '{\n  "root": {\n    "onClick": "toggle",\n    "onKeyDown": {\n      "action": "toggle",\n      "keys": [\n        "Enter",\n        " "\n      ],\n      "preventDefault": true\n    }\n  }\n}'
     )
   );
 }

@@ -35,25 +35,35 @@ export const Variants: Story = {
   render: () => (
     <VStack gap={0}>
       <Navigator variant="default">
-        <Text __slots={{ brand: true }} fontWeight="bold">Default</Text>
+        <Text __slots={{ brand: true }} fontWeight="bold">
+          Default
+        </Text>
         <HStack gap={16}>
           <Link href="#">Link</Link>
         </HStack>
         <Button size="sm">Action</Button>
       </Navigator>
       <Navigator variant="transparent" bg="#f3f4f6">
-        <Text __slots={{ brand: true }} fontWeight="bold">Transparent</Text>
+        <Text __slots={{ brand: true }} fontWeight="bold">
+          Transparent
+        </Text>
         <HStack gap={16}>
           <Link href="#">Link</Link>
         </HStack>
         <Button size="sm">Action</Button>
       </Navigator>
       <Navigator variant="filled">
-        <Text __slots={{ brand: true }} fontWeight="bold">Filled</Text>
+        <Text __slots={{ brand: true }} fontWeight="bold">
+          Filled
+        </Text>
         <HStack gap={16}>
-          <Link href="#" color="white">Link</Link>
+          <Link href="#" color="white">
+            Link
+          </Link>
         </HStack>
-        <Button size="sm" variant="outline" color="white">Action</Button>
+        <Button size="sm" variant="outline" color="white">
+          Action
+        </Button>
       </Navigator>
     </VStack>
   ),
@@ -64,7 +74,9 @@ export const WithLogo: Story = {
     <Navigator variant="default">
       <HStack __slots={{ brand: true }} gap={8} alignItems="center">
         <Text fontSize="1.5rem">🎸</Text>
-        <Text fontWeight="bold" fontSize="1.25rem">Bassbook</Text>
+        <Text fontWeight="bold" fontSize="1.25rem">
+          Bassbook
+        </Text>
       </HStack>
       <HStack gap={24}>
         <Link href="#">Features</Link>
@@ -73,8 +85,12 @@ export const WithLogo: Story = {
         <Link href="#">Blog</Link>
       </HStack>
       <HStack gap={8}>
-        <Button size="sm" variant="outline">Log In</Button>
-        <Button size="sm" variant="default">Sign Up</Button>
+        <Button size="sm" variant="outline">
+          Log In
+        </Button>
+        <Button size="sm" variant="default">
+          Sign Up
+        </Button>
       </HStack>
     </Navigator>
   ),

@@ -43,9 +43,9 @@ export const WithSpacing: Story = {
       <Text>Section 1</Text>
       <Divider my={8} />
       <Text>Small spacing (my=8)</Text>
-      
+
       <Divider my={24} />
-      
+
       <Text>Section 2</Text>
       <Divider my={32} />
       <Text>Large spacing (my=32)</Text>

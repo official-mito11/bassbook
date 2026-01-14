@@ -1,12 +1,7 @@
 import type { StyleProps } from "../types";
 import type { StyleContext } from "../engine/context";
 import { applyStyles, splitProps } from "../engine/adapters";
-import type {
-  AnyComponentSpec,
-  NodeSpec,
-  PartBindings,
-  SlotNodeSpec,
-} from "./spec";
+import type { AnyComponentSpec, NodeSpec, PartBindings, SlotNodeSpec } from "./spec";
 import type { ComponentRegistry } from "./registry";
 import { getVariantKeys, resolvePartStyles } from "./styleResolver";
 import { createBehaviorRuntime } from "./behaviorRuntime";
@@ -88,15 +83,12 @@ export function renderDomComponent(
   let currentSlots: Record<string, SlotValue> = { ...(slots ?? {}) };
 
   // behavior runtime
-  const behaviorRuntime = createBehaviorRuntime(
-    rootSpec.layer === "core" ? undefined : rootSpec.behavior,
-    {
+  const behaviorRuntime = createBehaviorRuntime(rootSpec.layer === "core" ? undefined : rootSpec.behavior, {
     getExternalProps: () => currentProps,
     onStateChange: () => {
       applyDiff();
     },
-    }
-  );
+  });
 
   let outsideListenerCleanup: (() => void) | null = null;
 
@@ -282,7 +274,8 @@ export function renderDomComponent(
           }
 
           const maybeFn = eventBinding.payload as unknown;
-          const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
+          const payload =
+            typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
           behaviorRuntime.dispatch(eventBinding.action, payload ?? ev);
         };
 
@@ -313,7 +306,8 @@ export function renderDomComponent(
           if (eventBinding.stopPropagation) ev.stopPropagation();
 
           const maybeFn = eventBinding.payload as unknown;
-          const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
+          const payload =
+            typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
           behaviorRuntime.dispatch(eventBinding.action, payload ?? ev);
         }
       };
@@ -343,11 +337,17 @@ export function renderDomComponent(
     const rawProps = currentProps as UnknownProps;
     const { styleProps: userStyleProps } = splitProps(rawProps);
 
-    if (rootSpec.name === "Slider") {
-      const v = effectiveProps["value"];
-      if (typeof v === "number" && Number.isFinite(v)) {
-        const rootEl = partElements.get("root");
-        if (rootEl) rootEl.style.setProperty("--slider-value", `${Math.min(100, Math.max(0, v))}%`);
+    // Apply CSS variable bindings if defined
+    if (rootSpec.cssVars) {
+      const rootEl = partElements.get("root");
+      if (rootEl) {
+        for (const [varName, binding] of Object.entries(rootSpec.cssVars)) {
+          const value = effectiveProps[binding.from];
+          if (value !== undefined && value !== null) {
+            const cssValue = binding.transform ? binding.transform(value) : String(value);
+            rootEl.style.setProperty(varName, cssValue);
+          }
+        }
       }
     }
 

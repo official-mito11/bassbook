@@ -10,57 +10,102 @@ import { resolveLength, resolveZIndex, resolveShadow, asLength } from "./length"
 // Layout prop keys
 type LayoutKey =
   // Display
-  | "display" | "d" | "displayFlex" | "displayGrid" | "block" | "inline" | "inlineBlock"
+  | "display"
+  | "d"
+  | "displayFlex"
+  | "displayGrid"
+  | "block"
+  | "inline"
+  | "inlineBlock"
   // Position
   | "position"
-  | "static" | "relative" | "absolute" | "fixed" | "sticky"
-  | "top" | "right" | "bottom" | "left"
-  | "inset" | "insetX" | "insetY"
+  | "static"
+  | "relative"
+  | "absolute"
+  | "fixed"
+  | "sticky"
+  | "top"
+  | "right"
+  | "bottom"
+  | "left"
+  | "inset"
+  | "insetX"
+  | "insetY"
   // Z-index
-  | "zIndex" | "z"
+  | "zIndex"
+  | "z"
   // Overflow
-  | "overflow" | "overflowX" | "overflowY"
-  | "overflowVisible" | "overflowHidden" | "overflowClip" | "overflowScroll" | "overflowAuto"
+  | "overflow"
+  | "overflowX"
+  | "overflowY"
+  | "overflowVisible"
+  | "overflowHidden"
+  | "overflowClip"
+  | "overflowScroll"
+  | "overflowAuto"
   // Visibility
-  | "visibility" | "visible" | "invisible" | "hidden"
+  | "visibility"
+  | "visible"
+  | "invisible"
+  | "hidden"
   // Cursor
   | "cursor"
   // Pointer events
   | "pointerEvents"
   | "pointerNone"
   // User select
-  | "userSelect" | "select"
-  | "selectNone" | "selectText" | "selectAll"
+  | "userSelect"
+  | "select"
+  | "selectNone"
+  | "selectText"
+  | "selectAll"
   // Object fit/position
-  | "objectFit" | "objectPosition"
-  | "fitCover" | "fitContain" | "fitNone" | "fitScale"
+  | "objectFit"
+  | "objectPosition"
+  | "fitCover"
+  | "fitContain"
+  | "fitNone"
+  | "fitScale"
   // Float/Clear
-  | "float" | "clear"
+  | "float"
+  | "clear"
   // Isolation
   | "isolation"
   // Box shadow
-  | "boxShadow" | "shadow"
+  | "boxShadow"
+  | "shadow"
   // Transform
-  | "transform" | "transformOrigin"
-  | "scale" | "scaleX" | "scaleY"
-  | "rotate" | "skewX" | "skewY"
-  | "translateX" | "translateY"
+  | "transform"
+  | "transformOrigin"
+  | "scale"
+  | "scaleX"
+  | "scaleY"
+  | "rotate"
+  | "skewX"
+  | "skewY"
+  | "translateX"
+  | "translateY"
   // Transition
-  | "transition" | "transitionProperty" | "transitionDuration" 
-  | "transitionTimingFunction" | "transitionDelay"
+  | "transition"
+  | "transitionProperty"
+  | "transitionDuration"
+  | "transitionTimingFunction"
+  | "transitionDelay"
   // Animation
-  | "animation" | "animationName" | "animationDuration"
-  | "animationTimingFunction" | "animationDelay"
-  | "animationIterationCount" | "animationDirection"
-  | "animationFillMode" | "animationPlayState";
+  | "animation"
+  | "animationName"
+  | "animationDuration"
+  | "animationTimingFunction"
+  | "animationDelay"
+  | "animationIterationCount"
+  | "animationDirection"
+  | "animationFillMode"
+  | "animationPlayState";
 
 /**
  * Resolve layout properties
  */
-export function resolveLayoutProps(
-  props: Partial<Record<LayoutKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveLayoutProps(props: Partial<Record<LayoutKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   // Display
@@ -200,16 +245,19 @@ export function resolveLayoutProps(
   if (props.transition !== undefined) result.transition = String(props.transition);
   if (props.transitionProperty !== undefined) result.transitionProperty = String(props.transitionProperty);
   if (props.transitionDuration !== undefined) result.transitionDuration = String(props.transitionDuration);
-  if (props.transitionTimingFunction !== undefined) result.transitionTimingFunction = String(props.transitionTimingFunction);
+  if (props.transitionTimingFunction !== undefined)
+    result.transitionTimingFunction = String(props.transitionTimingFunction);
   if (props.transitionDelay !== undefined) result.transitionDelay = String(props.transitionDelay);
 
   // Animation
   if (props.animation !== undefined) result.animation = String(props.animation);
   if (props.animationName !== undefined) result.animationName = String(props.animationName);
   if (props.animationDuration !== undefined) result.animationDuration = String(props.animationDuration);
-  if (props.animationTimingFunction !== undefined) result.animationTimingFunction = String(props.animationTimingFunction);
+  if (props.animationTimingFunction !== undefined)
+    result.animationTimingFunction = String(props.animationTimingFunction);
   if (props.animationDelay !== undefined) result.animationDelay = String(props.animationDelay);
-  if (props.animationIterationCount !== undefined) result.animationIterationCount = String(props.animationIterationCount);
+  if (props.animationIterationCount !== undefined)
+    result.animationIterationCount = String(props.animationIterationCount);
   if (props.animationDirection !== undefined) result.animationDirection = String(props.animationDirection);
   if (props.animationFillMode !== undefined) result.animationFillMode = String(props.animationFillMode);
   if (props.animationPlayState !== undefined) result.animationPlayState = String(props.animationPlayState);
@@ -221,35 +269,78 @@ export function resolveLayoutProps(
  * Extract layout props from a props object
  */
 export const layoutKeys: LayoutKey[] = [
-  "display", "d",
+  "display",
+  "d",
   "position",
-  "static", "relative", "absolute", "fixed", "sticky",
-  "top", "right", "bottom", "left",
-  "inset", "insetX", "insetY",
-  "zIndex", "z",
-  "overflow", "overflowX", "overflowY",
-  "overflowVisible", "overflowHidden", "overflowClip", "overflowScroll", "overflowAuto",
-  "visibility", "visible", "invisible", "hidden",
+  "static",
+  "relative",
+  "absolute",
+  "fixed",
+  "sticky",
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "inset",
+  "insetX",
+  "insetY",
+  "zIndex",
+  "z",
+  "overflow",
+  "overflowX",
+  "overflowY",
+  "overflowVisible",
+  "overflowHidden",
+  "overflowClip",
+  "overflowScroll",
+  "overflowAuto",
+  "visibility",
+  "visible",
+  "invisible",
+  "hidden",
   "cursor",
   "pointerEvents",
   "pointerNone",
-  "userSelect", "select",
-  "selectNone", "selectText", "selectAll",
-  "objectFit", "objectPosition",
-  "fitCover", "fitContain", "fitNone", "fitScale",
-  "float", "clear",
+  "userSelect",
+  "select",
+  "selectNone",
+  "selectText",
+  "selectAll",
+  "objectFit",
+  "objectPosition",
+  "fitCover",
+  "fitContain",
+  "fitNone",
+  "fitScale",
+  "float",
+  "clear",
   "isolation",
-  "boxShadow", "shadow",
-  "transform", "transformOrigin",
-  "scale", "scaleX", "scaleY",
-  "rotate", "skewX", "skewY",
-  "translateX", "translateY",
-  "transition", "transitionProperty", "transitionDuration",
-  "transitionTimingFunction", "transitionDelay",
-  "animation", "animationName", "animationDuration",
-  "animationTimingFunction", "animationDelay",
-  "animationIterationCount", "animationDirection",
-  "animationFillMode", "animationPlayState",
+  "boxShadow",
+  "shadow",
+  "transform",
+  "transformOrigin",
+  "scale",
+  "scaleX",
+  "scaleY",
+  "rotate",
+  "skewX",
+  "skewY",
+  "translateX",
+  "translateY",
+  "transition",
+  "transitionProperty",
+  "transitionDuration",
+  "transitionTimingFunction",
+  "transitionDelay",
+  "animation",
+  "animationName",
+  "animationDuration",
+  "animationTimingFunction",
+  "animationDelay",
+  "animationIterationCount",
+  "animationDirection",
+  "animationFillMode",
+  "animationPlayState",
 ];
 
 export function extractLayoutProps<T extends Record<string, unknown>>(

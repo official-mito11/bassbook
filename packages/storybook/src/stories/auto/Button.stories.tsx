@@ -9,13 +9,13 @@ export default {
   title: "Unit/Button",
   component: Component,
   args: {
-    "size": "md",
-    "variant": "default",
+    size: "md",
+    variant: "default",
     children: "Button",
   },
   argTypes: {
-    "size": { control: "select", options: ["sm","md","lg"] },
-    "variant": { control: "select", options: ["default","secondary","outline","ghost","destructive"] },
+    size: { control: "select", options: ["sm", "md", "lg"] },
+    variant: { control: "select", options: ["default", "secondary", "outline", "ghost", "destructive"] },
   },
 };
 

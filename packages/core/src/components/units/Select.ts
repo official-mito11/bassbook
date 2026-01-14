@@ -56,10 +56,7 @@ const selectSpec = {
 
         return { value, label, open: false };
       },
-      setValue: (
-        _s: Record<string, unknown>,
-        payload?: unknown
-      ) => {
+      setValue: (_s: Record<string, unknown>, payload?: unknown) => {
         if (typeof payload !== "string") return {};
         return { value: payload, label: payload };
       },
@@ -75,13 +72,14 @@ const selectSpec = {
           action: "select",
           payload: (ev: unknown) => {
             const target = (ev as { target?: unknown } | null)?.target;
-            const node = target as Element | null;
-            if (!node || typeof (node as any).closest !== "function") return undefined;
-            const btn = (node as any).closest('button[role="option"]') as HTMLButtonElement | null;
+            if (!target || typeof target !== "object") return undefined;
+            const node = target as Element;
+            if (typeof node.closest !== "function") return undefined;
+            const btn = node.closest('button[role="option"]') as HTMLButtonElement | null;
             if (!btn) return undefined;
-            if ((btn as any).disabled === true) return undefined;
-            const v = (btn as any).value;
-            const lbl = (btn as any).dataset?.label as unknown;
+            if (btn.disabled === true) return undefined;
+            const v = btn.value;
+            const lbl = btn.dataset?.["label"];
             const label = typeof lbl === "string" ? lbl : undefined;
             return typeof v === "string" ? { value: v, label: label ?? v } : undefined;
           },
@@ -159,7 +157,7 @@ const selectSpec = {
         alignCenter: true,
         justifyBetween: true,
         gap: 8,
-        w: 180,
+        w: "full",
         h: 36,
         px: 12,
         rounded: "md",

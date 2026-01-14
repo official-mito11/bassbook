@@ -9,11 +9,11 @@ export default {
   title: "Unit/Placeholder",
   component: Component,
   args: {
-    "variant": "loading",
+    variant: "loading",
     children: "Placeholder",
   },
   argTypes: {
-    "variant": { control: "select", options: ["loading","empty","error"] },
+    variant: { control: "select", options: ["loading", "empty", "error"] },
   },
 };
 

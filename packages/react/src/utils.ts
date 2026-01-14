@@ -1,30 +1,35 @@
 import type * as React from "react";
-import type { StyleProps, SlotStyles } from "@bassbook/core";
+import type { StyleProps } from "@bassbook/core";
+import { getVariantKeys as coreGetVariantKeys, resolvePartStyles as coreResolvePartStyles } from "@bassbook/core";
 import type { PartStyleMap, UnknownProps } from "./types";
 
 export function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-export function mergePartStyles(target: PartStyleMap, incoming?: SlotStyles): void {
-  if (!incoming) return;
-  for (const [part, styles] of Object.entries(incoming)) {
-    const prev = target[part] ?? {};
-    target[part] = { ...prev, ...(styles ?? {}) };
-  }
-}
-
-export function coerceVariantSelection(value: unknown): string | undefined {
-  if (value === undefined || value === null) return undefined;
-  if (typeof value === "string") return value;
-  if (typeof value === "boolean" || typeof value === "number") return String(value);
-  return undefined;
-}
+const SVG_ATTRIBUTES = new Set([
+  "viewBox",
+  "strokeWidth",
+  "strokeLinecap",
+  "strokeLinejoin",
+  "strokeDasharray",
+  "strokeDashoffset",
+  "strokeMiterlimit",
+  "fillRule",
+  "clipRule",
+  "fillOpacity",
+  "strokeOpacity",
+  "vectorEffect",
+  "shapeRendering",
+  "pathLength",
+]);
 
 export function filterDomProps(domProps: UnknownProps, keysToRemove: readonly string[]): UnknownProps {
   if (keysToRemove.length === 0) return domProps;
   const next: UnknownProps = { ...domProps };
   for (const key of keysToRemove) {
+    // SVG 속성은 보존
+    if (SVG_ATTRIBUTES.has(key)) continue;
     if (key in next) delete next[key];
   }
   return next;
@@ -63,11 +68,7 @@ export function mergeRefs(...refs: unknown[]) {
 }
 
 export function getVariantKeys(spec: { styles?: unknown }): string[] {
-  const styles = spec.styles as Record<string, unknown> | undefined;
-  if (!styles || !isObject(styles)) return [];
-  const variants = styles["variants"] as Record<string, unknown> | undefined;
-  if (!variants || !isObject(variants)) return [];
-  return Object.keys(variants);
+  return coreGetVariantKeys(spec);
 }
 
 export function resolvePartStyles(
@@ -75,50 +76,7 @@ export function resolvePartStyles(
   props: UnknownProps,
   userStyleProps: Partial<StyleProps>
 ): PartStyleMap {
-  const result: PartStyleMap = {};
-
-  const styles = spec.styles as Record<string, unknown> | undefined;
-  if (!styles || !isObject(styles)) {
-    if (Object.keys(userStyleProps).length > 0) {
-      result["root"] = { ...(result["root"] ?? {}), ...userStyleProps };
-    }
-    return result;
-  }
-
-  mergePartStyles(result, styles["base"] as SlotStyles | undefined);
-
-  const variants = styles["variants"] as Record<string, Record<string, SlotStyles>> | undefined;
-  const defaultVariants = styles["defaultVariants"] as Record<string, string> | undefined;
-
-  if (variants && isObject(variants)) {
-    for (const [variantKey, variantMap] of Object.entries(variants)) {
-      const selected = coerceVariantSelection(props[variantKey] ?? defaultVariants?.[variantKey]);
-      if (!selected) continue;
-      const slotStyles = (variantMap as Record<string, SlotStyles>)[selected];
-      if (!slotStyles) continue;
-      mergePartStyles(result, slotStyles);
-    }
-  }
-
-  const compoundVariants = styles["compoundVariants"] as
-    | Array<{ conditions: Record<string, string>; styles: SlotStyles }>
-    | undefined;
-  if (compoundVariants) {
-    for (const compound of compoundVariants) {
-      const matches = Object.entries(compound.conditions).every(([key, value]) => {
-        const actual = (props[key] ?? defaultVariants?.[key]) as unknown;
-        return actual === value;
-      });
-      if (!matches) continue;
-      mergePartStyles(result, compound.styles);
-    }
-  }
-
-  if (Object.keys(userStyleProps).length > 0) {
-    result["root"] = { ...(result["root"] ?? {}), ...userStyleProps };
-  }
-
-  return result;
+  return coreResolvePartStyles(spec as Parameters<typeof coreResolvePartStyles>[0], props, userStyleProps);
 }
 
 export function normalizeSlots<T extends Record<string, unknown>>(

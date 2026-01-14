@@ -48,12 +48,8 @@ export const Variants: Story = {
 export const WithoutTitle: Story = {
   render: () => (
     <VStack gap={12} w={400}>
-      <Alert variant="info">
-        A simple informational message without a title.
-      </Alert>
-      <Alert variant="success">
-        Your changes have been saved.
-      </Alert>
+      <Alert variant="info">A simple informational message without a title.</Alert>
+      <Alert variant="success">Your changes have been saved.</Alert>
     </VStack>
   ),
 };

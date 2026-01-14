@@ -13,9 +13,7 @@ export type {
 export { createReactRenderer, createReactComponent } from "./renderer";
 
 // Hooks
-export {
-  useBehavior,
-} from "./hooks";
+export { useBehavior } from "./hooks";
 
 // Compound components
 export {
@@ -75,6 +73,8 @@ export {
   Dialog,
   Modal,
   Sheet,
+  Dropdown,
+  ContextMenu,
 } from "./components";
 
 // Component prop types
@@ -118,4 +118,6 @@ export type {
   DialogProps,
   ModalProps,
   SheetProps,
+  DropdownProps,
+  ContextMenuProps,
 } from "./components";

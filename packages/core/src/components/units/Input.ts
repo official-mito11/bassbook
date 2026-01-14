@@ -9,21 +9,26 @@ export const Input = defineUnitComponent({
   styles: {
     base: {
       root: {
-        w: 180,
-        py: 8,
-        px: 12,
+        w: "full",
+        h: 40,
+        px: 14,
         fontSize: "0.875rem",
         lineHeight: 1.5,
         color: "foreground",
-        bg: "surface",
-        borderWidth: 1,
+        bg: "background",
+        borderWidth: 1.5,
         borderStyle: "solid",
         borderColor: "border",
-        rounded: "md",
+        rounded: "lg",
         outline: "none",
-        transition: "border-color 150ms ease, box-shadow 150ms ease",
+        transition: "all 200ms cubic-bezier(0.4, 0, 0.2, 1)",
+        shadow: "sm",
         _placeholder: {
           color: "muted-foreground",
+        },
+        _focus: {
+          borderColor: "primary",
+          shadow: "md",
         },
       },
     },
@@ -31,22 +36,22 @@ export const Input = defineUnitComponent({
       size: {
         sm: {
           root: {
-            py: 6,
-            px: 10,
+            h: 36,
+            px: 12,
             fontSize: "0.8125rem",
           },
         },
         md: {
           root: {
-            py: 8,
-            px: 12,
+            h: 40,
+            px: 14,
             fontSize: "0.875rem",
           },
         },
         lg: {
           root: {
-            py: 10,
-            px: 14,
+            h: 44,
+            px: 16,
             fontSize: "0.9375rem",
           },
         },

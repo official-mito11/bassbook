@@ -1,20 +1,15 @@
 import * as React from "react";
-import type {
-  ComponentBehavior,
-  StateSchema,
-  PartBindings,
-  EventBinding,
-} from "@bassbook/core";
+import type { ComponentBehavior, StateSchema, PartBindings, EventBinding } from "@bassbook/core";
 import { createBehaviorRuntime } from "@bassbook/core";
 
 type StateValues<S extends StateSchema> = {
   [K in keyof S]: S[K]["default"] extends boolean
     ? boolean
     : S[K]["default"] extends string
-    ? string
-    : S[K]["default"] extends number
-    ? number
-    : unknown;
+      ? string
+      : S[K]["default"] extends number
+        ? number
+        : unknown;
 };
 
 // Centralized click-outside delegation system to avoid multiple document listeners
@@ -49,7 +44,8 @@ function installGlobalListener() {
       }
 
       const maybeFn = handler.binding.payload as unknown;
-      const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : handler.binding.payload;
+      const payload =
+        typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : handler.binding.payload;
       handler.dispatch(handler.binding.action, payload ?? ev);
     }
   }
@@ -122,8 +118,7 @@ export function useBehavior<S extends StateSchema>(
       for (const [eventName, binding] of Object.entries(partBindings as PartBindings)) {
         if (!binding) continue;
 
-        const eventBinding: EventBinding =
-          typeof binding === "string" ? { action: binding } : binding;
+        const eventBinding: EventBinding = typeof binding === "string" ? { action: binding } : binding;
 
         if (eventName === "onClickOutside") {
           outsideBindingsRef.current[partName] = eventBinding;
@@ -150,7 +145,8 @@ export function useBehavior<S extends StateSchema>(
           }
 
           const maybeFn = eventBinding.payload as unknown;
-          const payload = typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
+          const payload =
+            typeof maybeFn === "function" ? (maybeFn as (e: unknown) => unknown)(ev) : eventBinding.payload;
           runtime.dispatch(eventBinding.action, payload ?? ev);
         };
       }
@@ -185,12 +181,18 @@ export function useBehavior<S extends StateSchema>(
     clickOutsideHandlers.push(handler);
     installGlobalListener();
 
+    // Cleanup: Remove handler from global array to prevent memory leaks
     return () => {
       const index = clickOutsideHandlers.indexOf(handler);
-      if (index > -1) clickOutsideHandlers.splice(index, 1);
+      if (index > -1) {
+        clickOutsideHandlers.splice(index, 1);
+      }
+      // Uninstall global listener when no handlers remain
       if (clickOutsideHandlers.length === 0) {
         uninstallGlobalListener();
       }
+      // Clear ref to allow garbage collection
+      handlerRef.current = null;
     };
   }, [runtime]);
 

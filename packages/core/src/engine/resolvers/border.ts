@@ -10,36 +10,84 @@ import { resolveLength, resolveColor, resolveRadius, asLength } from "./length";
 // Border prop keys
 type BorderKey =
   // Border shorthand
-  | "border" | "borderTop" | "borderRight" | "borderBottom" | "borderLeft"
-  | "bt" | "br" | "bb" | "bl"
-  | "borderX" | "borderY"
+  | "border"
+  | "borderTop"
+  | "borderRight"
+  | "borderBottom"
+  | "borderLeft"
+  | "bt"
+  | "br"
+  | "bb"
+  | "bl"
+  | "borderX"
+  | "borderY"
   // Border width
-  | "borderWidth" | "borderTopWidth" | "borderRightWidth" | "borderBottomWidth" | "borderLeftWidth"
-  | "btWidth" | "brWidth" | "bbWidth" | "blWidth"
+  | "borderWidth"
+  | "borderTopWidth"
+  | "borderRightWidth"
+  | "borderBottomWidth"
+  | "borderLeftWidth"
+  | "btWidth"
+  | "brWidth"
+  | "bbWidth"
+  | "blWidth"
   // Border color
-  | "borderColor" | "borderTopColor" | "borderRightColor" | "borderBottomColor" | "borderLeftColor"
-  | "btColor" | "brColor" | "bbColor" | "blColor"
+  | "borderColor"
+  | "borderTopColor"
+  | "borderRightColor"
+  | "borderBottomColor"
+  | "borderLeftColor"
+  | "btColor"
+  | "brColor"
+  | "bbColor"
+  | "blColor"
   // Border style
-  | "borderStyle" | "borderTopStyle" | "borderRightStyle" | "borderBottomStyle" | "borderLeftStyle"
+  | "borderStyle"
+  | "borderTopStyle"
+  | "borderRightStyle"
+  | "borderBottomStyle"
+  | "borderLeftStyle"
   // Border radius
-  | "borderRadius" | "rounded" | "r"
-  | "borderTopLeftRadius" | "borderTopRightRadius" | "borderBottomLeftRadius" | "borderBottomRightRadius"
-  | "roundedTl" | "roundedTr" | "roundedBl" | "roundedBr"
-  | "rtl" | "rtr" | "rbl" | "rbr"
-  | "roundedTop" | "roundedBottom" | "roundedLeft" | "roundedRight"
-  | "rt" | "rb" | "rl" | "rr"
+  | "borderRadius"
+  | "rounded"
+  | "r"
+  | "borderTopLeftRadius"
+  | "borderTopRightRadius"
+  | "borderBottomLeftRadius"
+  | "borderBottomRightRadius"
+  | "roundedTl"
+  | "roundedTr"
+  | "roundedBl"
+  | "roundedBr"
+  | "rtl"
+  | "rtr"
+  | "rbl"
+  | "rbr"
+  | "roundedTop"
+  | "roundedBottom"
+  | "roundedLeft"
+  | "roundedRight"
+  | "rt"
+  | "rb"
+  | "rl"
+  | "rr"
   // Outline
-  | "outline" | "outlineWidth" | "outlineColor" | "outlineStyle" | "outlineOffset"
+  | "outline"
+  | "outlineWidth"
+  | "outlineColor"
+  | "outlineStyle"
+  | "outlineOffset"
   // Ring (Tailwind-like)
-  | "ring" | "ringColor" | "ringWidth" | "ringOffset" | "ringOffsetColor";
+  | "ring"
+  | "ringColor"
+  | "ringWidth"
+  | "ringOffset"
+  | "ringOffsetColor";
 
 /**
  * Resolve border properties
  */
-export function resolveBorderProps(
-  props: Partial<Record<BorderKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveBorderProps(props: Partial<Record<BorderKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   // Border shorthand
@@ -52,7 +100,7 @@ export function resolveBorderProps(
   if (borderBottom !== undefined) result.borderBottom = String(borderBottom);
   const borderLeft = props.borderLeft ?? props.bl;
   if (borderLeft !== undefined) result.borderLeft = String(borderLeft);
-  
+
   // Border X/Y
   if (props.borderX !== undefined) {
     const val = String(props.borderX);
@@ -183,9 +231,7 @@ export function resolveBorderProps(
     const color = props.ringColor
       ? (resolveColor(String(props.ringColor), ctx) ?? String(props.ringColor))
       : "rgb(59 130 246 / 0.5)";
-    const offset = props.ringOffset
-      ? (resolveLength(asLength(props.ringOffset), ctx) ?? "0px")
-      : "0px";
+    const offset = props.ringOffset ? (resolveLength(asLength(props.ringOffset), ctx) ?? "0px") : "0px";
     const offsetColor = props.ringOffsetColor
       ? (resolveColor(String(props.ringOffsetColor), ctx) ?? String(props.ringOffsetColor))
       : "transparent";
@@ -200,22 +246,73 @@ export function resolveBorderProps(
  * Extract border props from a props object
  */
 export const borderKeys: BorderKey[] = [
-  "border", "borderTop", "borderRight", "borderBottom", "borderLeft",
-  "bt", "br", "bb", "bl",
-  "borderX", "borderY",
-  "borderWidth", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth",
-  "btWidth", "brWidth", "bbWidth", "blWidth",
-  "borderColor", "borderTopColor", "borderRightColor", "borderBottomColor", "borderLeftColor",
-  "btColor", "brColor", "bbColor", "blColor",
-  "borderStyle", "borderTopStyle", "borderRightStyle", "borderBottomStyle", "borderLeftStyle",
-  "borderRadius", "rounded", "r",
-  "borderTopLeftRadius", "borderTopRightRadius", "borderBottomLeftRadius", "borderBottomRightRadius",
-  "roundedTl", "roundedTr", "roundedBl", "roundedBr",
-  "rtl", "rtr", "rbl", "rbr",
-  "roundedTop", "roundedBottom", "roundedLeft", "roundedRight",
-  "rt", "rb", "rl", "rr",
-  "outline", "outlineWidth", "outlineColor", "outlineStyle", "outlineOffset",
-  "ring", "ringColor", "ringWidth", "ringOffset", "ringOffsetColor",
+  "border",
+  "borderTop",
+  "borderRight",
+  "borderBottom",
+  "borderLeft",
+  "bt",
+  "br",
+  "bb",
+  "bl",
+  "borderX",
+  "borderY",
+  "borderWidth",
+  "borderTopWidth",
+  "borderRightWidth",
+  "borderBottomWidth",
+  "borderLeftWidth",
+  "btWidth",
+  "brWidth",
+  "bbWidth",
+  "blWidth",
+  "borderColor",
+  "borderTopColor",
+  "borderRightColor",
+  "borderBottomColor",
+  "borderLeftColor",
+  "btColor",
+  "brColor",
+  "bbColor",
+  "blColor",
+  "borderStyle",
+  "borderTopStyle",
+  "borderRightStyle",
+  "borderBottomStyle",
+  "borderLeftStyle",
+  "borderRadius",
+  "rounded",
+  "r",
+  "borderTopLeftRadius",
+  "borderTopRightRadius",
+  "borderBottomLeftRadius",
+  "borderBottomRightRadius",
+  "roundedTl",
+  "roundedTr",
+  "roundedBl",
+  "roundedBr",
+  "rtl",
+  "rtr",
+  "rbl",
+  "rbr",
+  "roundedTop",
+  "roundedBottom",
+  "roundedLeft",
+  "roundedRight",
+  "rt",
+  "rb",
+  "rl",
+  "rr",
+  "outline",
+  "outlineWidth",
+  "outlineColor",
+  "outlineStyle",
+  "outlineOffset",
+  "ring",
+  "ringColor",
+  "ringWidth",
+  "ringOffset",
+  "ringOffsetColor",
 ];
 
 export function extractBorderProps<T extends Record<string, unknown>>(

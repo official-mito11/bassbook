@@ -10,29 +10,44 @@ import { resolveLength, resolveColor } from "./length";
 // Typography prop keys
 type TypographyKey =
   // Font
-  | "fontFamily" | "font"
+  | "fontFamily"
+  | "font"
   | "fontSize"
-  | "fontWeight" | "weight"
-  | "fontStyle" | "italic"
-  | "lineHeight" | "leading"
-  | "letterSpacing" | "tracking"
+  | "fontWeight"
+  | "weight"
+  | "fontStyle"
+  | "italic"
+  | "lineHeight"
+  | "leading"
+  | "letterSpacing"
+  | "tracking"
   // Text
   | "textAlign"
-  | "textDecoration" | "decoration"
-  | "textDecorationColor" | "decorationColor"
-  | "textDecorationStyle" | "decorationStyle"
-  | "textDecorationThickness" | "decorationThickness"
-  | "textUnderlineOffset" | "underlineOffset"
+  | "textDecoration"
+  | "decoration"
+  | "textDecorationColor"
+  | "decorationColor"
+  | "textDecorationStyle"
+  | "decorationStyle"
+  | "textDecorationThickness"
+  | "decorationThickness"
+  | "textUnderlineOffset"
+  | "underlineOffset"
   | "textTransform"
   | "textOverflow"
-  | "textIndent" | "indent"
+  | "textIndent"
+  | "indent"
   | "textShadow"
   // Whitespace & wrapping
-  | "whiteSpace" | "whitespace"
-  | "wordBreak" | "wordWrap" | "overflowWrap"
+  | "whiteSpace"
+  | "whitespace"
+  | "wordBreak"
+  | "wordWrap"
+  | "overflowWrap"
   | "hyphens"
   // Truncate shortcut
-  | "truncate" | "lineClamp";
+  | "truncate"
+  | "lineClamp";
 
 /**
  * Resolve typography properties
@@ -83,7 +98,7 @@ export function resolveTypographyProps(
   // Text decoration
   const textDecoration = props.textDecoration ?? props.decoration;
   if (textDecoration !== undefined) result.textDecoration = String(textDecoration);
-  
+
   const decorationColor = props.textDecorationColor ?? props.decorationColor;
   if (decorationColor !== undefined) {
     result.textDecorationColor = resolveColor(String(decorationColor), ctx) ?? String(decorationColor);
@@ -151,26 +166,41 @@ export function resolveTypographyProps(
  * Extract typography props from a props object
  */
 export const typographyKeys: TypographyKey[] = [
-  "fontFamily", "font",
+  "fontFamily",
+  "font",
   "fontSize",
-  "fontWeight", "weight",
-  "fontStyle", "italic",
-  "lineHeight", "leading",
-  "letterSpacing", "tracking",
+  "fontWeight",
+  "weight",
+  "fontStyle",
+  "italic",
+  "lineHeight",
+  "leading",
+  "letterSpacing",
+  "tracking",
   "textAlign",
-  "textDecoration", "decoration",
-  "textDecorationColor", "decorationColor",
-  "textDecorationStyle", "decorationStyle",
-  "textDecorationThickness", "decorationThickness",
-  "textUnderlineOffset", "underlineOffset",
+  "textDecoration",
+  "decoration",
+  "textDecorationColor",
+  "decorationColor",
+  "textDecorationStyle",
+  "decorationStyle",
+  "textDecorationThickness",
+  "decorationThickness",
+  "textUnderlineOffset",
+  "underlineOffset",
   "textTransform",
   "textOverflow",
-  "textIndent", "indent",
+  "textIndent",
+  "indent",
   "textShadow",
-  "whiteSpace", "whitespace",
-  "wordBreak", "wordWrap", "overflowWrap",
+  "whiteSpace",
+  "whitespace",
+  "wordBreak",
+  "wordWrap",
+  "overflowWrap",
   "hyphens",
-  "truncate", "lineClamp",
+  "truncate",
+  "lineClamp",
 ];
 
 export function extractTypographyProps<T extends Record<string, unknown>>(

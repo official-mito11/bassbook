@@ -49,21 +49,27 @@ export const Variants: Story = {
   render: () => (
     <VStack gap={16}>
       <Box w={300}>
-        <Text fontWeight="medium" mb={8}>Loading</Text>
+        <Text fontWeight="medium" mb={8}>
+          Loading
+        </Text>
         <Placeholder variant="loading" h={150}>
           Loading content...
         </Placeholder>
       </Box>
-      
+
       <Box w={300}>
-        <Text fontWeight="medium" mb={8}>Empty</Text>
+        <Text fontWeight="medium" mb={8}>
+          Empty
+        </Text>
         <Placeholder variant="empty" h={150}>
           No data available
         </Placeholder>
       </Box>
-      
+
       <Box w={300}>
-        <Text fontWeight="medium" mb={8}>Error</Text>
+        <Text fontWeight="medium" mb={8}>
+          Error
+        </Text>
         <Placeholder variant="error" h={150}>
           Failed to load
         </Placeholder>
@@ -79,17 +85,17 @@ export const LoadingState: Story = {
 const LoadingStateExample = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<string[] | null>(null);
-  
+
   const loadData = () => {
     setLoading(true);
     setData(null);
-    
+
     setTimeout(() => {
       setData(["Item 1", "Item 2", "Item 3"]);
       setLoading(false);
     }, 2000);
   };
-  
+
   return (
     <VStack gap={16} w={350}>
       {loading ? (
@@ -106,7 +112,7 @@ const LoadingStateExample = () => {
           </VStack>
         </Box>
       ) : null}
-      
+
       <Button onClick={loadData} w="full">
         {loading ? "Loading..." : "Reload Data"}
       </Button>
@@ -120,11 +126,11 @@ export const EmptyState: Story = {
 
 const EmptyStateExample = () => {
   const [items, setItems] = useState<string[]>([]);
-  
+
   const addItem = () => {
     setItems([...items, `Item ${items.length + 1}`]);
   };
-  
+
   return (
     <VStack gap={16} w={350}>
       {items.length === 0 ? (
@@ -147,7 +153,7 @@ const EmptyStateExample = () => {
           </VStack>
         </Box>
       )}
-      
+
       <Button onClick={addItem} variant={items.length === 0 ? "default" : "outline"} w="full">
         {items.length === 0 ? "Add First Item" : "Add Item"}
       </Button>
@@ -162,7 +168,7 @@ export const ErrorState: Story = {
 const ErrorStateExample = () => {
   const [error, setError] = useState(true);
   const [retrying, setRetrying] = useState(false);
-  
+
   const retry = () => {
     setRetrying(true);
     setTimeout(() => {
@@ -170,7 +176,7 @@ const ErrorStateExample = () => {
       setRetrying(false);
     }, 2000);
   };
-  
+
   return (
     <VStack gap={16} w={350}>
       {error ? (
@@ -186,14 +192,16 @@ const ErrorStateExample = () => {
       ) : (
         <Box p={16} border="1px solid" borderColor="green.200" bg="green.50" rounded="lg" w="full">
           <VStack gap={8}>
-            <Text fontWeight="bold" color="green.700">✓ Connected</Text>
+            <Text fontWeight="bold" color="green.700">
+              ✓ Connected
+            </Text>
             <Text fontSize="sm" color="green.600">
               Successfully connected to the server
             </Text>
           </VStack>
         </Box>
       )}
-      
+
       {error && (
         <Button onClick={retry} variant="destructive" w="full">
           {retrying ? "Retrying..." : "Retry Connection"}
@@ -258,7 +266,7 @@ export const AllVariants: Story = {
           Loading...
         </Placeholder>
       </Box>
-      
+
       <Box w={300}>
         <Text fontWeight="medium" mb={8} fontSize="sm" color="gray.600">
           Empty - 데이터 없음
@@ -267,7 +275,7 @@ export const AllVariants: Story = {
           No data
         </Placeholder>
       </Box>
-      
+
       <Box w={300}>
         <Text fontWeight="medium" mb={8} fontSize="sm" color="gray.600">
           Error - 에러 상태
@@ -320,7 +328,7 @@ export const WithAction: Story = {
 
 const WithActionExample = () => {
   const [showPlaceholder, setShowPlaceholder] = useState(true);
-  
+
   return (
     <VStack gap={16} w={350}>
       {showPlaceholder ? (
@@ -335,20 +343,12 @@ const WithActionExample = () => {
           <Text fontWeight="medium">Goal added!</Text>
         </Box>
       )}
-      
+
       <HStack gap={8}>
-        <Button 
-          variant="default" 
-          flex={1}
-          onClick={() => setShowPlaceholder(false)}
-        >
+        <Button variant="default" flex={1} onClick={() => setShowPlaceholder(false)}>
           Add Goal
         </Button>
-        <Button 
-          variant="outline" 
-          flex={1}
-          onClick={() => setShowPlaceholder(true)}
-        >
+        <Button variant="outline" flex={1} onClick={() => setShowPlaceholder(true)}>
           Reset
         </Button>
       </HStack>

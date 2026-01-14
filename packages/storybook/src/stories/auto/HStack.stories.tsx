@@ -9,12 +9,9 @@ export default {
   title: "Core/HStack",
   component: Component,
   args: {
-
     children: "HStack",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

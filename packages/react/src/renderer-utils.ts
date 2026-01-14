@@ -66,11 +66,7 @@ export function isSvgElementNode(node: unknown): boolean {
  * Check if value is a React element (has $$typeof symbol)
  */
 export function isReactElement(value: unknown): boolean {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "$$typeof" in (value as object)
-  );
+  return typeof value === "object" && value !== null && "$$typeof" in (value as object);
 }
 
 /**

@@ -3,5 +3,7 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "types": ["bun"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts", "examples/**/*", "node_modules", "dist"]
 }

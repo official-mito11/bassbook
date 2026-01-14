@@ -9,12 +9,9 @@ export default {
   title: "Core/TextArea",
   component: Component,
   args: {
-
     children: "TextArea",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

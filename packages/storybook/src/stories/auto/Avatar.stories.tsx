@@ -9,12 +9,12 @@ export default {
   title: "Unit/Avatar",
   component: Component,
   args: {
-    "size": "md",
-    "hasImage": false,
+    size: "md",
+    hasImage: false,
   },
   argTypes: {
-    "size": { control: "select", options: ["xs","sm","md","lg","xl"] },
-    "hasImage": { control: "boolean" },
+    size: { control: "select", options: ["xs", "sm", "md", "lg", "xl"] },
+    hasImage: { control: "boolean" },
   },
 };
 

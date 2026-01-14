@@ -29,11 +29,11 @@ export function createSlotComponent(slotName: string): React.FC<SlotComponentPro
     // Return children with slot marker
     return React.createElement(React.Fragment, null, children);
   };
-  
+
   // Mark as slot component
   (SlotComponent as unknown as Record<symbol, string>)[SLOT_SYMBOL] = slotName;
   SlotComponent.displayName = `Slot(${slotName})`;
-  
+
   return SlotComponent;
 }
 
@@ -86,13 +86,10 @@ export function isSlottedComponent(element: unknown): element is React.ReactElem
 /**
  * Extract slots from children based on slot definitions
  */
-export function extractSlotsFromChildren(
-  children: React.ReactNode,
-  slotsMap?: SlotsMap
-): SlotValues {
+export function extractSlotsFromChildren(children: React.ReactNode, slotsMap?: SlotsMap): SlotValues {
   const slots: SlotValues = {};
   const defaultChildren: React.ReactNode[] = [];
-  
+
   // Find default slot name
   let defaultSlotName = "children";
   if (slotsMap) {
@@ -103,7 +100,7 @@ export function extractSlotsFromChildren(
       }
     }
   }
-  
+
   React.Children.forEach(children, (child) => {
     if (isSlotComponent(child)) {
       const slotName = getSlotName(child);
@@ -115,30 +112,24 @@ export function extractSlotsFromChildren(
           : (child as React.ReactElement<{ children?: React.ReactNode }>).props.children;
         if (slots[slotName]) {
           // Append to existing slot
-          slots[slotName] = React.createElement(
-            React.Fragment,
-            null,
-            slots[slotName],
-            slotValue
-          );
+          slots[slotName] = React.createElement(React.Fragment, null, slots[slotName], slotValue);
         } else {
           slots[slotName] = slotValue;
         }
         return;
       }
     }
-    
+
     // Not a slot component - add to default slot
     defaultChildren.push(child);
   });
-  
+
   // Set default slot if there are unmatched children
   if (defaultChildren.length > 0) {
-    slots[defaultSlotName] = defaultChildren.length === 1 
-      ? defaultChildren[0] 
-      : React.createElement(React.Fragment, null, ...defaultChildren);
+    slots[defaultSlotName] =
+      defaultChildren.length === 1 ? defaultChildren[0] : React.createElement(React.Fragment, null, ...defaultChildren);
   }
-  
+
   return slots;
 }
 
@@ -153,19 +144,16 @@ export function createCompoundComponent<
   renderer: ReactRenderer,
   componentName: string,
   slotMapping: T
-): React.ForwardRefExoticComponent<BassbookComponentProps<Spec> & React.RefAttributes<unknown>> & {
-  [K in keyof T]: React.FC<SlotComponentProps>;
-} {
+): any {
   const BaseComponent = renderer.createComponent<Spec>(componentName);
-  
+
   // Create slot sub-components
   const subComponents: Record<string, React.FC<SlotComponentProps>> = {};
   for (const [subName, slotName] of Object.entries(slotMapping)) {
     subComponents[subName] = createSlotComponent(slotName);
   }
-  
+
   // Combine base component with sub-components
-  return Object.assign(BaseComponent, subComponents) as React.ForwardRefExoticComponent<BassbookComponentProps<Spec> & React.RefAttributes<unknown>> & {
-    [K in keyof T]: React.FC<SlotComponentProps>;
-  };
+  const result = Object.assign(BaseComponent, subComponents);
+  return result as any;
 }

@@ -1,9 +1,4 @@
-import type {
-  ComponentBehavior,
-  StateSchema,
-  EventBinding,
-  PartBindings,
-} from "./spec";
+import type { ComponentBehavior, StateSchema, EventBinding, PartBindings } from "./spec";
 
 type StateValuesFromSchema<S extends StateSchema> = {
   [K in keyof S]: S[K] extends { type: "boolean" }

@@ -9,13 +9,13 @@ export default {
   title: "Unit/Badge",
   component: Component,
   args: {
-    "variant": "default",
-    "size": "md",
+    variant: "default",
+    size: "md",
     children: "Badge",
   },
   argTypes: {
-    "variant": { control: "select", options: ["default","secondary","outline","destructive"] },
-    "size": { control: "select", options: ["sm","md","lg"] },
+    variant: { control: "select", options: ["default", "secondary", "outline", "destructive"] },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };
 

@@ -39,17 +39,10 @@ export function getContext(): StyleContext {
 /**
  * Configure the global style context with custom theme
  */
-export function configure(options: {
-  theme?: Partial<ThemeTokens>;
-  prefix?: string;
-}): StyleContext {
-  const theme = options.theme 
-    ? mergeThemes(defaultTheme, options.theme) 
-    : defaultTheme;
-  
-  const registry = options.prefix 
-    ? createRegistry(options.prefix) 
-    : getRegistry();
+export function configure(options: { theme?: Partial<ThemeTokens>; prefix?: string }): StyleContext {
+  const theme = options.theme ? mergeThemes(defaultTheme, options.theme) : defaultTheme;
+
+  const registry = options.prefix ? createRegistry(options.prefix) : getRegistry();
 
   if (isServer) {
     return { theme, registry };
@@ -62,14 +55,9 @@ export function configure(options: {
 /**
  * Create an isolated style context (useful for SSR or testing)
  */
-export function createContext(options?: {
-  theme?: Partial<ThemeTokens>;
-  prefix?: string;
-}): StyleContext {
-  const theme = options?.theme 
-    ? mergeThemes(defaultTheme, options.theme) 
-    : defaultTheme;
-  
+export function createContext(options?: { theme?: Partial<ThemeTokens>; prefix?: string }): StyleContext {
+  const theme = options?.theme ? mergeThemes(defaultTheme, options.theme) : defaultTheme;
+
   const registry = createRegistry(options?.prefix);
 
   return { theme, registry };
@@ -93,10 +81,10 @@ export function resolveToken<K extends keyof ThemeTokens>(
 ): string | undefined {
   const scale = ctx.theme[category];
   if (!scale) return undefined;
-  
+
   const value = (scale as Record<string | number, unknown>)[key];
   if (value === undefined) return undefined;
-  
+
   return String(value);
 }
 
@@ -121,8 +109,8 @@ export function parseAndResolveToken(ctx: StyleContext, value: string): string |
   const normalized = value.startsWith("$") ? value.slice(1) : value;
   const [category, ...keyParts] = normalized.split(".");
   const key = keyParts.join(".");
-  
+
   if (!category || !key) return undefined;
-  
+
   return resolveToken(ctx, category as keyof ThemeTokens, key);
 }

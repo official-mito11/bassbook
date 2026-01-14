@@ -9,11 +9,11 @@ export default {
   title: "Part/Alert",
   component: Component,
   args: {
-    "variant": "info",
+    variant: "info",
     children: "Alert",
   },
   argTypes: {
-    "variant": { control: "select", options: ["info","success","warning","error"] },
+    variant: { control: "select", options: ["info", "success", "warning", "error"] },
   },
 };
 

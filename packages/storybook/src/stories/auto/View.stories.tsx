@@ -9,13 +9,13 @@ export default {
   title: "Part/View",
   component: Component,
   args: {
-    "centered": false,
-    "scrollable": false,
+    centered: false,
+    scrollable: false,
     children: "View",
   },
   argTypes: {
-    "centered": { control: "boolean" },
-    "scrollable": { control: "boolean" },
+    centered: { control: "boolean" },
+    scrollable: { control: "boolean" },
   },
 };
 

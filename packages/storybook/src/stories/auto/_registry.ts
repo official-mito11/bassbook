@@ -6,10 +6,10 @@ function isComponentSpec(value: unknown): value is AnyComponentSpec {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
   return (
-    (v["layer"] === "core" || v["layer"] === "unit" || v["layer"] === "part") &&
-    typeof v["name"] === "string" &&
-    typeof v["tree"] === "object" &&
-    v["tree"] !== null
+    (v.layer === "core" || v.layer === "unit" || v.layer === "part") &&
+    typeof v.name === "string" &&
+    typeof v.tree === "object" &&
+    v.tree !== null
   );
 }
 

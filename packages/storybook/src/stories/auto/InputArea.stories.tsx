@@ -9,11 +9,11 @@ export default {
   title: "Unit/InputArea",
   component: Component,
   args: {
-    "size": "md",
+    size: "md",
     children: "InputArea",
   },
   argTypes: {
-    "size": { control: "select", options: ["sm","md","lg"] },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };
 

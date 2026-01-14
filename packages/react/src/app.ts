@@ -28,19 +28,19 @@ export interface BassbookApp {
 /**
  * Create a Bassbook app with all components pre-configured
  * This eliminates the need for a separate renderer.ts file in consumer apps
- * 
+ *
  * @example
  * ```tsx
  * import { createBassbookApp } from "@bassbook/react";
  * import { builtInSpecs } from "./specs";
- * 
+ *
  * const app = createBassbookApp({
  *   specs: builtInSpecs,
  *   theme: {
  *     colors: { primary: "#3b82f6" }
  *   }
  * });
- * 
+ *
  * export const Box = app.component("Box");
  * export const Button = app.component("Button");
  * export const Dialog = app.compoundComponent("Dialog", {
@@ -72,10 +72,7 @@ export function createBassbookApp(config: BassbookAppConfig): BassbookApp {
   }
 
   // Helper to create a compound component
-  function compoundComponent<T extends Record<string, string>>(
-    name: string,
-    slotMapping: T
-  ) {
+  function compoundComponent<T extends Record<string, string>>(name: string, slotMapping: T) {
     return createCompoundComponent(renderer, name, slotMapping);
   }
 

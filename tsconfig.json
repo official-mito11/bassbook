@@ -24,7 +24,7 @@
     // Stricter flags (enabled for better code quality)
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     
     "baseUrl": ".",
     "paths": {

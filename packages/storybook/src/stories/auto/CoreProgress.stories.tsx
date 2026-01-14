@@ -9,12 +9,9 @@ export default {
   title: "Core/CoreProgress",
   component: Component,
   args: {
-
     children: "CoreProgress",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

@@ -5,24 +5,24 @@ export const Sheet = definePartComponent({
   dataProps: ["open", "side"] as const,
   keyframes: {
     fadeIn: {
-      from: { opacity: 0 },
-      to: { opacity: 1 },
+      "0%": { opacity: 0 },
+      "100%": { opacity: 1 },
     },
-    slideInLeft: {
-      from: { transform: "translateX(-100%)" },
-      to: { transform: "translateX(0)" },
+    sheetInFromRight: {
+      "0%": { transform: "translateX(100%)" },
+      "100%": { transform: "translateX(0)" },
     },
-    slideInRight: {
-      from: { transform: "translateX(100%)" },
-      to: { transform: "translateX(0)" },
+    sheetInFromLeft: {
+      "0%": { transform: "translateX(-100%)" },
+      "100%": { transform: "translateX(0)" },
     },
-    slideInTop: {
-      from: { transform: "translateY(-100%)" },
-      to: { transform: "translateY(0)" },
+    sheetInFromTop: {
+      "0%": { transform: "translateY(-100%)" },
+      "100%": { transform: "translateY(0)" },
     },
-    slideInBottom: {
-      from: { transform: "translateY(100%)" },
-      to: { transform: "translateY(0)" },
+    sheetInFromBottom: {
+      "0%": { transform: "translateY(100%)" },
+      "100%": { transform: "translateY(0)" },
     },
   },
   tree: comp("Box", {
@@ -35,7 +35,7 @@ export const Sheet = definePartComponent({
         },
       }),
       comp("Box", {
-        part: "panel",
+        part: "container",
         children: [slot("children")],
       }),
     ],
@@ -51,13 +51,13 @@ export const Sheet = definePartComponent({
         position: "absolute",
         inset: 0,
         bg: "overlay",
-        animation: "fadeIn 200ms ease-out",
+        animation: "fadeIn 250ms ease-out",
       },
-      panel: {
+      container: {
         position: "absolute",
         bg: "background",
-        shadow: "xl",
-        overflowAuto: true,
+        shadow: "2xl",
+        overflow: "auto",
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "border",
@@ -78,39 +78,47 @@ export const Sheet = definePartComponent({
       },
       side: {
         left: {
-          panel: {
+          container: {
             top: 0,
             left: 0,
             bottom: 0,
-            w: 320,
-            animation: "slideInLeft 200ms ease-out",
+            w: 420,
+            maxW: "85%",
+            animation: "sheetInFromLeft 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            borderRight: "none",
           },
         },
         right: {
-          panel: {
+          container: {
             top: 0,
             right: 0,
             bottom: 0,
-            w: 320,
-            animation: "slideInRight 200ms ease-out",
+            w: 420,
+            maxW: "85%",
+            animation: "sheetInFromRight 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            borderLeft: "none",
           },
         },
         top: {
-          panel: {
+          container: {
             top: 0,
             left: 0,
             right: 0,
-            h: 320,
-            animation: "slideInTop 200ms ease-out",
+            h: 420,
+            maxH: "85%",
+            animation: "sheetInFromTop 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            borderBottom: "none",
           },
         },
         bottom: {
-          panel: {
+          container: {
             bottom: 0,
             left: 0,
             right: 0,
-            h: 320,
-            animation: "slideInBottom 200ms ease-out",
+            h: 420,
+            maxH: "85%",
+            animation: "sheetInFromBottom 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+            borderTop: "none",
           },
         },
       },

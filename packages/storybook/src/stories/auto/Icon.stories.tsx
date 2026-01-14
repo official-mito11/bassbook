@@ -9,13 +9,13 @@ export default {
   title: "Unit/Icon",
   component: Component,
   args: {
-    "size": "md",
-    "strokeWidth": "medium",
+    size: "md",
+    strokeWidth: "medium",
     children: "Icon",
   },
   argTypes: {
-    "size": { control: "select", options: ["xs","sm","md","lg","xl","2xl","3xl"] },
-    "strokeWidth": { control: "select", options: ["thin","medium","bold"] },
+    size: { control: "select", options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl"] },
+    strokeWidth: { control: "select", options: ["thin", "medium", "bold"] },
   },
 };
 

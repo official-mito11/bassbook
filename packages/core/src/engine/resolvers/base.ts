@@ -9,10 +9,7 @@ import type { Properties } from "csstype";
 export type CSSDeclarations = Partial<Record<keyof Properties, string>>;
 
 // Property resolver function type
-export type PropertyResolver<T> = (
-  value: T,
-  ctx: StyleContext
-) => CSSDeclarations | null;
+export type PropertyResolver<T> = (value: T, ctx: StyleContext) => CSSDeclarations | null;
 
 // Property definition with resolver - uses never for cssProperty when custom resolver is provided
 export interface PropertyDefinition<T = unknown> {
@@ -29,7 +26,9 @@ export interface PropertyDefinition<T = unknown> {
 /**
  * Type guard to check if property has custom resolver
  */
-function hasCustomResolver<T>(def: PropertyDefinition<T>): def is PropertyDefinition<T> & { resolver: PropertyResolver<T> } {
+function hasCustomResolver<T>(
+  def: PropertyDefinition<T>
+): def is PropertyDefinition<T> & { resolver: PropertyResolver<T> } {
   return def.resolver !== undefined;
 }
 
@@ -53,10 +52,7 @@ export function defineProperty<T>(
 /**
  * Create a property with custom resolver
  */
-export function defineCustomProperty<T>(
-  resolver: PropertyResolver<T>,
-  aliases?: string[]
-): PropertyDefinition<T> {
+export function defineCustomProperty<T>(resolver: PropertyResolver<T>, aliases?: string[]): PropertyDefinition<T> {
   return {
     // When custom resolver is provided, cssProperty is not used
     cssProperty: undefined as never,
@@ -68,27 +64,19 @@ export function defineCustomProperty<T>(
 /**
  * Apply a property definition to a value
  */
-export function applyProperty<T>(
-  def: PropertyDefinition<T>,
-  value: T,
-  ctx: StyleContext
-): CSSDeclarations | null {
+export function applyProperty<T>(def: PropertyDefinition<T>, value: T, ctx: StyleContext): CSSDeclarations | null {
   // Use custom resolver if provided
   if (hasCustomResolver(def)) {
     return def.resolver(value, ctx);
   }
 
   // Transform value
-  const transformed = def.transform
-    ? def.transform(value, ctx)
-    : String(value);
+  const transformed = def.transform ? def.transform(value, ctx) : String(value);
 
   if (transformed === undefined) return null;
 
   // Apply to CSS properties
-  const props = Array.isArray(def.cssProperty)
-    ? def.cssProperty
-    : [def.cssProperty];
+  const props = Array.isArray(def.cssProperty) ? def.cssProperty : [def.cssProperty];
 
   const result: CSSDeclarations = {};
   for (const prop of props) {

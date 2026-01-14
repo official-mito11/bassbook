@@ -8,12 +8,8 @@ const Component = createReactComponent("CoreInput", { registry });
 export default {
   title: "Core/CoreInput",
   component: Component,
-  args: {
-
-  },
-  argTypes: {
-
-  },
+  args: {},
+  argTypes: {},
 };
 
 export function Playground(args: any) {

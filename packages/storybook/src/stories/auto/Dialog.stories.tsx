@@ -9,11 +9,11 @@ export default {
   title: "Part/Dialog",
   component: Component,
   args: {
-    "open": true,
+    open: true,
     children: "Dialog",
   },
   argTypes: {
-    "open": { control: "boolean" },
+    open: { control: "boolean" },
   },
 };
 

@@ -9,13 +9,13 @@ export default {
   title: "Unit/SelectHeader",
   component: Component,
   args: {
-    "variant": "default",
-    "centered": false,
+    variant: "default",
+    centered: false,
     children: "SelectHeader",
   },
   argTypes: {
-    "variant": { control: "select", options: ["default","line","dotted"] },
-    "centered": { control: "boolean" },
+    variant: { control: "select", options: ["default", "line", "dotted"] },
+    centered: { control: "boolean" },
   },
 };
 

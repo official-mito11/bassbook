@@ -60,64 +60,61 @@ function shouldInline(property: string, value: string): boolean {
 /**
  * Main style function - resolves props to class names
  */
-export function css(
-  props: Record<string, unknown>,
-  options?: StyleOptions
-): StyleResult {
+export function css(props: Record<string, unknown>, options?: StyleOptions): StyleResult {
   const ctx = options?.context ?? getContext();
-  
+
   // Separate pseudo props from regular props
   const regularProps: Record<string, unknown> = {};
   const pseudoProps: Record<string, Record<string, unknown>> = {};
-  
+
   for (const [key, value] of Object.entries(props)) {
     if (value === undefined || value === null) continue;
-    
+
     if (isPseudoProp(key)) {
       pseudoProps[key] = value as Record<string, unknown>;
     } else {
       regularProps[key] = value;
     }
   }
-  
+
   // Resolve regular props to CSS declarations
   const declarations = resolveAllProps(regularProps, ctx);
-  
+
   // Separate atomic and inline styles
   const atomicDeclarations: CSSDeclarations = {};
   const inlineStyles: Properties = {};
-  
+
   for (const [prop, value] of Object.entries(declarations)) {
     if (value === undefined || value === null) continue;
-    
+
     if (options?.inline || shouldInline(prop, value)) {
       (inlineStyles as Record<string, string>)[prop] = value;
     } else {
       (atomicDeclarations as Record<string, string>)[prop] = value;
     }
   }
-  
+
   // Register atomic styles and collect class names
   const classNames: string[] = [];
-  
+
   for (const [prop, value] of Object.entries(atomicDeclarations)) {
     if (value === undefined) continue;
     const cssProperty = toKebabCase(prop);
     const className = ctx.registry.register(cssProperty, value);
     classNames.push(className);
   }
-  
+
   // Process pseudo-class styles
   for (const [pseudoKey, pseudoStyleProps] of Object.entries(pseudoProps)) {
     const selector = pseudoSelectors[pseudoKey as keyof PseudoProps];
     if (!selector) continue;
-    
+
     const pseudoDeclarations = resolveAllProps(pseudoStyleProps, ctx);
-    
+
     for (const [prop, value] of Object.entries(pseudoDeclarations)) {
       if (value === undefined || value === null) continue;
       if (shouldInline(prop, value)) continue; // Skip inline-only values for pseudo
-      
+
       const cssProperty = toKebabCase(prop);
       const className = ctx.registry.register(cssProperty, value, { selector });
       classNames.push(className);
@@ -125,17 +122,15 @@ export function css(
   }
 
   classNames.sort();
-  
+
   // Add additional class names
   if (options?.className) {
     classNames.push(...options.className.split(" ").filter(Boolean));
   }
-  
+
   // Merge inline styles
-  const mergedStyle = options?.style
-    ? { ...inlineStyles, ...options.style }
-    : inlineStyles;
-  
+  const mergedStyle = options?.style ? { ...inlineStyles, ...options.style } : inlineStyles;
+
   return {
     className: classNames.join(" "),
     classNames,
@@ -156,20 +151,17 @@ export function createStyleFactory(defaultOptions?: StyleOptions) {
 /**
  * Get inline style object only (no class generation)
  */
-export function inlineStyle(
-  props: Record<string, unknown>,
-  options?: { context?: StyleContext }
-): Properties {
+export function inlineStyle(props: Record<string, unknown>, options?: { context?: StyleContext }): Properties {
   const ctx = options?.context ?? getContext();
   const declarations = resolveAllProps(props, ctx);
-  
+
   const result: Properties = {};
   for (const [prop, value] of Object.entries(declarations)) {
     if (value !== undefined && value !== null) {
       (result as Record<string, string>)[prop] = value;
     }
   }
-  
+
   return result;
 }
 
@@ -183,16 +175,16 @@ export function cssString(
 ): string {
   const ctx = options?.context ?? getContext();
   const declarations = resolveAllProps(props, ctx);
-  
+
   const cssDeclarations = Object.entries(declarations)
     .filter(([, value]) => value !== undefined && value !== null)
     .map(([prop, value]) => `${toKebabCase(prop)}:${value}`)
     .join(";");
-  
+
   if (selector) {
     return `${selector}{${cssDeclarations}}`;
   }
-  
+
   return cssDeclarations;
 }
 
@@ -209,11 +201,10 @@ export function extractCSS(options?: { context?: StyleContext }): string {
  */
 export function createSSRContext(options?: Parameters<typeof createContext>[0]) {
   const ctx = createContext(options);
-  
+
   return {
     context: ctx,
-    css: (props: Record<string, unknown>, opts?: StyleOptions) => 
-      css(props, { ...opts, context: ctx }),
+    css: (props: Record<string, unknown>, opts?: StyleOptions) => css(props, { ...opts, context: ctx }),
     extractCSS: () => ctx.registry.getCSS(),
     reset: () => ctx.registry.reset(),
   };
@@ -226,7 +217,7 @@ export function mergeStyles(...results: (StyleResult | undefined)[]): StyleResul
   const classNames: string[] = [];
   let style: Properties | undefined;
   const cssStrings: string[] = [];
-  
+
   for (const result of results) {
     if (!result) continue;
     classNames.push(...result.classNames);
@@ -237,7 +228,7 @@ export function mergeStyles(...results: (StyleResult | undefined)[]): StyleResul
       cssStrings.push(result.css);
     }
   }
-  
+
   return {
     className: classNames.join(" "),
     classNames,
@@ -249,14 +240,12 @@ export function mergeStyles(...results: (StyleResult | undefined)[]): StyleResul
 /**
  * Conditional style helper
  */
-export function cx(
-  ...inputs: (string | Record<string, boolean> | undefined | null | false)[]
-): string {
+export function cx(...inputs: (string | Record<string, boolean> | undefined | null | false)[]): string {
   const classes: string[] = [];
-  
+
   for (const input of inputs) {
     if (!input) continue;
-    
+
     if (typeof input === "string") {
       classes.push(input);
     } else if (typeof input === "object") {
@@ -265,6 +254,6 @@ export function cx(
       }
     }
   }
-  
+
   return classes.join(" ");
 }

@@ -9,12 +9,9 @@ export default {
   title: "Core/Video",
   component: Component,
   args: {
-
     children: "Video",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

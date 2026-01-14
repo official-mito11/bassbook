@@ -59,20 +59,17 @@ function injectComponentCssText(cssText: string): void {
 /**
  * Extract SVG presentation attributes that should be forwarded as DOM attributes
  */
-function extractSvgDomOverrides(
-  rawProps: UnknownProps,
-  rootExtras?: UnknownProps
-): Record<string, unknown> {
+function extractSvgDomOverrides(rawProps: UnknownProps, rootExtras?: UnknownProps): Record<string, unknown> {
   const overrides: Record<string, unknown> = {};
 
-  if ('d' in rawProps) overrides['d'] = rawProps['d'];
-  if ('fill' in rawProps) overrides['fill'] = rawProps['fill'];
-  if ('stroke' in rawProps) overrides['stroke'] = rawProps['stroke'];
+  if ("d" in rawProps) overrides["d"] = rawProps["d"];
+  if ("fill" in rawProps) overrides["fill"] = rawProps["fill"];
+  if ("stroke" in rawProps) overrides["stroke"] = rawProps["stroke"];
 
   if (rootExtras) {
-    if ('d' in rootExtras && overrides['d'] === undefined) overrides['d'] = rootExtras['d'];
-    if ('fill' in rootExtras && overrides['fill'] === undefined) overrides['fill'] = rootExtras['fill'];
-    if ('stroke' in rootExtras && overrides['stroke'] === undefined) overrides['stroke'] = rootExtras['stroke'];
+    if ("d" in rootExtras && overrides["d"] === undefined) overrides["d"] = rootExtras["d"];
+    if ("fill" in rootExtras && overrides["fill"] === undefined) overrides["fill"] = rootExtras["fill"];
+    if ("stroke" in rootExtras && overrides["stroke"] === undefined) overrides["stroke"] = rootExtras["stroke"];
   }
 
   return overrides;
@@ -82,9 +79,9 @@ function extractSvgDomOverrides(
  * Apply SVG overrides to element props
  */
 function applySvgOverrides(elementProps: UnknownProps, extra: UnknownProps): void {
-  if ('d' in extra) elementProps['d'] = extra['d'];
-  if ('fill' in extra) elementProps['fill'] = extra['fill'];
-  if ('stroke' in extra) elementProps['stroke'] = extra['stroke'];
+  if ("d" in extra) elementProps["d"] = extra["d"];
+  if ("fill" in extra) elementProps["fill"] = extra["fill"];
+  if ("stroke" in extra) elementProps["stroke"] = extra["stroke"];
 }
 
 /**
@@ -195,21 +192,21 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
     const baseStyleOptions: StyleOptions | undefined = styleContext ? { context: styleContext } : undefined;
 
     const rawProps = (propsInput ?? {}) as UnknownProps;
-    const slotsFromProps = rawProps['__slots'] as SlotValues | undefined;
-    const partPropsFromProps = rawProps['__partProps'] as Record<string, UnknownProps> | undefined;
+    const slotsFromProps = rawProps["__slots"] as SlotValues | undefined;
+    const partPropsFromProps = rawProps["__partProps"] as Record<string, UnknownProps> | undefined;
 
     const props: UnknownProps = { ...rawProps };
-    delete props['__slots'];
-    delete props['__partProps'];
+    delete props["__slots"];
+    delete props["__partProps"];
 
     const svgRoot = isSvgRoot(spec);
     const domOverrides = svgRoot ? extractSvgDomOverrides(rawProps, rootExtras) : {};
 
     const propsForSplit: UnknownProps = { ...props };
     if (svgRoot) {
-      delete propsForSplit['d'];
-      delete propsForSplit['fill'];
-      delete propsForSplit['stroke'];
+      delete propsForSplit["d"];
+      delete propsForSplit["fill"];
+      delete propsForSplit["stroke"];
     }
 
     const { styleProps: userStyleProps, domProps: rawDomProps } = splitProps(propsForSplit);
@@ -228,16 +225,16 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
     const domProps = filterDomProps(domPropsWithoutChildren, [...variantKeys, ...dataPropKeys]);
 
     const rootDomProps = rootExtras ? { ...domProps, ...rootExtras } : domProps;
-    const rootPartProps = partPropsFromProps?.['root'];
+    const rootPartProps = partPropsFromProps?.["root"];
     const rootDomPropsWithPart = rootPartProps ? { ...rootDomProps, ...rootPartProps } : rootDomProps;
 
     if (svgRoot) {
-      if ('d' in domOverrides) (rootDomPropsWithPart as UnknownProps)['d'] = domOverrides['d'];
-      if ('fill' in domOverrides) (rootDomPropsWithPart as UnknownProps)['fill'] = domOverrides['fill'];
-      if ('stroke' in domOverrides) (rootDomPropsWithPart as UnknownProps)['stroke'] = domOverrides['stroke'];
+      if ("d" in domOverrides) (rootDomPropsWithPart as UnknownProps)["d"] = domOverrides["d"];
+      if ("fill" in domOverrides) (rootDomPropsWithPart as UnknownProps)["fill"] = domOverrides["fill"];
+      if ("stroke" in domOverrides) (rootDomPropsWithPart as UnknownProps)["stroke"] = domOverrides["stroke"];
     }
 
-    if (rootPartProps && 'ref' in rootPartProps && 'ref' in rootDomProps) {
+    if (rootPartProps && "ref" in rootPartProps && "ref" in rootDomProps) {
       const partRef = (rootPartProps as { ref?: unknown }).ref;
       const domRef = (rootDomProps as { ref?: unknown }).ref;
       if (partRef && domRef) {
@@ -245,10 +242,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       }
     }
 
-    const slots = normalizeSlots(
-      { ...(slotsFromProps ?? {}), ...(slotsInput ?? {}) },
-      propsInput?.children
-    );
+    const slots = normalizeSlots({ ...(slotsFromProps ?? {}), ...(slotsInput ?? {}) }, propsInput?.children);
     const partStyles = resolvePartStyles(spec, props, userStyleProps);
 
     const keyframeNames = getKeyframeNames(spec);
@@ -273,9 +267,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         }
 
         if (stack.includes(childSpec.name)) {
-          throw new Error(
-            `Circular component reference detected: ${[...stack, childSpec.name].join(" -> ")}`
-          );
+          throw new Error(`Circular component reference detected: ${[...stack, childSpec.name].join(" -> ")}`);
         }
 
         const renderedChildren = (node.children ?? []).map((child) => renderNode(child as NodeSpec));
@@ -287,15 +279,15 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
 
         const mergedNodeStyle = mergeReactStyles(
           mergeReactStyles(
-            (styleFromSpec.style as React.CSSProperties | undefined),
-            extractStyle((nodeProps as UnknownProps)['style'] as React.CSSProperties | undefined)
+            styleFromSpec.style as React.CSSProperties | undefined,
+            extractStyle((nodeProps as UnknownProps)["style"] as React.CSSProperties | undefined)
           ),
-          extractStyle((mergedExtraForNode as UnknownProps)?.['style'] as React.CSSProperties | undefined)
+          extractStyle((mergedExtraForNode as UnknownProps)?.["style"] as React.CSSProperties | undefined)
         );
 
         const mergedNodeClassName = cx(
-          extractClassName((nodeProps as UnknownProps)['className'] as string | undefined),
-          extractClassName((mergedExtraForNode as UnknownProps)?.['className'] as string | undefined),
+          extractClassName((nodeProps as UnknownProps)["className"] as string | undefined),
+          extractClassName((mergedExtraForNode as UnknownProps)?.["className"] as string | undefined),
           styleFromSpec.className
         );
 
@@ -326,11 +318,11 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       const attrs = (node.attrs ?? {}) as UnknownProps;
       const extra = mergedExtraForNode ?? {};
 
-      const behaviorRef = (mergedExtraForNode as UnknownProps)?.['ref'];
-      const userRef = (partPropsFromProps?.[node.part] as UnknownProps)?.['ref'];
+      const behaviorRef = (mergedExtraForNode as UnknownProps)?.["ref"];
+      const userRef = (partPropsFromProps?.[node.part] as UnknownProps)?.["ref"];
       const mergedRef = behaviorRef && userRef ? mergeRefs(behaviorRef, userRef) : (behaviorRef ?? userRef);
       if (mergedRef) {
-        (extra as UnknownProps)['ref'] = mergedRef;
+        (extra as UnknownProps)["ref"] = mergedRef;
       }
 
       const partStyleProps = partStyles[node.part] ?? {};
@@ -338,12 +330,12 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       const mergedStyleOptions: StyleOptions = {
         ...(baseStyleOptions ?? {}),
         className: cx(
-          extractClassName((attrs as UnknownProps)['className'] as string | undefined),
-          extractClassName((extra as UnknownProps)['className'] as string | undefined)
+          extractClassName((attrs as UnknownProps)["className"] as string | undefined),
+          extractClassName((extra as UnknownProps)["className"] as string | undefined)
         ),
         style: mergeReactStyles(
-          extractStyle((attrs as UnknownProps)['style'] as React.CSSProperties | undefined),
-          extractStyle((extra as UnknownProps)['style'] as React.CSSProperties | undefined)
+          extractStyle((attrs as UnknownProps)["style"] as React.CSSProperties | undefined),
+          extractStyle((extra as UnknownProps)["style"] as React.CSSProperties | undefined)
         ) as Record<string, unknown>,
       };
 
@@ -354,15 +346,15 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
         ...extra,
       };
 
-      delete elementProps['className'];
-      delete elementProps['style'];
-      delete elementProps['children'];
+      delete elementProps["className"];
+      delete elementProps["style"];
+      delete elementProps["children"];
 
       if (styleFromSpec.className) {
-        elementProps['className'] = styleFromSpec.className;
+        elementProps["className"] = styleFromSpec.className;
       }
       if (styleFromSpec.style) {
-        elementProps['style'] = styleFromSpec.style;
+        elementProps["style"] = styleFromSpec.style;
       }
 
       if (isElementNodeSpec(node) && isSvgElementNode(node)) {
@@ -428,9 +420,9 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
             })
           : undefined;
 
-      const consumedPartProps =
-        (consumedProps as unknown as { __partProps?: Record<string, Record<string, unknown>> } | undefined)
-          ?.__partProps;
+      const consumedPartProps = (
+        consumedProps as unknown as { __partProps?: Record<string, Record<string, unknown>> } | undefined
+      )?.__partProps;
 
       const userPartProps = (props.__partProps ?? {}) as Record<string, Record<string, unknown>>;
       const mergedPartProps: Record<string, Record<string, unknown>> = { ...behaviorResult.partProps };
@@ -455,7 +447,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
       if (keyframeNames.length > 0) {
         const pp = (propsWithBehavior.__partProps ?? {}) as Record<string, Record<string, unknown>>;
         for (const partObj of Object.values(pp)) {
-          const style = (partObj['style'] ?? undefined) as unknown;
+          const style = (partObj["style"] ?? undefined) as unknown;
           if (style && typeof style === "object" && !Array.isArray(style)) {
             namespaceKeyframeReferencesInStyleObject({
               style: style as Record<string, unknown>,
@@ -510,7 +502,7 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
           : parentCtx;
 
       const rootExtras: UnknownProps = {};
-      if (ref) rootExtras['ref'] = ref;
+      if (ref) rootExtras["ref"] = ref;
 
       return React.createElement(
         BassbookRuntimeContext.Provider,
@@ -526,8 +518,6 @@ export function createReactRenderer(options: CreateReactRendererOptions): ReactR
 export function createReactComponent(
   name: string,
   options: CreateReactRendererOptions
-): React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<BassbookComponentProps> & React.RefAttributes<unknown>
-> {
+): React.ForwardRefExoticComponent<React.PropsWithoutRef<BassbookComponentProps> & React.RefAttributes<unknown>> {
   return createReactRenderer(options).createComponent(name);
 }

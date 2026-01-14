@@ -85,12 +85,7 @@ function validateVariantStyles(
   if (variants) {
     for (const [variantName, variantValues] of Object.entries(variants)) {
       for (const [valueName, slotStyles] of Object.entries(variantValues)) {
-        validateSlotStyles(
-          slotStyles,
-          parts,
-          issues,
-          `${basePath}.variants.${variantName}.${valueName}`
-        );
+        validateSlotStyles(slotStyles, parts, issues, `${basePath}.variants.${variantName}.${valueName}`);
       }
     }
   }
@@ -99,21 +94,13 @@ function validateVariantStyles(
     for (const [variantName, valueName] of Object.entries(styles.defaultVariants)) {
       const valueKey = String(valueName);
       if (!variants || !(variantName in variants)) {
-        issue(
-          issues,
-          `${basePath}.defaultVariants.${variantName}`,
-          `Unknown variant '${variantName}'`
-        );
+        issue(issues, `${basePath}.defaultVariants.${variantName}`, `Unknown variant '${variantName}'`);
         continue;
       }
 
       const values = variants[variantName];
       if (!values) {
-        issue(
-          issues,
-          `${basePath}.defaultVariants.${variantName}`,
-          `Unknown variant '${variantName}'`
-        );
+        issue(issues, `${basePath}.defaultVariants.${variantName}`, `Unknown variant '${variantName}'`);
         continue;
       }
 
@@ -214,24 +201,13 @@ function validateNode(
   if (node.kind === "element" || node.kind === "component") {
     if (node.children) {
       for (let i = 0; i < node.children.length; i++) {
-        validateNode(
-          node.children[i] as NodeSpec,
-          parentLayer,
-          parentName,
-          issues,
-          resolver,
-          `${path}.children[${i}]`
-        );
+        validateNode(node.children[i] as NodeSpec, parentLayer, parentName, issues, resolver, `${path}.children[${i}]`);
       }
     }
   }
 }
 
-function validateDataProps(
-  spec: AnyComponentSpec,
-  issues: ValidationIssue[],
-  basePath: string
-): void {
+function validateDataProps(spec: AnyComponentSpec, issues: ValidationIssue[], basePath: string): void {
   if (!spec.dataProps) return;
 
   for (let i = 0; i < spec.dataProps.length; i++) {
@@ -242,10 +218,7 @@ function validateDataProps(
   }
 }
 
-export function validateComponentSpec(
-  spec: AnyComponentSpec,
-  resolver?: SpecResolver
-): ValidationResult {
+export function validateComponentSpec(spec: AnyComponentSpec, resolver?: SpecResolver): ValidationResult {
   const issues: ValidationIssue[] = [];
 
   if (!spec.name) issue(issues, "name", "Missing component name");
@@ -269,10 +242,7 @@ export function validateComponentSpec(
   return { valid: issues.length === 0, issues };
 }
 
-export function validateComponentSpecs(
-  specs: AnyComponentSpec[],
-  resolver?: SpecResolver
-): ValidationResult {
+export function validateComponentSpecs(specs: AnyComponentSpec[], resolver?: SpecResolver): ValidationResult {
   const issues: ValidationIssue[] = [];
 
   for (let i = 0; i < specs.length; i++) {

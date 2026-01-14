@@ -54,12 +54,22 @@ export const Navigation: Story = {
     <Box h={400} position="relative">
       <Sheet open={true} side="left">
         <VStack p={24} gap={16} alignItems="flex-start">
-          <Text fontWeight="bold" fontSize="1.25rem">Menu</Text>
+          <Text fontWeight="bold" fontSize="1.25rem">
+            Menu
+          </Text>
           <VStack gap={8} alignItems="flex-start" w="100%">
-            <Button variant="outline" w="100%">Home</Button>
-            <Button variant="outline" w="100%">Products</Button>
-            <Button variant="outline" w="100%">About</Button>
-            <Button variant="outline" w="100%">Contact</Button>
+            <Button variant="outline" w="100%">
+              Home
+            </Button>
+            <Button variant="outline" w="100%">
+              Products
+            </Button>
+            <Button variant="outline" w="100%">
+              About
+            </Button>
+            <Button variant="outline" w="100%">
+              Contact
+            </Button>
           </VStack>
         </VStack>
       </Sheet>

@@ -3,5 +3,7 @@
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "types": ["bun"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "../react-sample-app/**/*", "../core/examples/**/*"]
 }

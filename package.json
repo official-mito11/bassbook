@@ -15,6 +15,7 @@
     "@types/bun": "latest",
     "@types/node": "latest",
     "lerna": "^9.0.1",
+    "prettier": "^3.7.4",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tsup": "^8.2.4"
@@ -25,6 +26,9 @@
   "dependencies": {},
   "scripts": {
     "build": "lerna run build --stream",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "typecheck": "lerna run typecheck --stream",
+    "format": "prettier --write \"packages/**/src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"packages/**/src/**/*.{ts,tsx}\""
   }
 }

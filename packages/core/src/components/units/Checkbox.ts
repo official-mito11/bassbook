@@ -4,6 +4,31 @@ import { slot } from "../spec";
 export const Checkbox = defineUnitComponent({
   name: "Checkbox",
   dataProps: ["checked", "disabled", "size", "indeterminate"] as const,
+  behavior: {
+    state: {
+      checked: { type: "boolean", default: false, controlled: true },
+      indeterminate: { type: "boolean", default: false, controlled: true },
+    },
+    actions: {
+      toggle: (s: Record<string, unknown>) => {
+        const current = (s as { checked?: boolean }).checked;
+        return { checked: !current, indeterminate: false };
+      },
+      setChecked: (_s: Record<string, unknown>, payload?: unknown) => {
+        if (typeof payload !== "boolean") return {};
+        return { checked: payload, indeterminate: false };
+      },
+    },
+    bindings: {
+      root: {
+        onClick: "toggle",
+        onKeyDown: { action: "toggle", keys: ["Enter", " "], preventDefault: true },
+      },
+    },
+    controlledProps: {
+      checked: { prop: "checked", onChange: "onCheckedChange" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     props: {
@@ -36,7 +61,7 @@ export const Checkbox = defineUnitComponent({
                   d: "M20 6L9 17l-5-5",
                   fill: "none",
                   stroke: "currentColor",
-                  strokeWidth: 3,
+                  strokeWidth: 3.5,
                   strokeLinecap: "round",
                   strokeLinejoin: "round",
                 },
@@ -55,24 +80,25 @@ export const Checkbox = defineUnitComponent({
     base: {
       root: {
         display: "inline-flex",
-        alignCenter: true,
+        alignItems: "center",
         gap: 8,
         cursor: "pointer",
         selectNone: true,
       },
       indicator: {
-        display: "flex",
-        alignCenter: true,
-        justifyCenter: true,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
         flexShrink: 0,
-        w: 16,
-        h: 16,
-        rounded: "sm",
+        w: 18,
+        h: 18,
+        rounded: "md",
         borderWidth: 1.5,
         borderStyle: "solid",
-        borderColor: "border",
+        borderColor: "#d1d5db",
         bg: "background",
-        transition: "all 150ms ease",
+        transition: "all 200ms cubic-bezier(0.4, 0, 0.2, 1)",
+        shadow: "sm",
       },
       dash: {
         display: "none",
@@ -93,15 +119,16 @@ export const Checkbox = defineUnitComponent({
       label: {
         fontSize: "0.875rem",
         color: "foreground",
-        lineHeight: 1.5,
+        lineHeight: 1,
       },
     },
     variants: {
       checked: {
         true: {
           indicator: {
-            bg: "primary",
-            borderColor: "primary",
+            bg: "#3b82f6",
+            borderColor: "#3b82f6",
+            shadow: "md",
           },
           icon: {
             opacity: 1,
@@ -135,9 +162,12 @@ export const Checkbox = defineUnitComponent({
       disabled: {
         true: {
           root: {
-            opacity: 0.5,
+            opacity: 0.6,
             cursor: "not-allowed",
             pointerNone: true,
+          },
+          indicator: {
+            bg: "#f3f4f6",
           },
         },
         false: {},

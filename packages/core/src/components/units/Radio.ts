@@ -3,7 +3,29 @@ import { slot } from "../spec";
 
 export const Radio = defineUnitComponent({
   name: "Radio",
-  dataProps: ["checked", "disabled", "size"] as const,
+  dataProps: ["checked", "disabled", "size", "value"] as const,
+  behavior: {
+    state: {
+      checked: { type: "boolean", default: false, controlled: true },
+      value: { type: "string", default: "", controlled: true },
+    },
+    actions: {
+      select: (s: Record<string, unknown>) => {
+        const current = (s as { checked?: boolean }).checked;
+        if (current) return {}; // Already selected
+        return { checked: true };
+      },
+    },
+    bindings: {
+      root: {
+        onClick: "select",
+        onKeyDown: { action: "select", keys: ["Enter", " "], preventDefault: true },
+      },
+    },
+    controlledProps: {
+      checked: { prop: "checked", onChange: "onCheckedChange" },
+    },
+  },
   tree: comp("Box", {
     part: "root",
     props: {
@@ -35,15 +57,15 @@ export const Radio = defineUnitComponent({
     base: {
       root: {
         display: "inline-flex",
-        alignCenter: true,
+        alignItems: "center",
         gap: 8,
         cursor: "pointer",
         selectNone: true,
       },
       indicator: {
         display: "inline-flex",
-        alignCenter: true,
-        justifyCenter: true,
+        alignItems: "center",
+        justifyContent: "center",
         flexShrink: 0,
         w: 16,
         h: 16,
@@ -66,7 +88,7 @@ export const Radio = defineUnitComponent({
       label: {
         fontSize: "0.875rem",
         color: "foreground",
-        lineHeight: 1.5,
+        lineHeight: 1,
       },
     },
     variants: {

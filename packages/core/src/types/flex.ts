@@ -12,15 +12,18 @@ export type FlexDirection = "row" | "column" | "row-reverse" | "column-reverse";
 export type FlexWrap = "nowrap" | "wrap" | "wrap-reverse";
 
 // Justify content values
-export type JustifyContent = 
-  | "flex-start" | "flex-end" | "center" 
-  | "space-between" | "space-around" | "space-evenly"
-  | "start" | "end";
+export type JustifyContent =
+  | "flex-start"
+  | "flex-end"
+  | "center"
+  | "space-between"
+  | "space-around"
+  | "space-evenly"
+  | "start"
+  | "end";
 
 // Align items values
-export type AlignItems = 
-  | "flex-start" | "flex-end" | "center" 
-  | "baseline" | "stretch" | "start" | "end";
+export type AlignItems = "flex-start" | "flex-end" | "center" | "baseline" | "stretch" | "start" | "end";
 
 // Flex container props
 export interface FlexContainerProps {

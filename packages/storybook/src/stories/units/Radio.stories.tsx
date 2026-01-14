@@ -48,9 +48,15 @@ export const Checked: Story = {
 export const Sizes: Story = {
   render: () => (
     <VStack gap={8} alignItems="flex-start">
-      <Radio checked={true} size="sm">Small radio</Radio>
-      <Radio checked={true} size="md">Medium radio</Radio>
-      <Radio checked={true} size="lg">Large radio</Radio>
+      <Radio checked={true} size="sm">
+        Small radio
+      </Radio>
+      <Radio checked={true} size="md">
+        Medium radio
+      </Radio>
+      <Radio checked={true} size="lg">
+        Large radio
+      </Radio>
     </VStack>
   ),
 };
@@ -60,8 +66,12 @@ export const States: Story = {
     <VStack gap={8} alignItems="flex-start">
       <Radio checked={false}>Unchecked</Radio>
       <Radio checked={true}>Checked</Radio>
-      <Radio checked={false} disabled={true}>Disabled unchecked</Radio>
-      <Radio checked={true} disabled={true}>Disabled checked</Radio>
+      <Radio checked={false} disabled={true}>
+        Disabled unchecked
+      </Radio>
+      <Radio checked={true} disabled={true}>
+        Disabled checked
+      </Radio>
     </VStack>
   ),
 };
@@ -72,7 +82,9 @@ export const Group: Story = {
       <Radio checked={true}>Option 1 (selected)</Radio>
       <Radio checked={false}>Option 2</Radio>
       <Radio checked={false}>Option 3</Radio>
-      <Radio checked={false} disabled={true}>Option 4 (disabled)</Radio>
+      <Radio checked={false} disabled={true}>
+        Option 4 (disabled)
+      </Radio>
     </VStack>
   ),
 };
@@ -83,35 +95,23 @@ export const InteractiveGroup: Story = {
 
 const RadioGroupExample = () => {
   const [selected, setSelected] = useState<string>("option1");
-  
+
   return (
     <VStack gap={12} alignItems="flex-start">
       <Label fontWeight="medium">Choose an option:</Label>
-      <Radio 
-        checked={selected === "option1"} 
-        onChange={() => setSelected("option1")}
-      >
+      <Radio checked={selected === "option1"} onChange={() => setSelected("option1")}>
         Option 1 - Free
       </Radio>
-      <Radio 
-        checked={selected === "option2"} 
-        onChange={() => setSelected("option2")}
-      >
+      <Radio checked={selected === "option2"} onChange={() => setSelected("option2")}>
         Option 2 - Basic ($9.99/mo)
       </Radio>
-      <Radio 
-        checked={selected === "option3"} 
-        onChange={() => setSelected("option3")}
-      >
+      <Radio checked={selected === "option3"} onChange={() => setSelected("option3")}>
         Option 3 - Pro ($19.99/mo)
       </Radio>
-      <Radio 
-        checked={selected === "option4"} 
-        onChange={() => setSelected("option4")}
-      >
+      <Radio checked={selected === "option4"} onChange={() => setSelected("option4")}>
         Option 4 - Enterprise (Custom)
       </Radio>
-      
+
       <Box mt={8} p={8} bg="gray.50" rounded="md" w="full">
         <Text fontSize="sm" color="gray.600">
           Selected: <span style={{ fontWeight: 500 }}>{selected}</span>
@@ -132,7 +132,7 @@ export const WithDescription: Story = {
           </Text>
         </VStack>
       </Radio>
-      
+
       <Radio checked={false}>
         <VStack alignItems="flex-start" gap={2}>
           <Text fontWeight="medium">Express Shipping</Text>
@@ -141,7 +141,7 @@ export const WithDescription: Story = {
           </Text>
         </VStack>
       </Radio>
-      
+
       <Radio checked={false}>
         <VStack alignItems="flex-start" gap={2}>
           <Text fontWeight="medium">Free Shipping</Text>
@@ -161,26 +161,26 @@ export const SurveyExample: Story = {
 const SurveyExampleComponent = () => {
   const [satisfaction, setSatisfaction] = useState<string>("");
   const [experience, setExperience] = useState<string>("");
-  
+
   return (
     <VStack gap={24} alignItems="flex-start" w={400}>
       <Box>
-        <Text fontWeight="medium" mb={8}>How satisfied are you with our service?</Text>
+        <Text fontWeight="medium" mb={8}>
+          How satisfied are you with our service?
+        </Text>
         <HStack gap={4}>
           {["Very Dissatisfied", "Dissatisfied", "Neutral", "Satisfied", "Very Satisfied"].map((label, index) => (
-            <Radio 
-              key={label}
-              checked={satisfaction === String(index)}
-              onChange={() => setSatisfaction(String(index))}
-            >
+            <Radio key={label} checked={satisfaction === String(index)} onChange={() => setSatisfaction(String(index))}>
               <Text fontSize="xs">{index + 1}</Text>
             </Radio>
           ))}
         </HStack>
       </Box>
-      
+
       <Box>
-        <Text fontWeight="medium" mb={8}>How did you hear about us?</Text>
+        <Text fontWeight="medium" mb={8}>
+          How did you hear about us?
+        </Text>
         <VStack gap={8} alignItems="flex-start">
           <Radio checked={experience === "google"} onChange={() => setExperience("google")}>
             Search Engine (Google, Bing, etc.)
@@ -206,33 +206,26 @@ export const SettingsPanel: Story = {
 
 const SettingsPanelExample = () => {
   const [privacy, setPrivacy] = useState<string>("friends");
-  
+
   return (
     <Box w={350} p={16} border="1px solid" borderColor="gray.200" rounded="lg">
-      <Text fontWeight="bold" mb={16}>Privacy Settings</Text>
-      
+      <Text fontWeight="bold" mb={16}>
+        Privacy Settings
+      </Text>
+
       <VStack gap={12}>
         <Box>
           <Text fontWeight="medium" mb={8} fontSize="sm" color="gray.600">
             Who can see your profile?
           </Text>
           <VStack gap={8} alignItems="flex-start">
-            <Radio 
-              checked={privacy === "public"} 
-              onChange={() => setPrivacy("public")}
-            >
+            <Radio checked={privacy === "public"} onChange={() => setPrivacy("public")}>
               <Text>Everyone</Text>
             </Radio>
-            <Radio 
-              checked={privacy === "friends"} 
-              onChange={() => setPrivacy("friends")}
-            >
+            <Radio checked={privacy === "friends"} onChange={() => setPrivacy("friends")}>
               <Text>Friends Only</Text>
             </Radio>
-            <Radio 
-              checked={privacy === "private"} 
-              onChange={() => setPrivacy("private")}
-            >
+            <Radio checked={privacy === "private"} onChange={() => setPrivacy("private")}>
               <Text>Only Me</Text>
             </Radio>
           </VStack>
@@ -245,25 +238,49 @@ const SettingsPanelExample = () => {
 export const AllSizesStates: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
-      <Text fontWeight="medium" mb={4}>Small</Text>
+      <Text fontWeight="medium" mb={4}>
+        Small
+      </Text>
       <HStack gap={16}>
-        <Radio size="sm" checked={false}>Unchecked</Radio>
-        <Radio size="sm" checked={true}>Checked</Radio>
-        <Radio size="sm" checked={false} disabled={true}>Disabled</Radio>
+        <Radio size="sm" checked={false}>
+          Unchecked
+        </Radio>
+        <Radio size="sm" checked={true}>
+          Checked
+        </Radio>
+        <Radio size="sm" checked={false} disabled={true}>
+          Disabled
+        </Radio>
       </HStack>
-      
-      <Text fontWeight="medium" mb={4}>Medium</Text>
+
+      <Text fontWeight="medium" mb={4}>
+        Medium
+      </Text>
       <HStack gap={16}>
-        <Radio size="md" checked={false}>Unchecked</Radio>
-        <Radio size="md" checked={true}>Checked</Radio>
-        <Radio size="md" checked={false} disabled={true}>Disabled</Radio>
+        <Radio size="md" checked={false}>
+          Unchecked
+        </Radio>
+        <Radio size="md" checked={true}>
+          Checked
+        </Radio>
+        <Radio size="md" checked={false} disabled={true}>
+          Disabled
+        </Radio>
       </HStack>
-      
-      <Text fontWeight="medium" mb={4}>Large</Text>
+
+      <Text fontWeight="medium" mb={4}>
+        Large
+      </Text>
       <HStack gap={16}>
-        <Radio size="lg" checked={false}>Unchecked</Radio>
-        <Radio size="lg" checked={true}>Checked</Radio>
-        <Radio size="lg" checked={false} disabled={true}>Disabled</Radio>
+        <Radio size="lg" checked={false}>
+          Unchecked
+        </Radio>
+        <Radio size="lg" checked={true}>
+          Checked
+        </Radio>
+        <Radio size="lg" checked={false} disabled={true}>
+          Disabled
+        </Radio>
       </HStack>
     </VStack>
   ),
@@ -284,11 +301,15 @@ export const CustomStyles: Story = {
           Purple
         </Radio>
       </HStack>
-      
+
       <Text fontWeight="medium">Custom Sizes</Text>
       <HStack gap={16} alignItems="center">
-        <Radio size="sm" checked={true}>Small custom</Radio>
-        <Radio size="lg" checked={true}>Large custom</Radio>
+        <Radio size="sm" checked={true}>
+          Small custom
+        </Radio>
+        <Radio size="lg" checked={true}>
+          Large custom
+        </Radio>
       </HStack>
     </VStack>
   ),

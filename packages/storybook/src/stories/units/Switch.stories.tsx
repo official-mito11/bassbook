@@ -50,9 +50,15 @@ export const On: Story = {
 export const Sizes: Story = {
   render: () => (
     <VStack gap={8} alignItems="flex-start">
-      <Switch checked={true} size="sm">Small switch</Switch>
-      <Switch checked={true} size="md">Medium switch</Switch>
-      <Switch checked={true} size="lg">Large switch</Switch>
+      <Switch checked={true} size="sm">
+        Small switch
+      </Switch>
+      <Switch checked={true} size="md">
+        Medium switch
+      </Switch>
+      <Switch checked={true} size="lg">
+        Large switch
+      </Switch>
     </VStack>
   ),
 };
@@ -63,7 +69,9 @@ export const States: Story = {
       <Switch checked={false}>Off</Switch>
       <Switch checked={true}>On</Switch>
       <Switch disabled={true}>Disabled off</Switch>
-      <Switch checked={true} disabled={true}>Disabled on</Switch>
+      <Switch checked={true} disabled={true}>
+        Disabled on
+      </Switch>
     </VStack>
   ),
 };
@@ -83,7 +91,7 @@ export const WithDescription: Story = {
           </Text>
         </VStack>
       </Switch>
-      
+
       <Switch checked={false}>
         <VStack alignItems="flex-start" gap={0}>
           <Text fontWeight="medium">Auto-save</Text>
@@ -102,11 +110,11 @@ export const ThemeToggle: Story = {
 
 const ThemeToggleExample = () => {
   const [darkMode, setDarkMode] = useState(false);
-  
+
   return (
-    <Box 
-      p={24} 
-      rounded="lg" 
+    <Box
+      p={24}
+      rounded="lg"
       bg={darkMode ? "gray.800" : "white"}
       border="1px solid"
       borderColor={darkMode ? "gray.600" : "gray.200"}
@@ -123,26 +131,22 @@ const ThemeToggleExample = () => {
               Toggle between light and dark mode
             </Text>
           </VStack>
-          <Switch 
-            checked={darkMode} 
-            onChange={(e: any) => setDarkMode(e.target.checked)}
-            size="lg"
-          />
+          <Switch checked={darkMode} onChange={(e: any) => setDarkMode(e.target.checked)} size="lg" />
         </HStack>
-        
+
         {/* Preview */}
-        <Box 
-          p={12} 
-          rounded="md" 
+        <Box
+          p={12}
+          rounded="md"
           bg={darkMode ? "gray.700" : "gray.50"}
           border="1px solid"
           borderColor={darkMode ? "gray.600" : "gray.200"}
         >
           <HStack gap={8}>
-            <Box 
-              w={40} 
-              h={40} 
-              rounded="full" 
+            <Box
+              w={40}
+              h={40}
+              rounded="full"
               bg={darkMode ? "yellow.400" : "blue.500"}
               display="flex"
               alignItems="center"
@@ -184,13 +188,10 @@ export const CustomColors: Story = {
 export const InteractiveToggle: Story = {
   render: () => {
     const [enabled, setEnabled] = useState(false);
-    
+
     return (
       <VStack gap={16} alignItems="flex-start" w={300}>
-        <Switch 
-          checked={enabled} 
-          onChange={(e: any) => setEnabled(e.target.checked)}
-        >
+        <Switch checked={enabled} onChange={(e: any) => setEnabled(e.target.checked)}>
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Feature Toggle</Text>
             <Text fontSize="sm" color="gray.500">
@@ -198,10 +199,10 @@ export const InteractiveToggle: Story = {
             </Text>
           </VStack>
         </Switch>
-        
-        <Box 
-          p={16} 
-          rounded="md" 
+
+        <Box
+          p={16}
+          rounded="md"
           bg={enabled ? "green.50" : "gray.50"}
           border="1px solid"
           borderColor={enabled ? "green.200" : "gray.200"}
@@ -228,18 +229,22 @@ const SettingsPanelExample = () => {
     dataSaver: true,
     batterySaver: false,
   });
-  
+
   const toggle = (key: keyof typeof settings) => {
     setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-  
+
   return (
     <Box w={350} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box bg="gray.50" p={16} borderBottom="1px solid" borderColor="gray.200">
-        <Text fontWeight="bold" fontSize="lg">Quick Settings</Text>
-        <Text fontSize="sm" color="gray.500">Toggle your device settings</Text>
+        <Text fontWeight="bold" fontSize="lg">
+          Quick Settings
+        </Text>
+        <Text fontSize="sm" color="gray.500">
+          Toggle your device settings
+        </Text>
       </Box>
-      
+
       <VStack gap={0}>
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <HStack gap={12}>
@@ -248,12 +253,14 @@ const SettingsPanelExample = () => {
             </Box>
             <VStack alignItems="flex-start" gap={0}>
               <Text fontWeight="medium">Wi-Fi</Text>
-              <Text fontSize="xs" color="gray.500">Connected to Home</Text>
+              <Text fontSize="xs" color="gray.500">
+                Connected to Home
+              </Text>
             </VStack>
           </HStack>
           <Switch checked={settings.wifi} onChange={() => toggle("wifi")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <HStack gap={12}>
             <Box w={40} h={40} rounded="lg" bg="blue.100" display="flex" alignItems="center" justifyContent="center">
@@ -261,12 +268,14 @@ const SettingsPanelExample = () => {
             </Box>
             <VStack alignItems="flex-start" gap={0}>
               <Text fontWeight="medium">Bluetooth</Text>
-              <Text fontSize="xs" color="gray.500">Off</Text>
+              <Text fontSize="xs" color="gray.500">
+                Off
+              </Text>
             </VStack>
           </HStack>
           <Switch checked={settings.bluetooth} onChange={() => toggle("bluetooth")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <HStack gap={12}>
             <Box w={40} h={40} rounded="lg" bg="gray.100" display="flex" alignItems="center" justifyContent="center">
@@ -274,12 +283,14 @@ const SettingsPanelExample = () => {
             </Box>
             <VStack alignItems="flex-start" gap={0}>
               <Text fontWeight="medium">Airplane Mode</Text>
-              <Text fontSize="xs" color="gray.500">Off</Text>
+              <Text fontSize="xs" color="gray.500">
+                Off
+              </Text>
             </VStack>
           </HStack>
           <Switch checked={settings.airplane} onChange={() => toggle("airplane")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <HStack gap={12}>
             <Box w={40} h={40} rounded="lg" bg="green.100" display="flex" alignItems="center" justifyContent="center">
@@ -287,12 +298,14 @@ const SettingsPanelExample = () => {
             </Box>
             <VStack alignItems="flex-start" gap={0}>
               <Text fontWeight="medium">Data Saver</Text>
-              <Text fontSize="xs" color="gray.500">On</Text>
+              <Text fontSize="xs" color="gray.500">
+                On
+              </Text>
             </VStack>
           </HStack>
           <Switch checked={settings.dataSaver} onChange={() => toggle("dataSaver")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between">
           <HStack gap={12}>
             <Box w={40} h={40} rounded="lg" bg="yellow.100" display="flex" alignItems="center" justifyContent="center">
@@ -300,7 +313,9 @@ const SettingsPanelExample = () => {
             </Box>
             <VStack alignItems="flex-start" gap={0}>
               <Text fontWeight="medium">Battery Saver</Text>
-              <Text fontSize="xs" color="gray.500">Off</Text>
+              <Text fontSize="xs" color="gray.500">
+                Off
+              </Text>
             </VStack>
           </HStack>
           <Switch checked={settings.batterySaver} onChange={() => toggle("batterySaver")} />
@@ -322,7 +337,7 @@ const NotificationSettingsExample = () => {
     sms: true,
     marketing: false,
   });
-  
+
   const toggleAll = () => {
     const newState = !notifications.all;
     setNotifications({
@@ -333,7 +348,7 @@ const NotificationSettingsExample = () => {
       marketing: newState,
     });
   };
-  
+
   const toggle = (key: keyof typeof notifications) => {
     setNotifications((prev) => {
       const newState = { ...prev, [key]: !prev[key] };
@@ -341,7 +356,7 @@ const NotificationSettingsExample = () => {
       return newState;
     });
   };
-  
+
   return (
     <Box w={380} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box bg="primary" p={16}>
@@ -349,44 +364,54 @@ const NotificationSettingsExample = () => {
           Notification Preferences
         </Text>
       </Box>
-      
+
       <VStack gap={0}>
         <HStack p={16} justifyContent="space-between" bg="gray.50" borderBottom="1px solid" borderColor="gray.200">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="bold">Enable All Notifications</Text>
-            <Text fontSize="xs" color="gray.500">Master switch for all notifications</Text>
+            <Text fontSize="xs" color="gray.500">
+              Master switch for all notifications
+            </Text>
           </VStack>
           <Switch checked={notifications.all} onChange={toggleAll} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Email Notifications</Text>
-            <Text fontSize="xs" color="gray.500">Receive via email</Text>
+            <Text fontSize="xs" color="gray.500">
+              Receive via email
+            </Text>
           </VStack>
           <Switch checked={notifications.email} onChange={() => toggle("email")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Push Notifications</Text>
-            <Text fontSize="xs" color="gray.500">Browser notifications</Text>
+            <Text fontSize="xs" color="gray.500">
+              Browser notifications
+            </Text>
           </VStack>
           <Switch checked={notifications.push} onChange={() => toggle("push")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">SMS Notifications</Text>
-            <Text fontSize="xs" color="gray.500">Text message alerts</Text>
+            <Text fontSize="xs" color="gray.500">
+              Text message alerts
+            </Text>
           </VStack>
           <Switch checked={notifications.sms} onChange={() => toggle("sms")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between">
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Marketing</Text>
-            <Text fontSize="xs" color="gray.500">Promotional content</Text>
+            <Text fontSize="xs" color="gray.500">
+              Promotional content
+            </Text>
           </VStack>
           <Switch checked={notifications.marketing} onChange={() => toggle("marketing")} />
         </HStack>
@@ -399,23 +424,19 @@ export const WithLoadingState: Story = {
   render: () => {
     const [loading, setLoading] = useState(false);
     const [enabled, setEnabled] = useState(false);
-    
+
     const handleToggle = (e: any) => {
       const newValue = e.target.checked;
       setLoading(true);
       setEnabled(newValue);
-      
+
       // Simulate API call
       setTimeout(() => setLoading(false), 1500);
     };
-    
+
     return (
       <VStack gap={16} alignItems="flex-start" w={300}>
-        <Switch 
-          checked={enabled} 
-          onChange={handleToggle}
-          disabled={loading}
-        >
+        <Switch checked={enabled} onChange={handleToggle} disabled={loading}>
           <VStack alignItems="flex-start" gap={0}>
             <Text fontWeight="medium">Sync Settings</Text>
             <Text fontSize="sm" color="gray.500">
@@ -423,7 +444,7 @@ export const WithLoadingState: Story = {
             </Text>
           </VStack>
         </Switch>
-        
+
         {loading && (
           <Box p={12} bg="blue.50" rounded="md" w="full">
             <Text fontSize="sm" color="blue.600">
@@ -442,31 +463,23 @@ export const SubscriptionPlan: Story = {
 
 const SubscriptionPlanExample = () => {
   const [isPro, setIsPro] = useState(false);
-  
+
   return (
     <Box w={350} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box p={16} bg={isPro ? "purple.600" : "gray.100"}>
         <HStack justifyContent="space-between" alignItems="center">
           <VStack alignItems="flex-start" gap={0}>
-            <Text 
-              fontWeight="bold" 
-              fontSize="xl" 
-              color={isPro ? "white" : "gray.900"}
-            >
+            <Text fontWeight="bold" fontSize="xl" color={isPro ? "white" : "gray.900"}>
               {isPro ? "Pro Plan" : "Free Plan"}
             </Text>
             <Text fontSize="sm" color={isPro ? "purple.200" : "gray.500"}>
               {isPro ? "$9.99/month" : "No monthly fee"}
             </Text>
           </VStack>
-          <Switch 
-            checked={isPro} 
-            onChange={(e: any) => setIsPro(e.target.checked)}
-            size="lg"
-          />
+          <Switch checked={isPro} onChange={(e: any) => setIsPro(e.target.checked)} size="lg" />
         </HStack>
       </Box>
-      
+
       <Box p={16}>
         <VStack gap={12}>
           <HStack justifyContent="space-between">
@@ -479,21 +492,15 @@ const SubscriptionPlanExample = () => {
           </HStack>
           <HStack justifyContent="space-between">
             <Text color={isPro ? "gray.600" : "gray.500"}>Unlimited projects</Text>
-            <Text color={isPro ? "green.500" : "gray.300"}>
-              {isPro ? "✓" : "—"}
-            </Text>
+            <Text color={isPro ? "green.500" : "gray.300"}>{isPro ? "✓" : "—"}</Text>
           </HStack>
           <HStack justifyContent="space-between">
             <Text color={isPro ? "gray.600" : "gray.500"}>Priority support</Text>
-            <Text color={isPro ? "green.500" : "gray.300"}>
-              {isPro ? "✓" : "—"}
-            </Text>
+            <Text color={isPro ? "green.500" : "gray.300"}>{isPro ? "✓" : "—"}</Text>
           </HStack>
           <HStack justifyContent="space-between">
             <Text color={isPro ? "gray.600" : "gray.500"}>Analytics dashboard</Text>
-            <Text color={isPro ? "green.500" : "gray.300"}>
-              {isPro ? "✓" : "—"}
-            </Text>
+            <Text color={isPro ? "green.500" : "gray.300"}>{isPro ? "✓" : "—"}</Text>
           </HStack>
         </VStack>
       </Box>
@@ -509,23 +516,29 @@ export const ThemeStyles: Story = {
   render: () => (
     <VStack gap={16} alignItems="flex-start">
       <Box p={16} border="1px solid" borderColor="gray.200" rounded="lg" w="full">
-        <Text fontWeight="medium" mb={8}>Light Theme (Default)</Text>
+        <Text fontWeight="medium" mb={8}>
+          Light Theme (Default)
+        </Text>
         <VStack gap={8} alignItems="flex-start">
           <Switch checked={true}>Switch On</Switch>
           <Switch checked={false}>Switch Off</Switch>
         </VStack>
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="gray.600" rounded="lg" w="full" bg="gray.800">
-        <Text fontWeight="medium" mb={8} color="gray.200">Dark Theme</Text>
+        <Text fontWeight="medium" mb={8} color="gray.200">
+          Dark Theme
+        </Text>
         <VStack gap={8} alignItems="flex-start">
           <Switch checked={true}>Switch On</Switch>
           <Switch checked={false}>Switch Off</Switch>
         </VStack>
       </Box>
-      
+
       <Box p={16} border="1px solid" borderColor="purple.200" rounded="lg" w="full" bg="purple.50">
-        <Text fontWeight="medium" mb={8} color="purple.700">Brand Theme (Purple)</Text>
+        <Text fontWeight="medium" mb={8} color="purple.700">
+          Brand Theme (Purple)
+        </Text>
         <VStack gap={8} alignItems="flex-start">
           <Switch checked={true}>Switch On</Switch>
           <Switch checked={false}>Switch Off</Switch>
@@ -550,23 +563,27 @@ const AccountSecurityExample = () => {
     sessionTimeout: false,
     apiKeys: true,
   });
-  
+
   const toggle = (key: keyof typeof settings) => {
     setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-  
+
   return (
     <Box w={400} border="1px solid" borderColor="gray.200" rounded="lg" overflow="hidden">
       <Box bg="red.50" p={16} borderBottom="1px solid" borderColor="red.100">
         <HStack gap={8}>
           <Text fontSize="xl">🔒</Text>
           <VStack alignItems="flex-start" gap={0}>
-            <Text fontWeight="bold" color="red.800">Security Settings</Text>
-            <Text fontSize="sm" color="red.600">Manage your account security</Text>
+            <Text fontWeight="bold" color="red.800">
+              Security Settings
+            </Text>
+            <Text fontSize="sm" color="red.600">
+              Manage your account security
+            </Text>
           </VStack>
         </HStack>
       </Box>
-      
+
       <VStack gap={0}>
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
@@ -574,40 +591,48 @@ const AccountSecurityExample = () => {
               <Text fontSize="lg">📱</Text>
               <Text fontWeight="medium">Two-Factor Authentication</Text>
             </HStack>
-            <Text fontSize="xs" color="gray.500">Extra layer of security</Text>
+            <Text fontSize="xs" color="gray.500">
+              Extra layer of security
+            </Text>
           </VStack>
           <Switch checked={settings.twoFactor} onChange={() => toggle("twoFactor")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <HStack gap={8}>
               <Text fontSize="lg">🔔</Text>
               <Text fontWeight="medium">Login Alerts</Text>
             </HStack>
-            <Text fontSize="xs" color="gray.500">Notify on new logins</Text>
+            <Text fontSize="xs" color="gray.500">
+              Notify on new logins
+            </Text>
           </VStack>
           <Switch checked={settings.loginAlerts} onChange={() => toggle("loginAlerts")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between" borderBottom="1px solid" borderColor="gray.100">
           <VStack alignItems="flex-start" gap={0}>
             <HStack gap={8}>
               <Text fontSize="lg">⏰</Text>
               <Text fontWeight="medium">Auto Session Timeout</Text>
             </HStack>
-            <Text fontSize="xs" color="gray.500">Logout after 30 min inactivity</Text>
+            <Text fontSize="xs" color="gray.500">
+              Logout after 30 min inactivity
+            </Text>
           </VStack>
           <Switch checked={settings.sessionTimeout} onChange={() => toggle("sessionTimeout")} />
         </HStack>
-        
+
         <HStack p={16} justifyContent="space-between">
           <VStack alignItems="flex-start" gap={0}>
             <HStack gap={8}>
               <Text fontSize="lg">🔑</Text>
               <Text fontWeight="medium">API Access</Text>
             </HStack>
-            <Text fontSize="xs" color="gray.500">Allow third-party integrations</Text>
+            <Text fontSize="xs" color="gray.500">
+              Allow third-party integrations
+            </Text>
           </VStack>
           <Switch checked={settings.apiKeys} onChange={() => toggle("apiKeys")} />
         </HStack>

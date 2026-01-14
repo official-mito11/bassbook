@@ -9,11 +9,11 @@ export default {
   title: "Part/Navigator",
   component: Component,
   args: {
-    "variant": "default",
+    variant: "default",
     children: "Navigator",
   },
   argTypes: {
-    "variant": { control: "select", options: ["default","transparent","filled"] },
+    variant: { control: "select", options: ["default", "transparent", "filled"] },
   },
 };
 

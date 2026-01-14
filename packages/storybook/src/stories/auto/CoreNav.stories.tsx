@@ -9,12 +9,9 @@ export default {
   title: "Core/CoreNav",
   component: Component,
   args: {
-
     children: "CoreNav",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

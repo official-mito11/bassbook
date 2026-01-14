@@ -9,12 +9,9 @@ export default {
   title: "Core/Link",
   component: Component,
   args: {
-
     children: "Link",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

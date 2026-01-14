@@ -3,10 +3,10 @@
  */
 
 // Context
-export { 
-  getContext, 
-  configure, 
-  createContext, 
+export {
+  getContext,
+  configure,
+  createContext,
   resetContext,
   resolveToken,
   resolveVar,
@@ -16,11 +16,7 @@ export {
 export type { StyleContext } from "./context";
 
 // Registry
-export { 
-  getRegistry, 
-  createRegistry, 
-  resetGlobalRegistry,
-} from "./registry";
+export { getRegistry, createRegistry, resetGlobalRegistry } from "./registry";
 export type { CSSRule, CSSRegistry } from "./registry";
 
 // Resolvers

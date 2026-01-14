@@ -8,11 +8,23 @@ import type { CSSDeclarations } from "./base";
 import { resolveSizing } from "./length";
 
 // Sizing prop keys
-type SizingKey = 
-  | "width" | "height" | "minWidth" | "minHeight" | "maxWidth" | "maxHeight"
-  | "w" | "h" | "minW" | "minH" | "maxW" | "maxH"
-  | "aspectRatio" | "ratio"
-  | "boxSizing" | "box";
+type SizingKey =
+  | "width"
+  | "height"
+  | "minWidth"
+  | "minHeight"
+  | "maxWidth"
+  | "maxHeight"
+  | "w"
+  | "h"
+  | "minW"
+  | "minH"
+  | "maxW"
+  | "maxH"
+  | "aspectRatio"
+  | "ratio"
+  | "boxSizing"
+  | "box";
 
 // Mapping from prop keys to CSS properties
 const sizingMap: Record<SizingKey, keyof CSSDeclarations> = {
@@ -45,10 +57,7 @@ const boxSizingAliases: Record<string, string> = {
 /**
  * Resolve sizing properties
  */
-export function resolveSizingProps(
-  props: Partial<Record<SizingKey, unknown>>,
-  ctx: StyleContext
-): CSSDeclarations {
+export function resolveSizingProps(props: Partial<Record<SizingKey, unknown>>, ctx: StyleContext): CSSDeclarations {
   const result: CSSDeclarations = {};
 
   for (const [key, value] of Object.entries(props)) {

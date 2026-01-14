@@ -8,12 +8,8 @@ const Component = createReactComponent("SvgPath", { registry });
 export default {
   title: "Core/SvgPath",
   component: Component,
-  args: {
-
-  },
-  argTypes: {
-
-  },
+  args: {},
+  argTypes: {},
 };
 
 export function Playground(args: any) {

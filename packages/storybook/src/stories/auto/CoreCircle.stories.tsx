@@ -8,12 +8,8 @@ const Component = createReactComponent("CoreCircle", { registry });
 export default {
   title: "Core/CoreCircle",
   component: Component,
-  args: {
-
-  },
-  argTypes: {
-
-  },
+  args: {},
+  argTypes: {},
 };
 
 export function Playground(args: any) {

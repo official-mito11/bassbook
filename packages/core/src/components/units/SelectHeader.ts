@@ -55,7 +55,7 @@ export const SelectHeader = defineUnitComponent({
           },
           lineRight: {
             display: "block",
-          }
+          },
         },
         dotted: {
           lineLeft: {
@@ -65,8 +65,8 @@ export const SelectHeader = defineUnitComponent({
           lineRight: {
             display: "block",
             borderTopStyle: "dotted",
-          }
-        }
+          },
+        },
       },
       centered: {
         true: {

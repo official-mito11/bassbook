@@ -9,10 +9,10 @@ export default {
   title: "Unit/Skeleton",
   component: Component,
   args: {
-    "variant": "rectangular",
+    variant: "rectangular",
   },
   argTypes: {
-    "variant": { control: "select", options: ["text","circular","rectangular"] },
+    variant: { control: "select", options: ["text", "circular", "rectangular"] },
   },
 };
 

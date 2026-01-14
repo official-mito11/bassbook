@@ -1,4 +1,1 @@
-export type GlobalValue = 
-  "inherit" | 
-  "initial" | 
-  "unset";
+export type GlobalValue = "inherit" | "initial" | "unset";

@@ -9,12 +9,9 @@ export default {
   title: "Core/VStack",
   component: Component,
   args: {
-
     children: "VStack",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export function Playground(args: any) {

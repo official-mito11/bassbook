@@ -1,6 +1,6 @@
 {
   "name": "@bassbook/react",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -15,7 +15,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist"
+    "build": "tsup src/index.ts --format esm --dts --sourcemap --clean --out-dir dist",
+    "typecheck": "tsc --noEmit"
   },
   "publishConfig": {
     "access": "public"
@@ -33,6 +34,6 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@bassbook/core": "^0.4.4"
+    "@bassbook/core": "^0.5.0"
   }
 }

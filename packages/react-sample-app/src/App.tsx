@@ -26,7 +26,9 @@ import {
   Switch,
   // Parts
   Alert,
+  ContextMenu,
   Dialog,
+  Dropdown,
   Form,
   Modal,
   Navigator,
@@ -56,6 +58,11 @@ export function App() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dropdown1Open, setDropdown1Open] = React.useState(false);
+  const [dropdown2Open, setDropdown2Open] = React.useState(false);
+  const [dropdown3Open, setDropdown3Open] = React.useState(false);
+  const [contextMenu1Open, setContextMenu1Open] = React.useState(false);
+  const [contextMenu2Open, setContextMenu2Open] = React.useState(false);
 
   return (
     <Box p={24} fontFamily="ui-sans-serif, system-ui">
@@ -87,34 +94,70 @@ export function App() {
       </Text>
 
       <Section title="Box">
-        <Text mb={8} display="block">Using rounded token (rounded="md"):</Text>
+        <Text mb={8} display="block">
+          Using rounded token (rounded="md"):
+        </Text>
         <HStack gap={8} mb={16}>
-          <Box p={16} bg="#e0f2fe" rounded="md">Box 1</Box>
-          <Box p={16} bg="#fce7f3" rounded="md">Box 2</Box>
-          <Box p={16} bg="#dcfce7" rounded="md">Box 3</Box>
+          <Box p={16} bg="#e0f2fe" rounded="md">
+            Box 1
+          </Box>
+          <Box p={16} bg="#fce7f3" rounded="md">
+            Box 2
+          </Box>
+          <Box p={16} bg="#dcfce7" rounded="md">
+            Box 3
+          </Box>
         </HStack>
-        <Text mb={8} display="block">Using r alias with number (r={"{8}"}→8px):</Text>
+        <Text mb={8} display="block">
+          Using r alias with number (r={"{8}"}→8px):
+        </Text>
         <HStack gap={8}>
-          <Box p={16} bg="#e0f2fe" r={4}>r=4</Box>
-          <Box p={16} bg="#fce7f3" r={8}>r=8</Box>
-          <Box p={16} bg="#dcfce7" r={12}>r=12</Box>
-          <Box p={16} bg="#dbeafe" r={16}>r=16</Box>
-          <Box p={16} bg="#f3e8ff" r="full">r="full"</Box>
+          <Box p={16} bg="#e0f2fe" r={4}>
+            r=4
+          </Box>
+          <Box p={16} bg="#fce7f3" r={8}>
+            r=8
+          </Box>
+          <Box p={16} bg="#dcfce7" r={12}>
+            r=12
+          </Box>
+          <Box p={16} bg="#dbeafe" r={16}>
+            r=16
+          </Box>
+          <Box p={16} bg="#f3e8ff" r="full">
+            r="full"
+          </Box>
         </HStack>
       </Section>
 
       <Section title="HStack & VStack">
-        <Text mb={8} display="block">HStack (horizontal):</Text>
+        <Text mb={8} display="block">
+          HStack (horizontal):
+        </Text>
         <HStack gap={8} mb={16}>
-          <Box p={8} bg="#dbeafe" rounded="sm">Item 1</Box>
-          <Box p={8} bg="#dbeafe" rounded="sm">Item 2</Box>
-          <Box p={8} bg="#dbeafe" rounded="sm">Item 3</Box>
+          <Box p={8} bg="#dbeafe" rounded="sm">
+            Item 1
+          </Box>
+          <Box p={8} bg="#dbeafe" rounded="sm">
+            Item 2
+          </Box>
+          <Box p={8} bg="#dbeafe" rounded="sm">
+            Item 3
+          </Box>
         </HStack>
-        <Text mb={8} display="block">VStack (vertical):</Text>
+        <Text mb={8} display="block">
+          VStack (vertical):
+        </Text>
         <VStack gap={8}>
-          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">Item A</Box>
-          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">Item B</Box>
-          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">Item C</Box>
+          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">
+            Item A
+          </Box>
+          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">
+            Item B
+          </Box>
+          <Box p={8} bg="#fef3c7" rounded="sm" w="fit-content">
+            Item C
+          </Box>
         </VStack>
       </Section>
 
@@ -124,7 +167,9 @@ export function App() {
           <Text fontSize="0.875rem">Small Text (0.875rem)</Text>
           <Text fontSize="1rem">Normal Text (1rem)</Text>
           <Text fontSize="1.25rem">Large Text (1.25rem)</Text>
-          <Text fontSize="1.5rem" fontWeight="bold">Bold Large Text</Text>
+          <Text fontSize="1.5rem" fontWeight="bold">
+            Bold Large Text
+          </Text>
           <Text color="#3b82f6">Colored Text (primary)</Text>
           <Text color="#ef4444">Colored Text (danger)</Text>
         </VStack>
@@ -162,7 +207,9 @@ export function App() {
             <Button variant="ghost">Ghost</Button>
             <Button variant="destructive">Destructive</Button>
           </HStack>
-          <Text mb={4} mt={8}>Sizes:</Text>
+          <Text mb={4} mt={8}>
+            Sizes:
+          </Text>
           <HStack gap={8} alignItems="center">
             <Button size="sm">Small</Button>
             <Button size="md">Medium</Button>
@@ -180,37 +227,27 @@ export function App() {
 
       <Section title="Checkbox">
         <VStack gap={8} alignItems="flex-start">
-          <Checkbox
-            checked={checkboxChecked}
-            onClick={() => setCheckboxChecked((v) => !v)}
-          >
+          <Checkbox checked={checkboxChecked} onCheckedChange={setCheckboxChecked}>
             Check me ({checkboxChecked ? "checked" : "unchecked"})
           </Checkbox>
           <Checkbox checked={true}>Checked</Checkbox>
           <Checkbox checked={false}>Unchecked</Checkbox>
-          <Checkbox checked={true} size="lg">Large checked</Checkbox>
+          <Checkbox checked={true} size="lg">
+            Large checked
+          </Checkbox>
           <Checkbox disabled={true}>Disabled checkbox</Checkbox>
         </VStack>
       </Section>
 
       <Section title="Radio">
         <VStack gap={8} alignItems="flex-start">
-          <Radio
-            checked={radioValue === "option1"}
-            onClick={() => setRadioValue("option1")}
-          >
+          <Radio checked={radioValue === "option1"} onCheckedChange={(checked: boolean) => checked && setRadioValue("option1")}>
             Option 1
           </Radio>
-          <Radio
-            checked={radioValue === "option2"}
-            onClick={() => setRadioValue("option2")}
-          >
+          <Radio checked={radioValue === "option2"} onCheckedChange={(checked: boolean) => checked && setRadioValue("option2")}>
             Option 2
           </Radio>
-          <Radio
-            checked={radioValue === "option3"}
-            onClick={() => setRadioValue("option3")}
-          >
+          <Radio checked={radioValue === "option3"} onCheckedChange={(checked: boolean) => checked && setRadioValue("option3")}>
             Option 3
           </Radio>
           <Radio disabled={true}>Disabled option</Radio>
@@ -222,21 +259,25 @@ export function App() {
           <Switch checked={switchChecked} onCheckedChange={setSwitchChecked}>
             Toggle me ({switchChecked ? "ON" : "OFF"})
           </Switch>
-          <Switch checked={true} size="sm">Small ON</Switch>
-          <Switch checked={false} size="md">Medium OFF</Switch>
-          <Switch checked={true} size="lg">Large ON</Switch>
+          <Switch checked={true} size="sm">
+            Small ON
+          </Switch>
+          <Switch checked={false} size="md">
+            Medium OFF
+          </Switch>
+          <Switch checked={true} size="lg">
+            Large ON
+          </Switch>
           <Switch disabled={true}>Disabled switch</Switch>
         </VStack>
       </Section>
 
       <Section title="Select">
-        <Select
-          value={selectValue}
-          onValueChange={setSelectValue}
-          placeholder="Select an option..."
-        >
+        <Select value={selectValue} onValueChange={setSelectValue} placeholder="Select an option...">
           <Select.Header centered>Fruits</Select.Header>
-          <Select.Option value="opt1" disabled>Option 1</Select.Option>
+          <Select.Option value="opt1" disabled>
+            Option 1
+          </Select.Option>
           <Select.Option value="opt2">Option 2</Select.Option>
           <Select.Option value="opt3">Option 3</Select.Option>
         </Select>
@@ -254,7 +295,9 @@ export function App() {
       </Section>
 
       <Section title="Avatar">
-        <Text mb={8} display="block">With fallback (no image):</Text>
+        <Text mb={8} display="block">
+          With fallback (no image):
+        </Text>
         <HStack gap={12} alignItems="center" mb={16}>
           <Avatar size="xs" hasImage={false}>
             <Text __slots={{ fallback: true }}>XS</Text>
@@ -272,7 +315,9 @@ export function App() {
             <Text __slots={{ fallback: true }}>XL</Text>
           </Avatar>
         </HStack>
-        <Text mb={8} display="block">With image:</Text>
+        <Text mb={8} display="block">
+          With image:
+        </Text>
         <HStack gap={12} alignItems="center">
           <Avatar size="sm" hasImage={true} src="https://i.pravatar.cc/100?img=1" />
           <Avatar size="md" hasImage={true} src="https://i.pravatar.cc/100?img=2" />
@@ -297,19 +342,44 @@ export function App() {
       <Section title="Icon">
         <HStack gap={12} alignItems="center">
           <Icon size="xs">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" fill="none" />
+            <path
+              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </Icon>
           <Icon size="sm">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" fill="none" />
+            <path
+              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </Icon>
           <Icon size="md">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" fill="none" />
+            <path
+              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </Icon>
           <Icon size="lg">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" fill="none" />
+            <path
+              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </Icon>
           <Icon size="xl">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" fill="none" />
+            <path
+              d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              fill="none"
+            />
           </Icon>
         </HStack>
       </Section>
@@ -415,7 +485,9 @@ export function App() {
       <Section title="Modal & Dialog">
         <HStack gap={12}>
           <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
-          <Button variant="outline" onClick={() => setDialogOpen(true)}>Open Dialog</Button>
+          <Button variant="outline" onClick={() => setDialogOpen(true)}>
+            Open Dialog
+          </Button>
         </HStack>
 
         {/* NEW API: Using compound components - no more __slots! */}
@@ -423,13 +495,19 @@ export function App() {
           <Modal.Backdrop onPointerDown={() => setModalOpen(false)} />
           <Dialog open={true}>
             <Dialog.Title>Modal Title</Dialog.Title>
-            <Dialog.CloseIcon onClick={() => setModalOpen(false)} cursor="pointer">✕</Dialog.CloseIcon>
-            <Text>This is the modal content. You can put anything here.</Text>
+            <Dialog.CloseIcon onClick={() => setModalOpen(false)} cursor="pointer">
+              ✕
+            </Dialog.CloseIcon>
+            <Dialog.Body>
+              <Text>This is the modal content. You can put anything here.</Text>
+            </Dialog.Body>
             <Dialog.Footer>
-              <HStack gap={8}>
-                <Button variant="outline" onClick={() => setModalOpen(false)}>Cancel</Button>
-                <Button variant="default" onClick={() => setModalOpen(false)}>Confirm</Button>
-              </HStack>
+              <Button variant="outline" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="default" onClick={() => setModalOpen(false)}>
+                Confirm
+              </Button>
             </Dialog.Footer>
           </Dialog>
         </Modal>
@@ -447,12 +525,16 @@ export function App() {
           >
             <Dialog open={true} onPointerDown={(e: React.PointerEvent) => e.stopPropagation()}>
               <Dialog.Title>Dialog Title</Dialog.Title>
-              <Dialog.CloseIcon onClick={() => setDialogOpen(false)} cursor="pointer">✕</Dialog.CloseIcon>
-              <Text>This is a standalone dialog without Modal wrapper.</Text>
+              <Dialog.CloseIcon onClick={() => setDialogOpen(false)} cursor="pointer">
+                ✕
+              </Dialog.CloseIcon>
+              <Dialog.Body>
+                <Text>This is a standalone dialog without Modal wrapper.</Text>
+              </Dialog.Body>
               <Dialog.Footer>
-                <HStack gap={8}>
-                  <Button variant="outline" onClick={() => setDialogOpen(false)}>Close</Button>
-                </HStack>
+                <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                  Close
+                </Button>
               </Dialog.Footer>
             </Dialog>
           </Box>
@@ -467,10 +549,322 @@ export function App() {
             <Text fontWeight="bold" fontSize="1.25rem" mb={16} display="block">
               Sheet Panel
             </Text>
-            <Text mb={16} display="block">This is a slide-out sheet panel.</Text>
+            <Text mb={16} display="block">
+              This is a slide-out sheet panel.
+            </Text>
             <Button onClick={() => setSheetOpen(false)}>Close Sheet</Button>
           </Box>
         </Sheet>
+      </Section>
+
+      <Section title="Dropdown">
+        <VStack gap={16} alignStart={true}>
+          <Text display="block" mb={8}>
+            Basic Dropdown (bottom):
+          </Text>
+          <Dropdown open={dropdown1Open} onOpenChange={setDropdown1Open} placement="bottom">
+            <Dropdown.Trigger>
+              <Button variant="outline">Open Menu</Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content>
+              <VStack gap={4} alignStart={true}>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown1Open(false)}
+                >
+                  Profile
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown1Open(false)}
+                >
+                  Settings
+                </Box>
+                <Divider my={4} />
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  color="destructive"
+                  onClick={() => setDropdown1Open(false)}
+                >
+                  Logout
+                </Box>
+              </VStack>
+            </Dropdown.Content>
+          </Dropdown>
+
+          <Text display="block" mb={8} mt={16}>
+            Dropdown with Icons:
+          </Text>
+          <Dropdown open={dropdown2Open} onOpenChange={setDropdown2Open} placement="bottom-end">
+            <Dropdown.Trigger>
+              <Button>Actions ▼</Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content>
+              <VStack gap={4} alignStart={true}>
+                <HStack
+                  gap={8}
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown2Open(false)}
+                >
+                  <Text>📝</Text>
+                  <Text>Edit</Text>
+                </HStack>
+                <HStack
+                  gap={8}
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown2Open(false)}
+                >
+                  <Text>📋</Text>
+                  <Text>Copy</Text>
+                </HStack>
+                <HStack
+                  gap={8}
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown2Open(false)}
+                >
+                  <Text>🗑️</Text>
+                  <Text>Delete</Text>
+                </HStack>
+              </VStack>
+            </Dropdown.Content>
+          </Dropdown>
+
+          <Text display="block" mb={8} mt={16}>
+            Nested Dropdown:
+          </Text>
+          <Dropdown open={dropdown3Open} onOpenChange={setDropdown3Open}>
+            <Dropdown.Trigger>
+              <Button variant="secondary">More Options</Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content>
+              <VStack gap={4} alignStart={true}>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown3Open(false)}
+                >
+                  New File
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown3Open(false)}
+                >
+                  New Folder
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown3Open(false)}
+                >
+                  Import →
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setDropdown3Open(false)}
+                >
+                  Export →
+                </Box>
+              </VStack>
+            </Dropdown.Content>
+          </Dropdown>
+        </VStack>
+      </Section>
+
+      <Section title="ContextMenu">
+        <Text display="block" mb={12}>
+          Click on the boxes below to see context menus:
+        </Text>
+        <HStack gap={16}>
+          <ContextMenu open={contextMenu1Open}>
+            <ContextMenu.Trigger>
+              <Box
+                p={24}
+                bg="primary"
+                color="primary-foreground"
+                rounded="lg"
+                cursor="pointer"
+                textAlign="center"
+                onClick={() => setContextMenu1Open(!contextMenu1Open)}
+              >
+                Click me
+              </Box>
+            </ContextMenu.Trigger>
+            <ContextMenu.Content>
+              <VStack gap={4} alignStart={true}>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu1Open(false)}
+                >
+                  Cut
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu1Open(false)}
+                >
+                  Copy
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu1Open(false)}
+                >
+                  Paste
+                </Box>
+                <Divider my={4} />
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu1Open(false)}
+                >
+                  Delete
+                </Box>
+              </VStack>
+            </ContextMenu.Content>
+          </ContextMenu>
+
+          <ContextMenu open={contextMenu2Open}>
+            <ContextMenu.Trigger>
+              <Box
+                p={24}
+                bg="success-bg"
+                color="success-text"
+                rounded="lg"
+                cursor="pointer"
+                textAlign="center"
+                borderWidth={1}
+                borderStyle="solid"
+                borderColor="success-border"
+                onClick={() => setContextMenu2Open(!contextMenu2Open)}
+              >
+                Context Menu 2
+              </Box>
+            </ContextMenu.Trigger>
+            <ContextMenu.Content>
+              <VStack gap={4} alignStart={true}>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu2Open(false)}
+                >
+                  Open
+                </Box>
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu2Open(false)}
+                >
+                  Open in New Tab
+                </Box>
+                <Divider my={4} />
+                <Box
+                  p={8}
+                  cursor="pointer"
+                  rounded="md"
+                  _hover={{ bg: "muted" }}
+                  w="100%"
+                  onClick={() => setContextMenu2Open(false)}
+                >
+                  Inspect
+                </Box>
+              </VStack>
+            </ContextMenu.Content>
+          </ContextMenu>
+        </HStack>
+      </Section>
+
+      <Section title="Typography (Font Tokens)">
+        <VStack gap={16} alignStart={true}>
+          <Text fontFamily="display" fontSize="3xl" fontWeight="bold" lineHeight="tight">
+            Display Font - Extra Large
+          </Text>
+          <Text fontFamily="body" fontSize="2xl" fontWeight="semibold" lineHeight="snug">
+            Body Font - 2XL Semibold
+          </Text>
+          <Text fontFamily="sans" fontSize="xl" fontWeight="medium" lineHeight="normal">
+            Sans Font - XL Medium
+          </Text>
+          <Text fontFamily="sans" fontSize="lg" fontWeight="normal" lineHeight="relaxed">
+            Regular text with relaxed line height for better readability in paragraphs.
+          </Text>
+          <Text fontFamily="mono" fontSize="sm" fontWeight="normal" lineHeight="normal" bg="muted" p={8} rounded="md">
+            Monospace font for code: const hello = "world";
+          </Text>
+          <HStack gap={8}>
+            <Text fontSize="xs" fontWeight="light">
+              XS Light
+            </Text>
+            <Text fontSize="sm" fontWeight="normal">
+              SM Normal
+            </Text>
+            <Text fontSize="base" fontWeight="medium">
+              Base Medium
+            </Text>
+            <Text fontSize="lg" fontWeight="semibold">
+              LG Semibold
+            </Text>
+            <Text fontSize="xl" fontWeight="bold">
+              XL Bold
+            </Text>
+          </HStack>
+        </VStack>
       </Section>
 
       {/* Footer */}

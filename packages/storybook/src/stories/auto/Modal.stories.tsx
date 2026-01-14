@@ -9,11 +9,11 @@ export default {
   title: "Part/Modal",
   component: Component,
   args: {
-    "open": false,
+    open: false,
     children: "Modal",
   },
   argTypes: {
-    "open": { control: "boolean" },
+    open: { control: "boolean" },
   },
 };
 
